@@ -29,11 +29,11 @@ Le fichier comprend les différents clés à indiquer :
 - « tempPath » chemin où le répertoire temporaire Grass va être créé,
 - « geoserver_info » permettant la publication des mosaïques temporelles sur [Geoserver],
 - « processing_path » répertoire dont le quel vont être créé :
-	- le répertoire temporaire des bandes téléchargé « images_out »,
+	- le répertoire temporaire des bandes téléchargées « images_out »,
 	-  le répertoire «  RGB_geoserver » où les 4 mosaïques vont être créé dans 4 répertoires
 	   « RGB_Mosaic_path_row » distinguée par « path,row ».
 
--  « database_path » répertoire où les 4 bases (json) des 4 images vont être crée
+-  « database_path » répertoire où les 4 bases (json) des 4 images vont être crées
 
 ## Scripts utilisées : 
 
@@ -43,7 +43,7 @@ Le fichier comprend les différents clés à indiquer :
 
 [__image_processes.py__](image_processes.py) comprend la classe __ImageProcesses__ qui permet, à sont instanciation, de lancer la création du répertoire temporaire de Grass. Elle comporte les méthodes permettant :
  - l'import/export (Grass), 
- - la correction radiométrique et atmosphérique (DOS) des différents bandes de l’image, 
+ - la correction radiométrique et atmosphérique (DOS) des différentes bandes de l’image, 
  - le pansharpning des bandes 2, 3 et 4
  - la création de la composition colorée
  - création et publication sur [Geoserver] de la mosaïque temporelle.
@@ -63,8 +63,7 @@ Le comportement de la méthode __main_job__ est le suivant :
           - faire ça tout les jours jusqu'à aujourd'hui
 
 ## Script pas utilisé :
-[__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) c'est un script Shell qui permet de créer une composition colorée pansharpnée à partir des 4 bandes 2, 3, 4 et 8 et utilisant 
-les commandes GDAL suivantes:
+[__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) c'est un script Shell qui permet de créer une composition colorée pansharpnée à partir des 4 bandes 2, 3, 4 et 8 et utilisant les commandes GDAL suivantes:
 - __gdalbuildvrt__
 - __gdal_translate__
 - __gdal_landsat_pansharp__
