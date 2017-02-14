@@ -71,7 +71,7 @@ les commandes GDAL suivantes:
 - __gdaladdo__
 
 __NB :__ 
-- Ce scripte permet de créer une composition colorée avec un meilleur rendu (couleurs, contraste, luminosité...) mais [Geoserver] n'arive pas à l'afficher.
+- Ce scripte permet de créer une composition colorée avec un meilleur rendu (couleurs, contraste, luminosité...) mais [Geoserver] n'arrive pas à l'afficher.
 - Il se peut que __gdal_landsat_pansharp__ ne sera pas installer par défaut avec GDAL, se référer [ici](https://github.com/gina-alaska/dans-gdal-scripts/blob/master/README.md)  pour l'installer.
 
 
