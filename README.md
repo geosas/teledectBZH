@@ -72,11 +72,11 @@ les commandes GDAL suivantes:
 
 __NB :__ 
 - Ce script permet de créer une composition colorée avec un meilleur rendu (couleurs, contraste, luminosité...) mais [Geoserver] n'arrive pas à l'afficher.
-- Il se peut que __gdal_landsat_pansharp__ ne sera pas installer par défaut avec GDAL, se référer [ici](https://github.com/gina-alaska/dans-gdal-scripts/blob/master/README.md)  pour l'installer.
+- Il se peut que __gdal_landsat_pansharp__ ne sera pas installé par défaut avec GDAL, voir [ici](https://github.com/gina-alaska/dans-gdal-scripts/blob/master/README.md)  pour l'instalation.
 
 
 __TODO :__
-- Affiner le traitement concernant la création de la composition colorée avec [__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) afin de pouvoir la publier sur [Geoserver].
+- Affiner le traitement concernant la création de la composition colorée avec [__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) afin de pouvoir l'afficher sur [Geoserver].
 - Déveloper une méthode qui permet de créer un masque des nuages en utilisant le fichier .BQA de l’image.
 - Brancher le modèle de l'indice de sécheresse ou autre.
 
