@@ -35,7 +35,7 @@ Le fichier comprend les différents clés à indiquer :
 
 -  « database_path » répertoire où les 4 bases (json) des 4 images vont être crée
 
-## Scriptes utilisées : 
+## Scripts utilisées : 
 
 [__grass_location_config.py__](grass_location_config.py) comprend la classe __GrassLocationConfig__ qui permet,  à sont instanciation, de déclarer les variables d'environnement Grass, créer un repertoir temporaire dont les fichiers nécessaires pour faire tourner les algorithmes Grass et lire le fichier de configuration [config.json](config.json)
 
@@ -48,7 +48,7 @@ Le fichier comprend les différents clés à indiquer :
  - la création de la composition colorée
  - création et publication sur [Geoserver] de la mosaïque temporelle.
 
-[__main_job.py__](main_job.py) C'est le scripte principale à exécuter avec les arguments de date de début (jour, mois et année), commande d'aide : ```./main_job.py --help```
+[__main_job.py__](main_job.py) C'est le script principale à exécuter avec les arguments de date de début (jour, mois et année), commande d'aide : ```./main_job.py --help```
 Le script comprend la classe __Main__ dont les méthode __make_RGB_work__ là où il faut appeler les méthodes de traitement souhaitées. Cette dernière sera appeler dans deux endroits (lignes : 233 & 258) dans la méthode à exécuter nommée __main_job__.
 Le comportement de la méthode __main_job__ est le suivant :
 - En commençant par une date choisie (la date par défaut et 01//11/2013),
@@ -62,8 +62,8 @@ Le comportement de la méthode __main_job__ est le suivant :
           - Lance le traitement avec __make_RGB_work__ et ajouter l’image dans la base locale
           - faire ça tout les jours jusqu'à aujourd'hui
 
-## Scripte pas utilisé :
-[__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) c'est script Shell qui permet de créer une composition colorée pansharpnée à partir des 4 bandes 2, 3, 4 et 8 et utilisant 
+## Script pas utilisé :
+[__landsat_vrt_rgb_pan.sh__](landsat_vrt_rgb_pan.sh) c'est un script Shell qui permet de créer une composition colorée pansharpnée à partir des 4 bandes 2, 3, 4 et 8 et utilisant 
 les commandes GDAL suivantes:
 - __gdalbuildvrt__
 - __gdal_translate__
@@ -71,7 +71,7 @@ les commandes GDAL suivantes:
 - __gdaladdo__
 
 __NB :__ 
-- Ce scripte permet de créer une composition colorée avec un meilleur rendu (couleurs, contraste, luminosité...) mais [Geoserver] n'arrive pas à l'afficher.
+- Ce script permet de créer une composition colorée avec un meilleur rendu (couleurs, contraste, luminosité...) mais [Geoserver] n'arrive pas à l'afficher.
 - Il se peut que __gdal_landsat_pansharp__ ne sera pas installer par défaut avec GDAL, se référer [ici](https://github.com/gina-alaska/dans-gdal-scripts/blob/master/README.md)  pour l'installer.
 
 
