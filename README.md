@@ -28,7 +28,7 @@ Le fichier comprend les différents clés à indiquer :
 - « grass_config_envs » pour les variables d’environnement de l’instance Grass installée,
 - « tempPath » chemin où le répertoire temporaire Grass va être créé,
 - « geoserver_info » permettant la publication des mosaïques temporelles sur [Geoserver],
-- « processing_path » répertoire dont le quel vont être créé :
+- « processing_path » répertoire dans lequel vont être créé :
 	- le répertoire temporaire des bandes téléchargées « images_out »,
 	-  le répertoire «  RGB_geoserver » où les 4 mosaïques vont être créé dans 4 répertoires
 	   « RGB_Mosaic_path_row » distinguée par « path,row ».
