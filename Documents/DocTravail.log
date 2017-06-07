@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  7 JUN 2017 14:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  7 JUN 2017 14:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -450,10 +450,10 @@ tps://lpdaac.usgs.gov/data_access/data_pool.
  []
 
 
-Overfull \hbox (387.74387pt too wide) in paragraph at lines 41--42
+Overfull \hbox (382.49515pt too wide) in paragraph at lines 41--42
 []\T1/cmr/m/n/10 Lien type pour télécharger une im-age : []\T1/cmtt/m/n/10 http
-s://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25 /MOD09Q1.A2017145.h17v04.00
-6.2017154032443.hdf. 
+s://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006
+.2017154032443.hdf. 
  []
 
 [1
@@ -483,7 +483,7 @@ var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/font
 s/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb>
-Output written on DocTravail.pdf (2 pages, 83201 bytes).
+Output written on DocTravail.pdf (2 pages, 83197 bytes).
 PDF statistics:
  299 PDF objects out of 1000 (max. 8388607)
  45 compressed objects within 1 object stream
