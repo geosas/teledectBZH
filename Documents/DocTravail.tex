@@ -1,0 +1,65 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\author{Donatien Dallery}
+\title{Chaine de traitement MODIS pour automatiser la production et la diffusion de l'evaporative fraction}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Production d'une chaîne de traitement visant à montrer l'intérêt d'une information spatiale concernant des données à suivre au cours du temps à l'échelle de la Bretagne. Dans un premier temps, la condition hydrique via l'Evaporative Fraction (EF) calculé à partir de données MODIS est mis à contribution.
+\end{abstract}
+
+\section{Introduction}
+
+Dans un premier temps, une démonstration de l'apport d'une donnée (EF) continue dans le temps à l'échelle de Bretagne est attendue. Pour cela, entre 4-6 images MODIS continues (à partir de Mai) vont être utilisées pour montrer l'évolution de l'état hydrique. Cette démonstration sera accessible sur un geoserver, faisant que certains outils (graphiques, curseurs, animations) sont également à réaliser. 
+
+\subsection{Plan de travail}
+
+\begin{itemize}
+\item Téléchargement et stockage automatique des images MODIS (bandes + TempJour et TempNuit S8)
+\item Calcul du NDVI, bord chaud/froid via nuage de points, récupérer 5\% min et max pour calculer EF
+\item Remplir une fiche de métadonnées
+\item Présenter le résultat
+\end{itemize}
+
+\section{Méthodologie}
+
+La méthodologie correspond à une chaîne de traitement développée en Python.
+
+\subsection{Téléchargement des données MODIS}
+
+
+
+\begin{itemize}
+\item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
+\item Lien type pour télécharger une image : \verb!https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006.2017154032443.hdf.!
+\item Pour la Bretagne, il faut télécharger la tuile h17v04. 
+\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007).
+\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 du capteur TERRA (1 =jour, 2 = nuit) et les produits LST day et night 1km (température en Kelvin).
+\item Les bandes MODIS sont disponibles via le produit MOD09Q1 (S8 à 250m). Pour utiliser les bandes 1 et 2 pour le NDVI, un facteur 0.0001 est à appliquer sur les images.
+\end{itemize}  
+
+La nomenclature des noms de fichiers est la suivante :
+\begin{itemize}
+\item MYD11A2.AYYYYDDD.hHHvVV.CCC.YYYYDDDHHMMSS.hdf
+\begin{itemize}
+\item YYYYDDD = Year and Day of Year of acquisition
+\item hHH = Horizontal tile number (0-35)
+\item vVV = Vertical tile number (0-17)
+\item CCC = Collection number
+\item YYYYDDDHHMMSS = Production Date and Time
+\end{itemize}
+\end{itemize}
+
+L'évapotranspiration est disponible dans les données MODIS (MOD16) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16), cependant cette données est disponible de 2000-2010 et à partir de cette date, cette donnée est produite et diffusé de manière périodique et non pas continue.
+
+\section{Bibliographie}
+
+Comparisons of normalized difference vegetation index from MODIS Terra and Aqua data in northwestern China (http://ieeexplore.ieee.org/document/4423572/)
+\end{document}
