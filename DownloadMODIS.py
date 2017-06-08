@@ -89,6 +89,11 @@ def Main(Path, dateStart):
     listDatesDl2 = [date1 for date1 in listDatesMOD11A2 \
                             for date2 in listDates if date2 in date1]
     
+    if listDatesDl1 == [] and listDatesDl2 == [] :
+        print "\nAucune image disponible pour et a partir du %s. ARRET"\
+                % (dateStart)
+        sys.exit()
+        
     #genere une liste des urls des images a telecharger
     listUrlsDl1 = [baseUrlMOD09Q1+date for date in listDatesDl1]
     listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
@@ -126,5 +131,5 @@ if __name__ == "__main__":
         date = datetime.datetime.strptime(args.date, "%Y-%m-%d")
     elif isinstance(args.date, datetime.date):
         date = args.date
-
+    
     Main(args.path, date)

@@ -38,9 +38,9 @@ La méthodologie correspond à une chaîne de traitement développée en Python.
 \item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
 \item Lien type pour télécharger une image : \verb!https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006.2017154032443.hdf.!
 \item Pour la Bretagne, il faut télécharger la tuile h17v04. 
-\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007).
-\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 du capteur TERRA (1 =jour, 2 = nuit) et les produits LST day et night 1km (température en Kelvin).
-\item Les bandes MODIS sont disponibles via le produit MOD09Q1 (S8 à 250m). Pour utiliser les bandes 1 et 2 pour le NDVI, un facteur 0.0001 est à appliquer sur les images.
+\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007) et aussi pour les autres informations.
+\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 du capteur TERRA (1 =jour, 2 = nuit) avec les produits LST day et night 1km (température en Kelvin).
+\item Les bandes MODIS sont disponibles via le produit MOD09Q1 S8 à 250m. Pour utiliser les bandes 1 et 2 pour le NDVI, un facteur 0.0001 est à appliquer sur les images.
 \end{itemize}  
 
 La nomenclature des noms de fichiers est la suivante :
