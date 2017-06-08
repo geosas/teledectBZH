@@ -34,8 +34,6 @@ La méthodologie correspond à une chaîne de traitement développée en Python.
 
 \subsection{Téléchargement des données MODIS}
 
-
-
 \begin{itemize}
 \item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
 \item Lien type pour télécharger une image : \verb!https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006.2017154032443.hdf.!
@@ -58,6 +56,14 @@ La nomenclature des noms de fichiers est la suivante :
 \end{itemize}
 
 L'évapotranspiration est disponible dans les données MODIS (MOD16) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16), cependant cette données est disponible de 2000-2010 et à partir de cette date, cette donnée est produite et diffusé de manière périodique et non pas continue.
+
+\begin{enumerate}
+\item Indique une date (str) ou utilise la date du jour
+\item Converti la date en YYYYJJJ par rapport à la nomenclature des fichiers MODIS
+\item Initialise un début d'url pour télécharger les données
+\item Se place au niveau de l'url indiquée et liste tous les liens à télécharger (test de tuile)
+\item Télécharger les images
+\end{enumerate}
 
 \section{Bibliographie}
 

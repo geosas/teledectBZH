@@ -10,10 +10,12 @@ import sys
 import os
 import argparse
 import requests
-from datetime import datetime
+import datetime
+import pandas as pd
+from bs4 import BeautifulSoup
 
 
-def DateToYJ(date):
+def DateAndYJ(date):
     '''
     Converti une date YYYY-MM-DD en YYYY-MM-DD HH:MM:SS.MS (si besoin) puis en
     YYYYJJJ
@@ -25,15 +27,75 @@ def DateToYJ(date):
     return year, month, day, dayYear
 
 
-def DownloadMODIS(wd, date):
+def ListUrlDates(url):
+    """
+    Liste les urls des images a telecharger.
+    """
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, "html.parser")
+    listDates = [link.get("href") for link in soup.findAll("a")]
+    return listDates
+    
+
+def ListLinks(url):
+    """
+    Liste les urls des images a telecharger.
+    """
+    r = requests.get(url)
+    soup = BeautifulSoup(r.content, "html.parser")
+    listUrls = [link.get("href") for link in soup.findAll("a") if "h17v04"\
+                in link.get("href") and ".hdf" in link.get("href")]
+    return listUrls
+
+
+def Download(ListUrls, Path):
+    """
+    Use Curl method from usgs informations to download datas
+    (https://lpdaac.usgs.gov/sites/default/files/public/get_data/docs/
+    Command%20Line%20Access%20Tips%20for%20Utilizing%20Earthdata%20Login.docx)
+    """
+    for url in ListUrls:
+        ListFiles = ListLinks(url)
+        for dl in ListFiles:   
+            command = "curl -u ddallery:Venturas1991 -L %s --output %s"\
+                        % (url+dl, Path+os.path.basename(dl))
+            os.system(command)
+
+
+def Main(Path, dateStart):
     """
     Fonction pour telecharger des produits MODIS necessaires pour calculer EF
     """
-    listImages = []
-    year, month, day, dateYJ = DateToYJ(date)
-    baseUrlMOD09Q1 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/%s.%s.%s/MOD09Q1.A%s%s.h17v04.006' % (year, month, day, year,dateYJ)
-    baseUrlMOD11A2 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11A2.006/%s.%s.%s/MOD11A2.A%s%s.h17v04.006' % (year, month, day, year,dateYJ)
-    print wd, baseUrlMOD09Q1
+    # defini la periode de recherche de donnees et genere une liste de dates
+    listDates = []
+    dateEnd = datetime.date.today()
+    dateRange = pd.date_range(dateStart, dateEnd)
+    for d in dateRange:
+        year, month, day, dateYJ = DateAndYJ(pd.to_datetime(d))
+        listDates.append("%s.%s.%s" % (year, month, day))
+
+    # initialise les urls pour telecharger les donnees MODIS
+    baseUrlMOD09Q1 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/'
+    baseUrlMOD11A2 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11A2.006/'
+
+    # liste toutes les dates disponibles pour les donnees MODIS
+    listDatesMOD09Q1 = ListUrlDates(baseUrlMOD09Q1)
+    listDatesMOD11A2 = ListUrlDates(baseUrlMOD11A2)
+
+    # genere une liste contenant les dates que l'on souhaite et qui sont
+    # disponibles
+    listDatesDl1 = [date1 for date1 in listDatesMOD09Q1 \
+                            for date2 in listDates if date2 in date1]
+    listDatesDl2 = [date1 for date1 in listDatesMOD11A2 \
+                            for date2 in listDates if date2 in date1]
+    
+    #genere une liste des urls des images a telecharger
+    listUrlsDl1 = [baseUrlMOD09Q1+date for date in listDatesDl1]
+    listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
+    
+    #telechargement des images
+    Download(listUrlsDl1, Path)
+    Download(listUrlsDl2, Path)
 
 
 if __name__ == "__main__":
@@ -53,10 +115,16 @@ if __name__ == "__main__":
                             help="Directory where download datas")
 
         parser.add_argument("-date", dest="date", action="store",
-                            default=datetime.now(),
+                            default=datetime.date.today(),
                             help="Date a partir de laquelle telecharger des\
-                            donnees")
+                            donnees normalisee ainsi : YYYY-MM-DD")
 
         args = parser.parse_args()
 
-    DownloadMODIS(args.path, args.date)
+    # Converti une chaine de texte en date au besoin
+    if isinstance(args.date, str):
+        date = datetime.datetime.strptime(args.date, "%Y-%m-%d")
+    elif isinstance(args.date, datetime.date):
+        date = args.date
+
+    Main(args.path, date)
