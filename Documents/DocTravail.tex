@@ -58,8 +58,8 @@ La nomenclature des noms de fichiers est la suivante :
 L'évapotranspiration est disponible dans les données MODIS (MOD16) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16), cependant cette données est disponible de 2000-2010 et à partir de cette date, cette donnée est produite et diffusé de manière périodique et non pas continue.
 
 \begin{enumerate}
-\item Indique une date (str) ou utilise la date du jour
-\item Converti la date en YYYYJJJ par rapport à la nomenclature des fichiers MODIS
+\item Lancement du script (-path pour le repertoire où sauvegarder les données, -date pour indiquer la date à partir de laquelle on souhaite télécharger les images. Si le paramètre n'est pas indiqué, c'est la date du jour qui est utilisé).
+\item Liste toutes les dates entre celle indiqué en paramètre et la date du jour.
 \item Initialise un début d'url pour télécharger les données
 \item Se place au niveau de l'url indiquée et liste tous les liens à télécharger (test de tuile)
 \item Télécharger les images

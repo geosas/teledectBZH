@@ -56,15 +56,16 @@ def Download(ListUrls, Path):
     """
     for url in ListUrls:
         ListFiles = ListLinks(url)
-        for dl in ListFiles:   
-            command = "curl -u ddallery:Venturas1991 -L %s --output %s"\
-                        % (url+dl, Path+os.path.basename(dl))
-            os.system(command)
+        for dl in ListFiles:
+            if not os.path.exists(Path+os.path.basename(dl)):
+                command = "curl -u ddallery:Venturas1991 -L -c %s.cookies -b %s.cookies %s --output %s"\
+                            % (Path, Path, url+dl, Path+os.path.basename(dl))
+                os.system(command)
 
 
 def Main(Path, dateStart):
     """
-    Fonction pour telecharger des produits MODIS necessaires pour calculer EF
+    Fonction pour telecharger des produits MODIS
     """
     # defini la periode de recherche de donnees et genere une liste de dates
     listDates = []
@@ -79,11 +80,13 @@ def Main(Path, dateStart):
     baseUrlMOD11A2 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11A2.006/'
 
     # liste toutes les dates disponibles pour les donnees MODIS
+    print "Listage des dates disponibles"
     listDatesMOD09Q1 = ListUrlDates(baseUrlMOD09Q1)
     listDatesMOD11A2 = ListUrlDates(baseUrlMOD11A2)
-
+    
     # genere une liste contenant les dates que l'on souhaite et qui sont
     # disponibles
+    print "Listage des dates voulus"
     listDatesDl1 = [date1 for date1 in listDatesMOD09Q1 \
                             for date2 in listDates if date2 in date1]
     listDatesDl2 = [date1 for date1 in listDatesMOD11A2 \
@@ -95,10 +98,12 @@ def Main(Path, dateStart):
         sys.exit()
         
     #genere une liste des urls des images a telecharger
+    print "Generation des urls des images"
     listUrlsDl1 = [baseUrlMOD09Q1+date for date in listDatesDl1]
     listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
     
     #telechargement des images
+    print "Telechargement"
     Download(listUrlsDl1, Path)
     Download(listUrlsDl2, Path)
 
