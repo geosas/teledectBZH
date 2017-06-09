@@ -28,25 +28,38 @@ def ExtractClip(fichier, out, dataType):
             command = "gdal_translate -ot Float32 \
             -projwin -390689.706353 5484046.86307 -90843.2433257 5198819.47034 \
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_b0%s \
-            %s/%s_%s.tif" % (fichier, int(i)+1, out, filename, name)            
+            %s/%s_%s_raw.tif" % (fichier, int(i)+1, out, filename, name)
+            os.system(command)
+            BandMath(["%s/%s_%s_raw.tif" % (out, filename, name)], \
+                        "%s/%s_%s.tif" % (out, filename, name), \
+                        "im1b1*0.0001")
+            os.remove("%s/%s_%s_raw.tif" % (out, filename, name))
+            
         elif dataType == "Temp":
             command = "gdal_translate -ot Float32 \
             -projwin -390689.706353 5484046.86307 -90843.2433257 5198819.47034 \
             HDF4_EOS:EOS_GRID:'%s':MODIS_Grid_8Day_1km_LST:LST_%s_1km \
-            %s/%s_%s.tif" % (fichier, name, out, filename, name)            
-        os.system(command)
+            %s/%s_%s_raw.tif" % (fichier, name, out, filename, name)            
+            os.system(command)
+            BandMath(["%s/%s_%s_raw.tif" % (out, filename, name)], \
+                        "%s/%s_%s.tif" % (out, filename, name), \
+                        "im1b1*0.02")
+            os.remove("%s/%s_%s_raw.tif" % (out, filename, name))   
+            
         ListFilesNames.append(out+"/"+filename+"_%s.tif" % (name))
-    return ListFilesNames
+    return ListFilesNames, filename
 
     
-def BandMath(indata, outdata):
+def BandMath(inFiles, outFile, expr):
     """
     """
     BandMath = otb.Registry.CreateApplication("BandMath")   
-    BandMath.SetParameterStringList("il", ['verySmallFSATSW_r.tif', 'verySmallFSATSW_nir.tif', 'verySmallFSATSW.tif'])
-    BandMath.SetParameterString("out", "apTvUtBandMathOutput.tif")
-    BandMath.SetParameterString("exp", "cos(im1b1) > cos(im2b1) ? im3b1 : im3b2")
+    BandMath.SetParameterStringList("il", inFiles)
+    BandMath.SetParameterString("out", outFile)
+    BandMath.SetParameterString("exp", expr)
     BandMath.ExecuteAndWriteOutput()
+    return outFile
+
 
 def Main(datas, out):
     """
@@ -55,13 +68,20 @@ def Main(datas, out):
     # Liste les fichiers reflectance et temperature
     ListFilesBands = glob.glob(datas+"/*%s*.hdf" % ("MOD09Q1"))
     ListFilesTemp = glob.glob(datas+"/*%s*.hdf" % ("MOD11A2"))
+    ListFilesBands.sort()
+    ListFilesTemp.sort()
     
-    #pour chaque fichier, calcul le NDVI
+    #pour chaque fichier
     for FilesBands, FilesTemp in zip(ListFilesBands, ListFilesTemp):
-        ListFilesBands = ExtractClip(FilesBands, out, "Bands")
-        ListFilesTemp = ExtractClip(FilesTemp, out, "Temp")
-        print ListFilesBands
-        print ListFilesTemp
+        # Extract au format tif et clip les bandes et temperatures
+        ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands")
+        ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp")
+        # Calcule le NDVI
+        NDVI = BandMath(ListFilesBands, \
+                        out+"/"+filenameBand+"_Ndvi.tif", \
+                        "ndvi(im1b1, im2b1)")
+        #Calcul bord chaud/froid
+        
         
         
 if __name__ == "__main__":
