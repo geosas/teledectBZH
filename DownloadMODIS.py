@@ -59,7 +59,7 @@ def Download(ListUrls, Path):
         for dl in ListFiles:
             if not os.path.exists(Path+os.path.basename(dl)):
                 command = "curl -u ddallery:Venturas1991 -L -c %s.cookies -b %s.cookies %s --output %s"\
-                            % (Path, Path, url+dl, Path+os.path.basename(dl))
+                            % (Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
                 os.system(command)
 
 
