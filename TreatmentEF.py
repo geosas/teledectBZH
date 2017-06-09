@@ -80,8 +80,10 @@ def Main(datas, out):
         NDVI = BandMath(ListFilesBands, \
                         out+"/"+filenameBand+"_Ndvi.tif", \
                         "ndvi(im1b1, im2b1)")
-        #Calcul bord chaud/froid
+        # Calcul bord chaud/froid
         
+        # Convert kelvin to celsius
+        #BandMath(image, out, "im1b1-273.15")
         
         
 if __name__ == "__main__":
