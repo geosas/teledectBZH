@@ -9,6 +9,10 @@ import numpy as np
 import otbApplication as otb
 import argparse
 import glob
+import gdal
+import ogr
+import Functions
+import matplotlib.pyplot as plt
 
 def ExtractClip(fichier, out, dataType):
     """
@@ -49,6 +53,23 @@ def ExtractClip(fichier, out, dataType):
         ListFilesNames.append(out+"/"+filename+"_%s.tif" % (name))
     return ListFilesNames, filename
 
+def CalcFVC(raster, out):
+    """
+    """
+    Data, Xsize, Ysize, Projection, Transform, RasterBand = Functions.RastOpen(raster, 1)
+    FVC = ((Data - np.min(Data))/(np.max(Data)-np.min(Data)))**2
+    Functions.RastSave(out, Xsize, Ysize, Transform, FVC, Projection, gdal.GDT_Float32)
+    return FVC
+
+
+def CalcTjTn(ListFilesTemp, out):
+    """
+    """
+    Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, RasterBand_Tj = Functions.RastOpen(ListFilesTemp[0], 1)
+    Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn, RasterBand_Tn = Functions.RastOpen(ListFilesTemp[1], 1) 
+    TjTn = Tj - Tn
+    Functions.RastSave(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, Projection_Tj, gdal.GDT_Float32)
+    return TjTn
     
 def BandMath(inFiles, outFile, expr):
     """
@@ -80,7 +101,15 @@ def Main(datas, out):
         NDVI = BandMath(ListFilesBands, \
                         out+"/"+filenameBand+"_Ndvi.tif", \
                         "ndvi(im1b1, im2b1)")
-        # Calcul bord chaud/froid
+
+        # Calcule le FVC               
+        FVC = CalcFVC(NDVI, out+"/"+filenameBand+"_FVC.tif")   
+        
+        # Calcule Tj - Tn
+        TjTn = CalcTjTn(ListFilesTemp, out+"/"+filenameBand+"_TjTn.tif")
+        
+        
+        # Calcul bord sec/humide
         
         # Convert kelvin to celsius
         #BandMath(image, out, "im1b1-273.15")

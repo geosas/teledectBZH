@@ -37,7 +37,7 @@ def ListUrlDates(url):
     return listDates
     
 
-def ListLinks(url):
+def ListLinksModis(url):
     """
     Liste les urls des images a telecharger.
     """
@@ -55,11 +55,12 @@ def Download(ListUrls, Path):
     Command%20Line%20Access%20Tips%20for%20Utilizing%20Earthdata%20Login.docx)
     """
     for url in ListUrls:
-        ListFiles = ListLinks(url)
+        ListFiles = ListLinksModis(url)
         for dl in ListFiles:
             if not os.path.exists(Path+os.path.basename(dl)):
-                command = "curl -u ddallery:Venturas1991 -L -c %s.cookies -b %s.cookies %s --output %s"\
+                command = "curl -n -L -c %s.cookies -b %s.cookies %s --output %s"\
                             % (Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
+                print command
                 os.system(command)
 
 
@@ -104,6 +105,12 @@ def Main(Path, dateStart):
     
     #telechargement des images
     print "Telechargement"
+    # Create .netrc file to download datas. This file must be create at the place
+    # where script was executed (/home/Donatien)
+    #with open(Path+"/.netrc", "w") as netrcFile:
+        #netrcFile.write("machine urs.earthdata.nasa.gov\n login ddallery\n password Venturas1991")
+        #netrcFile.close()
+        
     Download(listUrlsDl1, Path)
     Download(listUrlsDl2, Path)
 
