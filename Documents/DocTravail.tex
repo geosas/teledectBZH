@@ -36,11 +36,10 @@ La méthodologie correspond à une chaîne de traitement développée en Python.
 
 \begin{itemize}
 \item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
-\item Lien type pour télécharger une image : \verb!https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006.2017154032443.hdf.!
 \item Pour la Bretagne, il faut télécharger la tuile h17v04. 
 \item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007) et aussi pour les autres informations.
-\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 du capteur TERRA (1 =jour, 2 = nuit) avec les produits LST day et night 1km (température en Kelvin) avec un scale factor de 0.02.
-\item Les bandes MODIS sont disponibles via le produit MOD09Q1 S8 à 250m. Pour utiliser les bandes 1 et 2 pour le NDVI, un scale factor de 0.0001 est à appliquer sur les images.
+\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 avec les produits LST day et night (température en Kelvin) avec un scale factor de 0.02.
+\item Les bandes Red et Nir MODIS sont disponibles via le produit MOD09Q1 S8 à 250m avec un scale factor de 0.0001.
 \end{itemize}  
 
 La nomenclature des noms de fichiers est la suivante :
@@ -55,25 +54,36 @@ La nomenclature des noms de fichiers est la suivante :
 \end{itemize}
 \end{itemize}
 
-L'évapotranspiration est disponible dans les données MODIS (MOD16) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16), cependant cette données est disponible de 2000-2010 et à partir de cette date, cette donnée est produite et diffusé de manière périodique et non pas continue.
+L'évapotranspiration est disponible dans les données MODIS (MOD16A2) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16).
 
 \begin{enumerate}
 \item Lancement du script (-path pour le répertoire où sauvegarder les données, -date pour indiquer la date à partir de laquelle on souhaite télécharger les images. Si le paramètre n'est pas indiqué, c'est la date du jour qui est utilisé).
 \item Liste toutes les dates entre celle indiqué en paramètre et la date du jour.
-\item Initialise un début d'url pour télécharger les données.
-\item Se place au niveau de l'url indiquée et liste tous les liens à télécharger (test de tuile)
-\item Télécharge les images (actuellement, problème d’accès en passant par un script).
+\item Initialise l'url pour télécharger les données.
+\item Se place au niveau de l'url et liste tous les liens à télécharger.
+\item Télécharge les images (nécessité de générer un fichier .netrc contenant l'identifiant de connexion. Ce fichier est à placer à l'endroit où le terminal de commande est exécuté).
 \end{enumerate}
 
-\subsection{Calcul de l'évaporative fraction (EF)}
+Concernant une perspective, il serait intéressant de donner des intervalles de temps et non pas une date de départ.
 
-Lors de cette étape, nous disposons des images nécessaires pour calculer le NDVI, mais aussi des températures de jour et de nuit. Ces données sont stockés dans une archive hdf, il est donc nécessaire d'extraire au format geotiff ces données. De même, les images sont à l'échelle de la tuile MODIS, nous allons également découper cette données par rapport à notre zone d'étude et appliquer un coefficient multiplicateur d'après la documentation sur le site MODIS.
+\subsection{Calcul de l'Evaporative Fraction (EF)}
 
-Ensuite, avec ces fichiers .tif ayant la dimension de notre zone d'étude, nous allons calculer dans un premier temps le ndvi.
+Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge, mais aussi des températures de jour et de nuit en Kelvin.
 
-Puis, dans un second temps, nous allons déterminer les bord chaud et froid à partir des données de température.
+\begin{enumerate}
+\item Liste tous les fichiers téléchargés.
+\item  Pour chaque fichier, converti le type .hdf vers .GeoTiff et rééchantillonne les températures à la résolution spatiale des bandes du rouge et proche infrarouge (1km vers 250m).
+\item Utilisation d'un shapefile de la région Bretonne pour découper la tuile MODIS et masquer les valeurs aberrantes de la mer.
+\item Calcule le NDVI et supprime les valeurs <0 et >1 (valeurs aberrantes se situant dans la mer et qui ne peuvent être masquée sans rogner sur le territoire).
+\item Calcul du FVC via le NDVI.
+\item Supprime les pixels sans données (Nan) sur les images (si un pixel est Nan sur une image, supprime le même pixel sur l'autre) et calcule Tj-Tn.
+\item Assigne une valeur Nan au FVC aux endroits où il n'y a pas de données sur Tj-Tn.
+\item Génère un nuage de points pour employer la méthode de Priestley-Taylor pour déterminer EF par l'utilisation d'une équation de droite selon les bords sec et humide.
+\item Génère les droites de régression et détermine l'équation pour calculer EF pour chacun des points.
+\item Calcule EF et génère une image selon cette donnée.
+\end{enumerate}
 
-De là, nous calculons l'évaporative fraction (EF).
+\section{Ajout d'EF dans un geoserver}
 
 \section{Bibliographie}
 

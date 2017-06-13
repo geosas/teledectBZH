@@ -254,8 +254,7 @@ def BandMath(inFiles, outFile, expr):
 
 
 def Main(datas, out, ShapeBretagne):
-    """
-    
+    """  
     """
     # Liste les fichiers reflectance et temperature
     ListFilesBands = glob.glob(datas+"/*%s*.hdf" % ("MOD09Q1"))

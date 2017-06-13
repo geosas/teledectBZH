@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  7 JUN 2017 14:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  13 JUN 2017 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -439,36 +439,29 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 40.
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 38.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-Overfull \hbox (95.92514pt too wide) in paragraph at lines 40--41
+Overfull \hbox (95.92514pt too wide) in paragraph at lines 38--39
 []\T1/cmr/m/n/10 Les don-nées MODIS se situent sur le site []\T1/cmtt/m/n/10 ht
 tps://lpdaac.usgs.gov/data_access/data_pool. 
  []
 
-
-Overfull \hbox (382.49515pt too wide) in paragraph at lines 41--42
-[]\T1/cmr/m/n/10 Lien type pour télécharger une im-age : []\T1/cmtt/m/n/10 http
-s://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006
-.2017154032443.hdf. 
- []
-
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (10.35767pt too wide) in paragraph at lines 64--65
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+Overfull \hbox (10.35767pt too wide) in paragraph at lines 89--90
 \T1/cmr/m/n/10 Aqua data in north-west-ern China (http://ieeexplore.ieee.org/do
 cument/4423572/) 
  []
 
-[2] (./DocTravail.aux) ) 
+[3] (./DocTravail.aux) ) 
 Here is how much of TeX's memory you used:
  1675 strings out of 494910
  17462 string characters out of 6179837
- 66955 words of memory out of 5000000
+ 67955 words of memory out of 5000000
  4973 multiletter control sequences out of 15000+600000
  15529 words of font info for 42 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
@@ -483,10 +476,10 @@ var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/font
 s/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb>
-Output written on DocTravail.pdf (2 pages, 83197 bytes).
+Output written on DocTravail.pdf (3 pages, 84053 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 298 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
