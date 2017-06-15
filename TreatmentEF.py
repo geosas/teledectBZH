@@ -10,9 +10,8 @@ import otbApplication as otb
 import argparse
 import glob
 import gdal
-import ogr
 import Functions
-from scipy import stats
+from scipy.stats import linregress
 import matplotlib.pyplot as plt
 
 def DataMask(InRaster, out, filename, name, ShapeBretagne):
@@ -21,10 +20,11 @@ def DataMask(InRaster, out, filename, name, ShapeBretagne):
     """
     # Initialise un raster vide
     BandMath([InRaster], \
-                "%s/%s_%s_raw2.tif" % (out, filename, name), \
-                "im1b1*0")
+            "%s/%s_%s_raw2.tif" % (out, filename, name), \
+            "im1b1*0")
     # Initialise a 1 l'emplacement du departement
-    command = "gdal_rasterize -burn 1 %s %s"%(ShapeBretagne, "%s/%s_%s_raw2.tif" % (out, filename, name))
+    command = "gdal_rasterize -burn 1 %s %s"%(ShapeBretagne, \
+                "%s/%s_%s_raw2.tif" % (out, filename, name))
     os.system(command)
     
     # Conserve uniquement les valeurs se situant sur le departement
@@ -32,6 +32,7 @@ def DataMask(InRaster, out, filename, name, ShapeBretagne):
                 "%s/%s_%s_raw3.tif" % (out, filename, name), \
                 "im2b1==0?0:im1b1")
     
+    # Supprime les fichiers intermediaires
     os.remove(InRaster)
     os.remove("%s/%s_%s_raw2.tif" % (out, filename, name))    
     
@@ -59,7 +60,8 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), out, filename, name, ShapeBretagne)
+            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), \
+                        out, filename, name, ShapeBretagne)
             
             # Applique le scale factor           
             BandMath([OutRaster], \
@@ -76,7 +78,8 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), out, filename, name, ShapeBretagne)
+            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), \
+                        out, filename, name, ShapeBretagne)
             
             
             BandMath([OutRaster], \
@@ -91,17 +94,17 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
 
 def CalcNDVI(ListFilesBands, out, filenameBand):
     """
+    Calcule le NDVI et ne conserve que les valeurs entre 0 et 1 (necessaire 
+    a cause des valeurs se situant sur la mer).
     """
     # Calcule le NDVI
     NDVITemp = BandMath(ListFilesBands, \
                     out+"/"+filenameBand+"_NdviTemp.tif", \
-                    "ndvi(im1b1, im2b1)") 
-                       
+                    "ndvi(im1b1, im2b1)")                   
     # Supprime valeurs aberrantes du NDVI causee par la mer              
     NDVI = BandMath([NDVITemp], \
                     out+"/"+filenameBand+"_Ndvi.tif", \
-                    "im1b1<0||im1b1>1?0:im1b1")        
-                    
+                    "im1b1<0||im1b1>1?0:im1b1")                       
     # Supprime le fichier intermediaire                
     os.remove(out+"/"+filenameBand+"_NdviTemp.tif")
     return NDVI
@@ -109,6 +112,7 @@ def CalcNDVI(ListFilesBands, out, filenameBand):
     
 def CalcFVC(raster, out):
     """
+    Calcule le Fractional Vegetation Cover.
     """
     Data, Xsize, Ysize, Projection, Transform, RasterBand = Functions.RastOpen(raster, 1)
     FVC = ((Data - np.min(Data))/(np.max(Data)-np.min(Data)))**2
@@ -118,132 +122,214 @@ def CalcFVC(raster, out):
 
 def CalcTjTn(ListFilesTemp, out):
     """
+    Calcule Tj - Tn et, pour les pixels n'ayant aucune donnée sur une des
+    images, supprime les même pixels sur l'autre. Cela évite d'avoir des
+    temperatures aberrantes suite a la soustraction.
     """
     # Ouvre les raster de temperature de jour et de nuit
-    Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, RasterBand_Tj = Functions.RastOpen(ListFilesTemp[0], 1)
-    Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn, RasterBand_Tn = Functions.RastOpen(ListFilesTemp[1], 1) 
+    Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, RasterBand_Tj = \
+        Functions.RastOpen(ListFilesTemp[0], 1)
+    Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn, RasterBand_Tn = \
+        Functions.RastOpen(ListFilesTemp[1], 1) 
     # Identifie les cellules en nodata et supprime leur equivalent dans les deux images
     Tj[np.where(Tn==0)]=np.nan
     Tn[np.where(Tj==0)]=np.nan 
     # Applique Tj_Tn
     TjTn = Tj - Tn  
     # Enregistre l'image
-    Functions.RastSave(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, Projection_Tj, gdal.GDT_Float32)
-    return TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj
-    
-    
-def CalcEFInterval(FVC, TjTn):
-    """
-    """
-    Seuils = np.linspace(0,1,11)
-    xmin = []
-    xmax = []
-    ymin = []
-    ymax = []
-    couleur = ["Red","Green","Blue","Yellow","Purple","Black","Orange","Cyan","Grey","Brown"]
-    for i in range(10):
-        IntervFVC = FVC[(FVC > Seuils[i]) & (FVC < Seuils[i+1])]
-        IntervTemp = TjTn[(FVC > Seuils[i]) & (FVC < Seuils[i+1])]
-        IndexSort = np.argsort(IntervTemp)
-        FVCSort = IntervFVC[IndexSort]
-        TjTnSort = IntervTemp[IndexSort]
-        TjTnVal = int(TjTnSort.size * 0.05)
-        
-        FVCMin = FVCSort[:TjTnVal]
-        FVCMax = FVCSort[-(TjTnVal):]
-        TjTnMin = TjTnSort[:TjTnVal]
-        TjTnMax = TjTnSort[-(TjTnVal):]
+    Functions.RastSave(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
+                        Projection_Tj, gdal.GDT_Float32)
+    return TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn
 
-        if i==0:
-            StackTjTnMin = TjTnMin
-            StackTjTnMax = TjTnMax
-            StackFVCMin = FVCMin
-            StackFVCMax = FVCMax
+
+def courbes_phi(indice, temp, nb_interval=25, pourcentage=1):
+    """Renvoie les points (et leur moyenne) composants les bords humide et sec.
+
+    La valeur de phi est calculée par double interpolation en fonction du 
+    nombre d'intevalles choisi et du pourcentage de point dans ces intervalles.
+    La fonction renvoie, pour les bords humide et sec, les points ainsi que
+    leur moyenne pour chaque intervalle.
+
+    Arguments
+    ---------
+    indice : numpy.array
+             indice de végétation choisi en abscisse
+    temp : numpy.array
+           température choisie en ordonnée
+    nb_interval : int
+                  nombre d'intervalle de découpage des données (10 par défaut)
+    pourcentage : float
+                  pourcentage de points utilisés dans la méthode exprimé en % (5 par défaut)
+    Returns
+    -------
+    tuple : (numpy.array, numpy.array), (numpy.array, numpy.array)
+            Renvoie un tuple de 2 tuples :
+                - tous les points composants les bords humides (pts_inf) et sec (pts_sup)
+                - les points moyens composants les bords humides (pts_inf_mean) et sec (pts_sup_mean)
+    """
+    # On retire les valeurs NaN dans chaque tableau et leur équivalent dans l'autre tableau
+    ind_nan = np.logical_not(np.logical_or(np.isnan(temp), np.isnan(indice)))
+    indice = indice[ind_nan]
+    temp = temp[ind_nan]
+
+    # Pour chaque intervalle, on ne garde que les pourcentages des valeurs supérieures et inférieures
+    intervals = np.linspace(indice.min(), indice.max(), nb_interval+1)
+    for i in range(nb_interval):
+        # Points contenus dans l'intervalle considéré
+        if i == nb_interval-1:
+            cond = (indice>=intervals[i]) & (indice<=intervals[i+1])
         else:
-            StackTjTnMin = np.hstack((TjTnMin, StackTjTnMin))
-            StackTjTnMax = np.hstack((TjTnMax, StackTjTnMax))
-            StackFVCMin = np.hstack((FVCMin, StackFVCMin))
-            StackFVCMax = np.hstack((FVCMax, StackFVCMax))
-        
-        xmin.append(np.mean(FVCMin))
-        xmax.append(np.mean(FVCMax))
-        ymin.append(np.mean(TjTnMin))
-        ymax.append(np.mean(TjTnMax))
-        
-        plt.scatter(FVCMin, TjTnMin, c=couleur[i], edgecolor = 'none')
-        plt.scatter(FVCMax, TjTnMax, c=couleur[i], edgecolor = 'none')
-        plt.scatter(np.mean(FVCMin), np.mean(TjTnMin), c=couleur[i])
-        plt.scatter(np.mean(FVCMax), np.mean(TjTnMax), c=couleur[i])
-    
-    return xmin, xmax, ymin, ymax, StackTjTnMin, StackTjTnMax, StackFVCMin, StackFVCMax
+            cond = (indice>=intervals[i]) & (indice<intervals[i+1])
+        x = indice[cond]
+        y = temp[cond]
+        if x.size > 0:
+            print("Intervalle %d : nombre de points = %d" % (i, x.size),
+                  "- temp mini = %f - temp maxi = %f" % (np.min(y), np.max(y)))#(y[0], y[-1]))
+        else:
+            print("Il n'y a pas de points dans l'intervale",  i)
 
+        # On trie les données selon la température pour ne garder que les points supérieurs et inférieurs
+        ind_sort_temp = np.argsort(y)
+        x = x[ind_sort_temp]
+        y = y[ind_sort_temp]
 
-def LineRegression(xmin, xmax, ymin, ymax, StackTjTnMin, StackTjTnMax, StackFVCMin, StackFVCMax):
+        # Calcul du nombre de points dans l'intervalle
+        nb_val = int(x.size * pourcentage / 100)
+
+        # Attention au cas où il n'y a aucun point dans un intervalle
+        if nb_val >= 1:
+            x_inf = x[:nb_val]
+            x_sup = x[-nb_val:]
+            y_inf = y[:nb_val]
+            y_sup = y[-nb_val:]
+            x_mid = intervals[i] + (intervals[i+1]-intervals[i])/2
+
+            # Pour tous les points l'array créé à 3 lignes et nb_val colonnes.
+            # np.transpose le transforme en un array de nb_val lignes et 3 colonnes.
+            # La troisième colonne représente le numéro de l'intervalle.
+            arr_inf = np.transpose(np.array([x_inf, y_inf, np.zeros(x_inf.size, dtype=np.float32)+i]))
+            arr_sup = np.transpose(np.array([x_sup, y_sup, np.zeros(x_inf.size, dtype=np.float32)+i]))
+            mean_inf = np.array([x_mid, y_inf.mean(), i])
+            mean_sup = np.array([x_mid, y_sup.mean(), i])
+
+            if i == 0:
+                pts_inf = arr_inf
+                pts_sup = arr_sup
+                pts_inf_mean = mean_inf
+                pts_sup_mean = mean_sup
+            else:
+                pts_inf = np.vstack((pts_inf, arr_inf))
+                pts_sup = np.vstack((pts_sup, arr_sup))
+                pts_inf_mean = np.vstack((pts_inf_mean, mean_inf))
+                pts_sup_mean = np.vstack((pts_sup_mean, mean_sup))
+
+    return (pts_inf, pts_sup), (pts_inf_mean, pts_sup_mean)
+    
+    
+def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup, out):
     """
+    Genere un graphique permettant d'identifier des intervalles de temperatures
+    mini et maxi avec des droites de regressions.
     """
-    print "Calcul des droites de regression"
-        
-    SlopeMin, InterceptMin, RValueMin, PValueMin, STDErrMin = stats.linregress(xmin, ymin)
-    print 'Droite moyenne humide'
-    print 'R2 = ', RValueMin**2
-    print  'P-value = ', PValueMin
-    print 'Ecart type = ', STDErrMin
-    LineMinFroid = SlopeMin*xmin[0] + InterceptMin
-    LineMaxFroid = SlopeMin*xmin[-1] + InterceptMin
+    # Liste de couleurs pour l'affichage des points des intervalles
+    color_list = plt.cm.Set1(np.linspace(0, 1, nbInterval))
     
-    SlopeMax, InterceptMax, RValueMax, PValueMax, STDErrMax = stats.linregress(xmax, ymax)
-    print 'Droite moyenne sec'
-    print 'R2 = ', RValueMax**2
-    print  'P-value = ', PValueMax
-    print 'Ecart type = ', STDErrMax
-    LineMinSec = SlopeMax*xmax[0] + InterceptMax
-    LineMaxSec = SlopeMax*xmax[-1] + InterceptMax
+    fig, ax = plt.subplots(figsize=(14, 10))
+    fig.suptitle("Estimation du coefficient de Priestley-Taylor \n par \
+                    double interpolation", fontsize=20)
+    x_reg = np.array([0, 1])
     
-    SlopeAllMin, InterceptAllMin, RValueAllMin, PValueAllMin, STDErrAllMin = stats.linregress(StackFVCMin, StackTjTnMin)
-    print 'Droite ensemble humide'
-    print 'R2 = ', RValueAllMin**2
-    print  'P-value = ', PValueAllMin
-    print 'Ecart type = ', STDErrAllMin
-    LineAllMinFroid = SlopeAllMin*StackFVCMin[0] + InterceptAllMin
-    LineAllMaxFroid = SlopeAllMin*StackFVCMin[-1] + InterceptAllMin
+    # Points moyens
+    print("*** Régression avec les points moyens ***")
+    reg_h_moy = linregress(pts_inf_mean[:, 0], pts_inf_mean[:, 1])
+    print("Bord humide : R2 = %f - pente = %f - intersect = %f" % 
+          (reg_h_moy[2] ** 2, reg_h_moy[0], reg_h_moy[1]))
+    y_inf = reg_h_moy[0]*x_reg + reg_h_moy[1]
     
-    SlopeAllMax, InterceptAllMax, RValueAllMax, PValueAllMax, STDErrAllMax = stats.linregress(StackFVCMax, StackTjTnMax)
-    print StackTjTnMax
-    print 'Droite ensemble sec'
-    print 'R2 = ', RValueAllMax**2
-    print  'P-value = ', PValueAllMax
-    print 'Ecart type = ', STDErrAllMax
-    LineAllMinSec = SlopeAllMax*StackFVCMax[0] + InterceptAllMax
-    LineAllMaxSec = SlopeAllMax*StackFVCMax[-1] + InterceptAllMax
+    # Affichage des points moyens du bord humide
+    ax.scatter(pts_inf_mean[:, 0], pts_inf_mean[:, 1], zorder=10, c="k")
     
-    yminSort = np.sort(ymin)
+    # Affichage de la régression des points moyens du bord humide
+    ax.plot(x_reg, y_inf,'k-')
+    reg_s_moy = linregress(pts_sup_mean[:, 0], pts_sup_mean[:, 1])
+    print("Bord sec : R2 = %f - pente = %f - intersect = %f" %
+          (reg_s_moy[2] ** 2, reg_s_moy[0], reg_s_moy[1]))
+    y_sup = reg_s_moy[0]*x_reg + reg_s_moy[1]
     
-    print "Affiche les droites"
-    plt.plot([xmin[0], xmin[-1]], [LineMinFroid, LineMaxFroid])
-    plt.plot([xmax[0], xmax[-1]],[LineMinSec, LineMaxSec])
-    plt.plot([StackFVCMin[0], StackFVCMin[-1]],[LineAllMinFroid, LineAllMaxFroid])
-    plt.plot([StackFVCMax[0], StackFVCMax[-1]],[LineAllMinSec, LineAllMaxSec])
-    plt.plot([0,1],[yminSort[1],yminSort[1]])
+    # Affichage des points moyens du bord sec
+    pts = ax.scatter(pts_sup_mean[:, 0], pts_sup_mean[:, 1], c="k", zorder=10, label="Points moyens")
+    
+    # Affichage de la régression des points moyens du bord sec
+    reg_moy, = ax.plot(x_reg, y_sup, 'k-', label="Regression des points moyens")
+    
+    # Affichage doite du bord humide
+    temp_hum = pts_inf_mean.copy()
+    arg = np.argsort(temp_hum[:, 1])
+    y_min_hum = temp_hum[:, 1][arg][1]
+    plot_reg_humide, = ax.plot(x_reg, [y_min_hum, y_min_hum],'r-', lw=2, label="Droite du bord humide")
+    
+    # Tous les points
+    print("*** Régression avec l'ensemble des points ***")
+    reg_h_tot = linregress(pts_inf[:, 0], pts_inf[:, 1])
+    print("Bord humide : R2 = %f - pente = %f - intersect = %f" %
+          (reg_h_tot[2] ** 2, reg_h_tot[0], reg_h_tot[1]))
+    slope_sec = reg_h_tot[0]
+    y_inf = reg_h_tot[0]*x_reg + reg_h_tot[1]
+    
+    # Affichage de tous les points du bord humide
+    ax.scatter(pts_inf[:, 0], pts_inf[:, 1], color=color_list[pts_inf[:, 2].astype(int)],
+               alpha=0.2, edgecolor='none')
+               
+    # Affichage de la régression de tous les points du bord humide
+    ax.plot(x_reg, y_inf, 'b-')
+    reg_s_tot = linregress(pts_sup[:, 0], pts_sup[:, 1])
+    print("Bord sec : R2 = %f - pente = %f - intersect = %f" %
+          (reg_s_tot[2] ** 2, reg_s_tot[0], reg_s_tot[1]))   
+    y_sup = reg_s_tot[0]*x_reg + reg_s_tot[1]
+    
+    # Affichage de tous les points du bord sec
+    ax.scatter(pts_sup[:, 0], pts_sup[:, 1], color=color_list[pts_sup[:, 2].astype(int)],
+               alpha=0.2, edgecolor="none")
+               
+    # Affichage de la régression de tous les points du bord sec
+    plot_reg_tot, = ax.plot(x_reg, y_sup,'b-', label="Regression de l'ensemble des points")
+    
+    ax.set_title("\nNombre d'intervalle = %d - Pourcentage = %.1f%%"  % (nbInterval, pourcentage), fontsize=16)
+    ax.set_xlabel("FVC", fontsize=16)
+    ax.set_ylabel("Tj - Tn", fontsize=16)
+    plt.legend(handles=[pts, reg_moy, plot_reg_tot, plot_reg_humide])
+    # Sauvegarde de la figure au format png
+    plt.savefig(out, dpi=300)
     plt.show()
     
-    return SlopeAllMax, InterceptAllMax, yminSort
+    t_min_hum = y_min_hum
+    slope_sec = reg_s_tot[0]
+    intercept_sec = reg_s_tot[1]
+
+    return t_min_hum, slope_sec, intercept_sec
 
 
-def CalcEF(FVC, SlopeAllMax, InterceptAllMax, TjTn, yminSort, out, filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj):
+def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
+    filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj):
     """
     """
-    Tmax = SlopeAllMax * FVC + InterceptAllMax
-    Phi = ((Tmax - TjTn)/(Tmax - yminSort[1]))*1.26
-    e_sat_ta = 1000*np.exp(52.57633-(6790.4985/TjTn)-5.02808*np.log(TjTn))
-    delta = (e_sat_ta/TjTn)*((6790.4985/TjTn)-5.02808)
+    Tmax = SlopeSec * FVC + InterceptSec
+    Phi = ((Tmax - TjTn)/(Tmax - TminHumide)*1.26)
+    print("Nombre de valeurs négative : %d" % (Phi < 0).sum())
+    print("Nombre de valeurs > 1,26 : %d" % (Phi > 1.26).sum())
+    tmoy = (Tj + Tn)/2
+    ESatTa = 1000 * np.exp(52.57633 - (6790.4985 / tmoy) - 5.02808 * np.log(tmoy))
+    delta = (ESatTa / tmoy) * ((6790.4985 / tmoy) - 5.02808)
     EF = (delta/(delta+66))*Phi
     
     # Enregistre l'image
-    Functions.RastSave(out+"/"+filenameTemp+"_EF.tif", Xsize_Tj, Ysize_Tj, Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
+    Functions.RastSave(out+"/"+filenameTemp+"_EF.tif", Xsize_Tj, Ysize_Tj, \
+                        Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
     
     
 def BandMath(inFiles, outFile, expr):
     """
+    Application Bandmath de l'orpheo tools box
     """
     BandMath = otb.Registry.CreateApplication("BandMath")   
     BandMath.SetParameterStringList("il", inFiles)
@@ -254,7 +340,15 @@ def BandMath(inFiles, outFile, expr):
 
 
 def Main(datas, out, ShapeBretagne):
-    """  
+    """
+    Fonction consistant a lister tous les fichiers MODIS se trouvant dans un
+    dossier. Puis, trie par ordre chronologique ces fichiers, puis utilise
+    ceux-ci pour :
+    1/ effectuer un decoupage selon la zone d'etude et un reechantillonnage
+    pour avoir la meme resolution spatiale entre les images.
+    2/ calculer le NDVI
+    3/ calculer Tj-Tn
+    4/ calculer l'Evaporative Fraction
     """
     # Liste les fichiers reflectance et temperature
     ListFilesBands = glob.glob(datas+"/*%s*.hdf" % ("MOD09Q1"))
@@ -275,30 +369,23 @@ def Main(datas, out, ShapeBretagne):
         FVC = CalcFVC(NDVI, out+"/"+filenameTemp+"_FVC.tif")   
         
         # Calcule Tj - Tn
-        TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj = CalcTjTn(ListFilesTemp, out+"/"+filenameTemp+"_TjTn.tif")
+        TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
+            = CalcTjTn(ListFilesTemp, out+"/"+filenameTemp+"_TjTn.tif")
         
         # Supprime les valeurs de FVC ou la temperature n'est pas disponible
         FVC[np.where(TjTn==0)]=np.nan
-        
-#        Plot nuage de points
-#        plt.scatter(FVC, TjTn)
-#        plt.title('Representation du nuage points Tj-Tn / FVC')
-#        plt.xlabel('FVC')
-#        plt.ylabel('Tj-Tn')
-#        plt.show()
-        
-        # Calcule les donnees necessaires pour calculer les droites de regression
-        xmin, xmax, ymin, ymax, StackTjTnMin, StackTjTnMax, StackFVCMin, StackFVCMax = CalcEFInterval(FVC, TjTn)
 
+        # Calcule les donnees necessaires pour calculer les droites de regression)
+        (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn)
+        
         # Calcule les droites de regression et les donnees necessaire pour calculer EF
-        SlopeAllMax, InterceptAllMax, yminSort = LineRegression(xmin, xmax, ymin, ymax, StackTjTnMin, StackTjTnMax, StackFVCMin, StackFVCMax)
-
+        TminHumide, SlopeSec, InterceptSec = Graph(25, 1, PtsInfMean, PtsSupMean, \
+            PtsInf, PtsSup, out+"/"+filenameTemp+"_Phi_%s_%s.png" % (25, 1))
+        
         # Calcul d'EF
-        CalcEF(FVC, SlopeAllMax, InterceptAllMax, TjTn, yminSort, out, filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
-        
-        # Convert kelvin to celsius
-        #BandMath(image, out, "im1b1-273.15")
-        
+        CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
+            filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
+
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:

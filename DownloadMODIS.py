@@ -60,17 +60,15 @@ def Download(ListUrls, Path):
             if not os.path.exists(Path+os.path.basename(dl)):
                 command = "curl -n -L -c %s.cookies -b %s.cookies %s --output %s"\
                             % (Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
-                print command
                 os.system(command)
 
 
-def Main(Path, dateStart):
+def Main(Path, dateStart, dateEnd=datetime.date.today()):
     """
     Fonction pour telecharger des produits MODIS
     """
     # defini la periode de recherche de donnees et genere une liste de dates
     listDates = []
-    dateEnd = datetime.date.today()
     dateRange = pd.date_range(dateStart, dateEnd)
     for d in dateRange:
         year, month, day, dateYJ = DateAndYJ(pd.to_datetime(d))
@@ -81,7 +79,7 @@ def Main(Path, dateStart):
     baseUrlMOD11A2 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11A2.006/'
 
     # liste toutes les dates disponibles pour les donnees MODIS
-    print "Listage des dates disponibles"
+    print "Liste les dates disponibles"
     listDatesMOD09Q1 = ListUrlDates(baseUrlMOD09Q1)
     listDatesMOD11A2 = ListUrlDates(baseUrlMOD11A2)
     
@@ -131,17 +129,29 @@ if __name__ == "__main__":
         parser.add_argument("-path", dest="path", action="store",
                             help="Directory where download datas")
 
-        parser.add_argument("-date", dest="date", action="store",
+        parser.add_argument("-fdate", dest="fdate", action="store",
                             default=datetime.date.today(),
                             help="Date a partir de laquelle telecharger des\
-                            donnees normalisee ainsi : YYYY-MM-DD")
+                            donnees (normalisee ainsi : YYYY-MM-DD)")
+                            
+        parser.add_argument("-ldate", dest="ldate", action="store",
+                            default=datetime.date.today(),
+                            help="Derniere date a laquelle telecharger des\
+                            donnees (normalisee ainsi : YYYY-MM-DD)")
 
         args = parser.parse_args()
 
     # Converti une chaine de texte en date au besoin
-    if isinstance(args.date, str):
-        date = datetime.datetime.strptime(args.date, "%Y-%m-%d")
-    elif isinstance(args.date, datetime.date):
-        date = args.date
+    for i in [args.fdate, args.ldate]:
+        if isinstance(i, str):
+            if i == args.fdate:
+                fdate = datetime.datetime.strptime(i, "%Y-%m-%d")
+            else :
+                ldate = datetime.datetime.strptime(i, "%Y-%m-%d")
+        elif isinstance(i, datetime.date):
+            if i == args.fdate:
+                fdate = i
+            else :
+                ldate = i
     
-    Main(args.path, date)
+    Main(args.path, fdate, ldate)
