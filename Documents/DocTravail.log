@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  13 JUN 2017 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  16 JUN 2017 11:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -451,13 +451,26 @@ tps://lpdaac.usgs.gov/data_access/data_pool.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (10.35767pt too wide) in paragraph at lines 89--90
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+Overfull \hbox (54.04758pt too wide) in paragraph at lines 100--101
+[]\T1/cmr/m/n/10 wms time []\T1/cmtt/m/n/10 http://docs.geoserver.org/latest/en
+/user/services/wms/time.html
+ []
+
+
+Overfull \hbox (427.87296pt too wide) in paragraph at lines 109--110
+[]\T1/cmr/m/n/10 generer des fichiers in-dex et proprietes.[]\T1/cmtt/m/n/10 ht
+tp://docs.geoserver.org/stable/en/user/tutorials/imagemosaic_timeseries/imagemo
+saic_time-elevationseries.html 
+ []
+
+
+Overfull \hbox (10.35767pt too wide) in paragraph at lines 113--114
 \T1/cmr/m/n/10 Aqua data in north-west-ern China (http://ieeexplore.ieee.org/do
 cument/4423572/) 
  []
 
-[3] (./DocTravail.aux) ) 
+[4] (./DocTravail.aux) ) 
 Here is how much of TeX's memory you used:
  1675 strings out of 494910
  17462 string characters out of 6179837
@@ -476,10 +489,10 @@ var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/font
 s/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb>
-Output written on DocTravail.pdf (3 pages, 84053 bytes).
+Output written on DocTravail.pdf (4 pages, 90758 bytes).
 PDF statistics:
- 298 PDF objects out of 1000 (max. 8388607)
- 47 compressed objects within 1 object stream
+ 318 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

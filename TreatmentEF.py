@@ -236,7 +236,7 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     
     fig, ax = plt.subplots(figsize=(14, 10))
     fig.suptitle("Estimation du coefficient de Priestley-Taylor \n par \
-                    double interpolation", fontsize=20)
+    double interpolation", fontsize=20)
     x_reg = np.array([0, 1])
     
     # Points moyens
