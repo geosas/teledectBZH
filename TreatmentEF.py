@@ -10,6 +10,7 @@ import otbApplication as otb
 import argparse
 import glob
 import gdal
+import datetime
 import Functions
 from scipy.stats import linregress
 import matplotlib.pyplot as plt
@@ -40,7 +41,7 @@ def DataMask(InRaster, out, filename, name, ShapeBretagne):
     
 def ExtractClip(fichier, out, dataType, ShapeBretagne):
     """
-    Extract and clip hdf files.
+    Extract, clip and reproject hdf files.
     """
     # Extrait les bandes du red et nir de l'archive hdf et decoupe les images
     # sur l'emprise de la bretagne.
@@ -53,39 +54,56 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
     ListFilesNames = []
     for i, name in zip(range(2), dataName):
         if dataType == "Bands":
+            RastClip = "%s/%s_%s_raw.tif" % (out, filename, name)
+            RastReproject = "%s/%s_%s_rproj.tif" % (out, filename, name)
+            
+            # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 \
-            -projwin -389844.619168 5439224.00949 -69235.6801105 5251930.23507 \
+            -projwin -386371 5533708 -3708 5211341 \
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_b0%s \
-            %s/%s_%s_raw.tif" % (fichier, int(i)+1, out, filename, name)
+            %s" % (fichier, int(i)+1, RastClip)
+            os.system(command)
+            
+            # Reprojete le raster en EPSG:2154
+            command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), \
-                        out, filename, name, ShapeBretagne)
+            OutRaster = DataMask(RastReproject, out, filename, name, ShapeBretagne)
             
             # Applique le scale factor           
             BandMath([OutRaster], \
                         "%s/%s_%s.tif" % (out, filename, name), \
                         "im1b1*0.0001")
-
+            
+            os.remove(RastClip)
             os.remove(OutRaster)
             
         elif dataType == "Temp":
+            RastClip = "%s/%s_%s_raw.tif" % (out, filename, name)
+            RastReproject = "%s/%s_%s_rproj.tif" % (out, filename, name)
+            
+            # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 -r nearest -tr 231.656 231.656\
-            -projwin -389844.619168 5439224.00949 -69235.6801105 5251930.23507 \
+            -projwin -386371 5533108 -3976 5211056 \
             HDF4_EOS:EOS_GRID:'%s':MODIS_Grid_8Day_1km_LST:LST_%s_1km \
-            %s/%s_%s_raw.tif" % (fichier, name, out, filename, name)            
+            %s" % (fichier, name, RastClip)            
+            os.system(command)
+            
+            # Reprojete le raster en EPSG:2154
+            command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask("%s/%s_%s_raw.tif" % (out, filename, name), \
+            OutRaster = DataMask("%s" % (RastReproject), \
                         out, filename, name, ShapeBretagne)
             
-            
+            # Applique le scale factor
             BandMath([OutRaster], \
                         "%s/%s_%s.tif" % (out, filename, name), \
                         "im1b1*0.02")
                         
+            os.remove(RastClip)           
             os.remove(OutRaster)   
             
         ListFilesNames.append(out+"/"+filename+"_%s.tif" % (name))
@@ -273,7 +291,7 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     reg_h_tot = linregress(pts_inf[:, 0], pts_inf[:, 1])
     print("Bord humide : R2 = %f - pente = %f - intersect = %f" %
           (reg_h_tot[2] ** 2, reg_h_tot[0], reg_h_tot[1]))
-    slope_sec = reg_h_tot[0]
+
     y_inf = reg_h_tot[0]*x_reg + reg_h_tot[1]
     
     # Affichage de tous les points du bord humide
@@ -301,16 +319,12 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     # Sauvegarde de la figure au format png
     plt.savefig(out, dpi=300)
     plt.show()
-    
-    t_min_hum = y_min_hum
-    slope_sec = reg_s_tot[0]
-    intercept_sec = reg_s_tot[1]
 
-    return t_min_hum, slope_sec, intercept_sec
+    return y_min_hum, reg_s_tot[0], reg_s_tot[1]
 
 
 def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
-    filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj):
+    Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj):
     """
     """
     Tmax = SlopeSec * FVC + InterceptSec
@@ -321,9 +335,9 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     ESatTa = 1000 * np.exp(52.57633 - (6790.4985 / tmoy) - 5.02808 * np.log(tmoy))
     delta = (ESatTa / tmoy) * ((6790.4985 / tmoy) - 5.02808)
     EF = (delta/(delta+66))*Phi
-    
+
     # Enregistre l'image
-    Functions.RastSave(out+"/"+filenameTemp+"_EF.tif", Xsize_Tj, Ysize_Tj, \
+    Functions.RastSave(out+"/EF_%s.tif" % (Date), Xsize_Tj, Ysize_Tj, \
                         Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
     
     
@@ -348,7 +362,7 @@ def Main(datas, out, ShapeBretagne):
     pour avoir la meme resolution spatiale entre les images.
     2/ calculer le NDVI
     3/ calculer Tj-Tn
-    4/ calculer l'Evaporative Fraction
+    4/ calculer l'Evaporative Fractionf
     """
     # Liste les fichiers reflectance et temperature
     ListFilesBands = glob.glob(datas+"/*%s*.hdf" % ("MOD09Q1"))
@@ -362,6 +376,11 @@ def Main(datas, out, ShapeBretagne):
         ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne)
         ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne)
         
+            
+        # Extrait la date au format anneejour pour faire une date ymd
+        YDate = datetime.datetime.strptime(filenameTemp[9:16], "%Y%j")
+        Date = datetime.datetime.strftime(YDate, "%Y%m%d")
+    
         # Calcule le NDVI
         NDVI = CalcNDVI(ListFilesBands, out, filenameBand)
         
@@ -384,7 +403,7 @@ def Main(datas, out, ShapeBretagne):
         
         # Calcul d'EF
         CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
-            filenameTemp, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
+            Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
 
         
 if __name__ == "__main__":
