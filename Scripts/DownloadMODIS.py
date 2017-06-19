@@ -106,7 +106,7 @@ def Main(Path, dateStart, dateEnd=datetime.date.today()):
     # Create .netrc file to download datas. This file must be create at the place
     # where script was executed (/home/Donatien)
     #with open(Path+"/.netrc", "w") as netrcFile:
-        #netrcFile.write("machine urs.earthdata.nasa.gov\n login ddallery\n password Venturas1991")
+        #netrcFile.write("machine urs.earthdata.nasa.gov\n login \n password ")
         #netrcFile.close()
         
     Download(listUrlsDl1, Path)
