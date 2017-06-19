@@ -5,6 +5,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{verbatim}
 
 \author{Donatien Dallery}
 \title{Chaine de traitement MODIS pour automatiser la production et la diffusion de l'evaporative fraction}
@@ -110,26 +111,76 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
             compress = deflate)
 \end{itemize}
 
-\subsection{Méthodologie publication série temporelle}
+\subsection{Publication d'une série temporelle (rasters) sur un GeoServer}
 
 \begin{enumerate}
-\item Créer entrepôt ImageMosaic (raster time series) \medbreak
-Les rasters doivent avoir la même projection, ColorModel et SampleModel, résoluton. Pas de fichiers datastore.properties à créer pour laisser le geoserver créer le shapefile d'emprise. Créer les fichiers indexer et timeregex et les placer dans le meme dossier que les images raster.
-Le nom des fichiers doivent terminer par la date (ex:EF_20170405.tif).
-\item generer des fichiers index et proprietes.\verb!http://docs.geoserver.org/stable/en/user/tutorials/imagemosaic_timeseries/imagemosaic_time-elevationseries.html!
-\item Creer Mosaic correspondant à une info (EF, Red, Nir, Temp, etc...)
+\item Normaliser le nom des rasters : indice\_date.tif (EF\_20170525.tif).
+\item Créer un fichier timeregex.properties pour indiquer le nombre de caractères constituant la date :
+\begin{verbatim}
+	regex=[0-9]{8}
+\end{verbatim}
+\item Créer un fichier indexer.properties :
+\begin{verbatim}
+	TimeAttribute=ingestion
+	ElevationAttribute=elevation
+Schema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer
+PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)
+\end{verbatim}
+\item Importer les rasters et les deux fichiers properties sur le serveur. Dans notre cas, sur Pydio Geoxxx.
+\item Sur le GeoServer, créer un workspace (\verb!https://geoxxx.agrocampus-ouest.fr/teledectBZH!).
+\item Créer un entrepôt ImageMosaic en indiquant le workspace créé précédemment, un nom d'entrepôt, une description et l'url du dossier où sont stockés les rasters et fichiers properties (\verb!file:///home/data/gi2016/teledectBZH/!). Dans cette configuration, un shapefile est automatiquement créé et a pour rôle d'indexer les différents raster par ordre chronologique et de les spatialiser.
+\item Créer un sld correspondant aux valeurs de la série temporelle :
+\begin{verbatim}
+<?xml version="1.0" ?>
+<sld:StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:sld="http://www.opengis.net/sld">
+    <sld:UserLayer>
+        <sld:LayerFeatureConstraints>
+            <sld:FeatureTypeConstraint/>
+        </sld:LayerFeatureConstraints>
+        <sld:UserStyle>
+            <sld:Name>NDVI_05_12_16</sld:Name>
+            <sld:Title/>
+            <sld:FeatureTypeStyle>
+                <sld:Name/>
+                <sld:Rule>
+                    <sld:RasterSymbolizer>
+                        <sld:Geometry>
+                            <ogc:PropertyName>grid</ogc:PropertyName>
+                        </sld:Geometry>
+                        <sld:Opacity>1</sld:Opacity>
+                        <sld:ColorMap type="ramp">
+                            <sld:ColorMapEntry color="#d7191c" quantity="0" label="0 - 0.1" opacity="1"/>
+                            <sld:ColorMapEntry color="#e34a33" quantity="0.1" label="0.1 - 0.2" opacity="1"/>
+                            <sld:ColorMapEntry color="#f07c4a" quantity="0.2" label="0.2 - 0.3" opacity="1"/>
+                            <sld:ColorMapEntry color="#fdae61" quantity="0.3" label="0.3 - 0.4" opacity="1"/>
+                            <sld:ColorMapEntry color="#fdc980" quantity="0.4" label="0.4 - 0.5" opacity="1"/>
+                            <sld:ColorMapEntry color="#fee49f" quantity="0.5" label="0.5 - 0.6" opacity="1"/>
+                            <sld:ColorMapEntry color="#ffffbf" quantity="0.6" label="0.6 - 0.7" opacity="1"/>
+                            <sld:ColorMapEntry color="#e3f2cd" quantity="0.7" label="0.7 - 0.8" opacity="1"/>
+                            <sld:ColorMapEntry color="#c7e5db" quantity="0.8" label="0.8 - 0.9" opacity="1"/>
+                            <sld:ColorMapEntry color="#abd9e9" quantity="0.9" label="0.9 - 1.0" opacity="1"/>
+                            <sld:ColorMapEntry color="#80b9d8" quantity="1" label="1.0 - 1.1" opacity="1"/>
+                            <sld:ColorMapEntry color="#569ac7" quantity="1.1" label="1.1 - 1.2" opacity="1"/>
+                            <sld:ColorMapEntry color="#2c7bb6" quantity="1.2" label="1.2 - 1.26" opacity="1"/>
+                        </sld:ColorMap>
+                    </sld:RasterSymbolizer>
+                </sld:Rule>
+            </sld:FeatureTypeStyle>
+        </sld:UserStyle>
+    </sld:UserLayer>
+</sld:StyledLayerDescriptor>
+\end{verbatim}
+\item Créer un layer selon le workspace et l'entrepôt (teledectBZH:EF\_teledectBZH). Penser à renseigner les métadonnées, projection (Force declared), indiquer "ingestion D" dans la cellule SORTING, nommer l'attribut du raster (EF) et son échelle de valeurs (0 - 1.26), indiquer le sld dans l'onglet Publishing et dans l'onglet Dimensions activer le Time et choisir l'option "List".
+\item Finalement, aller dans Layer Preview, sélectionner le layer et dans l'url, rajouter \&time=date pour choisir la date à afficher (\&time=2017-05-25).
 \end{enumerate}
 
-\begin{enumerate}
-\item deposer le fichier sur le geoserver
-\item curl l'image en uploading
-\item maj l'emprise dans shapefile ?
-\item fin ?
-\end{enumerate}
+\subsection{Mise à jour d'une série temporelle (rasters) sur un GeoServer}
 
 \subsection{A faire}
-
-Lancer la publication d'une serie d'images \verb!http://docs.geoserver.org/latest/en/user/rest/examples/curl.html! uploading image mosaic
+\begin{itemize}
+\item Tester l'ajout d'une date sur le GeoServer.
+\item Lancer la publication d'une serie d'images \verb!http://docs.geoserver.org/latest/en/user/rest/examples/curl.html! uploading image mosaic
+\end{itemize}
 \section{Bibliographie}
 
 Comparisons of normalized difference vegetation index from MODIS Terra and Aqua data in northwestern China (http://ieeexplore.ieee.org/document/4423572/)

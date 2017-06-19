@@ -372,38 +372,43 @@ def Main(datas, out, ShapeBretagne):
     
     #pour chaque fichier
     for FilesBands, FilesTemp in zip(ListFilesBands, ListFilesTemp):
-        # Extract au format tif et clip les bandes et temperatures
-        ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne)
-        ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne)
         
-            
-        # Extrait la date au format anneejour pour faire une date ymd
-        YDate = datetime.datetime.strptime(filenameTemp[9:16], "%Y%j")
+        # Teste si la date a deja ete traitee
+        filename = os.path.basename(FilesBands)[:-4]
+        
+        ## Extrait la date au format anneejour pour faire une date ymd
+        YDate = datetime.datetime.strptime(filename[9:16], "%Y%j")
         Date = datetime.datetime.strftime(YDate, "%Y%m%d")
+        
+        if not os.path.exists(out+"/EF_%s.tif" % (Date)):
+            
+            # Extract au format tif et clip les bandes et temperatures
+            ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne)
+            ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne)
     
-        # Calcule le NDVI
-        NDVI = CalcNDVI(ListFilesBands, out, filenameBand)
-        
-        # Calcule le FVC               
-        FVC = CalcFVC(NDVI, out+"/"+filenameTemp+"_FVC.tif")   
-        
-        # Calcule Tj - Tn
-        TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
-            = CalcTjTn(ListFilesTemp, out+"/"+filenameTemp+"_TjTn.tif")
-        
-        # Supprime les valeurs de FVC ou la temperature n'est pas disponible
-        FVC[np.where(TjTn==0)]=np.nan
-
-        # Calcule les donnees necessaires pour calculer les droites de regression)
-        (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn)
-        
-        # Calcule les droites de regression et les donnees necessaire pour calculer EF
-        TminHumide, SlopeSec, InterceptSec = Graph(25, 1, PtsInfMean, PtsSupMean, \
-            PtsInf, PtsSup, out+"/"+filenameTemp+"_Phi_%s_%s.png" % (25, 1))
-        
-        # Calcul d'EF
-        CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
-            Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
+            # Calcule le NDVI
+            NDVI = CalcNDVI(ListFilesBands, out, filenameBand)
+            
+            # Calcule le FVC               
+            FVC = CalcFVC(NDVI, out+"/"+filenameTemp+"_FVC.tif")   
+            
+            # Calcule Tj - Tn
+            TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
+                = CalcTjTn(ListFilesTemp, out+"/"+filenameTemp+"_TjTn.tif")
+            
+            # Supprime les valeurs de FVC ou la temperature n'est pas disponible
+            FVC[np.where(TjTn==0)]=np.nan
+    
+            # Calcule les donnees necessaires pour calculer les droites de regression)
+            (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn)
+            
+            # Calcule les droites de regression et les donnees necessaire pour calculer EF
+            TminHumide, SlopeSec, InterceptSec = Graph(25, 1, PtsInfMean, PtsSupMean, \
+                PtsInf, PtsSup, out+"/"+filenameTemp+"_Phi_%s_%s.png" % (25, 1))
+            
+            # Calcul d'EF
+            CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
+                Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
 
         
 if __name__ == "__main__":
@@ -434,3 +439,5 @@ if __name__ == "__main__":
         os.mkdir(args.out)
         
     Main(args.datas, args.out, args.shp)
+    
+    print "\nToutes les dates (rasters) telechargees ont ete traitees. Fin"
