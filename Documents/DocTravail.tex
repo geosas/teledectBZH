@@ -36,11 +36,10 @@ La méthodologie correspond à une chaîne de traitement développée en Python.
 
 \begin{itemize}
 \item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
-\item Lien type pour télécharger une image : \verb!https://e4ftl01.cr.usgs.gov/MOLT/MOD09Q1.006/2017.05.25/MOD09Q1.A2017145.h17v04.006.2017154032443.hdf.!
 \item Pour la Bretagne, il faut télécharger la tuile h17v04. 
-\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007).
-\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 du capteur TERRA (1 =jour, 2 = nuit) et les produits LST day et night 1km (température en Kelvin).
-\item Les bandes MODIS sont disponibles via le produit MOD09Q1 (S8 à 250m). Pour utiliser les bandes 1 et 2 pour le NDVI, un facteur 0.0001 est à appliquer sur les images.
+\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007) et aussi pour les autres informations.
+\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 avec les produits LST day et night (température en Kelvin) avec un scale factor de 0.02.
+\item Les bandes Red et Nir MODIS sont disponibles via le produit MOD09Q1 S8 à 250m avec un scale factor de 0.0001.
 \end{itemize}  
 
 La nomenclature des noms de fichiers est la suivante :
@@ -55,16 +54,82 @@ La nomenclature des noms de fichiers est la suivante :
 \end{itemize}
 \end{itemize}
 
-L'évapotranspiration est disponible dans les données MODIS (MOD16) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16), cependant cette données est disponible de 2000-2010 et à partir de cette date, cette donnée est produite et diffusé de manière périodique et non pas continue.
+L'évapotranspiration est disponible dans les données MODIS (MOD16A2) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16).
 
 \begin{enumerate}
-\item Indique une date (str) ou utilise la date du jour
-\item Converti la date en YYYYJJJ par rapport à la nomenclature des fichiers MODIS
-\item Initialise un début d'url pour télécharger les données
-\item Se place au niveau de l'url indiquée et liste tous les liens à télécharger (test de tuile)
-\item Télécharger les images
+\item Lancement du script (-path pour le répertoire où sauvegarder les données, -date pour indiquer la date à partir de laquelle on souhaite télécharger les images. Si le paramètre n'est pas indiqué, c'est la date du jour qui est utilisé).
+\item Liste toutes les dates entre celle indiqué en paramètre et la date du jour.
+\item Initialise l'url pour télécharger les données.
+\item Se place au niveau de l'url et liste tous les liens à télécharger.
+\item Télécharge les images (nécessité de générer un fichier .netrc contenant l'identifiant de connexion. Ce fichier est à placer à l'endroit où le terminal de commande est exécuté).
 \end{enumerate}
 
+Concernant une perspective, il serait intéressant de donner des intervalles de temps et non pas une date de départ.
+
+\subsection{Calcul de l'Evaporative Fraction (EF)}
+
+Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge, mais aussi des températures de jour et de nuit en Kelvin.
+
+\begin{enumerate}
+\item Liste tous les fichiers téléchargés.
+\item  Pour chaque fichier, converti le type .hdf vers .GeoTiff et rééchantillonne les températures à la résolution spatiale des bandes du rouge et proche infrarouge (1km vers 250m).
+\item Utilisation d'un shapefile de la région Bretonne pour découper la tuile MODIS et masquer les valeurs aberrantes de la mer.
+\item Calcule le NDVI et supprime les valeurs <0 et >1 (valeurs aberrantes se situant dans la mer et qui ne peuvent être masquée sans rogner sur le territoire).
+\item Calcul du FVC via le NDVI.
+\item Supprime les pixels sans données (Nan) sur les images (si un pixel est Nan sur une image, supprime le même pixel sur l'autre) et calcule Tj-Tn.
+\item Assigne une valeur Nan au FVC aux endroits où il n'y a pas de données sur Tj-Tn.
+\item Génère un nuage de points pour employer la méthode de Priestley-Taylor pour déterminer EF par l'utilisation d'une équation de droite selon les bords sec et humide.
+\item Génère les droites de régression et détermine l'équation pour calculer EF pour chacun des points.
+\item Calcule EF et génère une image selon cette donnée.
+\end{enumerate}
+
+\section{Réunion 16/06/2017 (Donatien, Hervé, Fabrice)}
+\begin{itemize}
+\item Estimer coût mémoire (stockage) et temps de téléchargement et calcul des données.
+\item Conserver les données brutes et les diffuser également
+\item Tif : compression "deflate" à ajouter
+\item Publier les bandes brutes decoupee/reechant/compress et les produits calculés.
+\item Coverage view -> vue sur le geoserver où l'on indique différents rasters (Donnees brutes + EF)
+\item Zone sans données -> on conserve les zones sans données pour le moment (solution avec interpolation pour recréer via la série temporelle ou faire des synthèse de 16j voir plus ?)
+\item Entre deux images (dates), quelle est la pertinence d'une valeur identique entre ces deux dates (déduction qu'il ne s'est rien passé ou pas de temps trop faible pour le voir ?)
+\item Pour présenter les valeurs EF, faire un découpage par zones pour donner les valeurs, courbes, etc... par zones et non pas à l'échelle du pixel.
+\item Organigramme -> traitement en verticale et publication vers la droite.
+\item Publier sur GeoSas des donnees.
+\item Creer un GeoRss + mail + tweet + page html avec lien direct pour animation, donnees pour informer sur de la publication de donnees + lien vers mviewer.
+\item Geoxxx pour traitement et mise au point (temps telechargement, traitement, demo) et geoserver pour publication (Geowww) via un upload à partir de geoxxx
+\item wms time \verb!http://docs.geoserver.org/latest/en/user/services/wms/time.html! pour tester la visualisation + interaction (calendrier, frise chronologique)
+\item \verb!http://kartenn.region-bretagne.fr/mviewer/! pour trouver exemple time dans le wms pour generer une couche appelant toutes les dates.
+\item coverage view = 1 workspace par date (probablement)
+\item Publication des temperatures jour/nuit avec data story (voici les villes, voila 2003 avec l'effet des secheresses, etc...). Pas uniquement présenter les donnees brutes, fournir une analyse.
+\item Activer partie temporelle via buildup sur le geoserver (buildup = exemple) avec liste de date, liste et intervalle
+\item parametre de connexion en indiquant l'url du fichier.
+\item Est ce que toutes les dates doivent être referencee sur un index spatiale ou temporelle ?
+\item Geoserver utilise un shapefile pour lire l'emprise des fichiers tif. Pour l'ajout d'une date, il faut mettre à jour le shapefile cree par le geoserver pour lui indiquer l'emprise du fichier ou bien passer par un reload.
+\item Cron tab pour automatiser l'execution des scripts à une frequence de son choix ou jenkins.
+\item             lco tile=True (tuilage interne du format
+            compress = deflate)
+\end{itemize}
+
+\subsection{Méthodologie publication série temporelle}
+
+\begin{enumerate}
+\item Créer entrepôt ImageMosaic (raster time series) \medbreak
+Les rasters doivent avoir la même projection, ColorModel et SampleModel, résoluton. Pas de fichiers datastore.properties à créer pour laisser le geoserver créer le shapefile d'emprise. Créer les fichiers indexer et timeregex et les placer dans le meme dossier que les images raster.
+Le nom des fichiers doivent terminer par la date (ex:EF_20170405.tif).
+\item generer des fichiers index et proprietes.\verb!http://docs.geoserver.org/stable/en/user/tutorials/imagemosaic_timeseries/imagemosaic_time-elevationseries.html!
+\item Creer Mosaic correspondant à une info (EF, Red, Nir, Temp, etc...)
+\end{enumerate}
+
+\begin{enumerate}
+\item deposer le fichier sur le geoserver
+\item curl l'image en uploading
+\item maj l'emprise dans shapefile ?
+\item fin ?
+\end{enumerate}
+
+\subsection{A faire}
+
+Lancer la publication d'une serie d'images \verb!http://docs.geoserver.org/latest/en/user/rest/examples/curl.html! uploading image mosaic
 \section{Bibliographie}
 
 Comparisons of normalized difference vegetation index from MODIS Terra and Aqua data in northwestern China (http://ieeexplore.ieee.org/document/4423572/)
