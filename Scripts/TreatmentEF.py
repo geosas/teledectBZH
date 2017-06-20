@@ -39,7 +39,7 @@ def DataMask(InRaster, out, filename, name, ShapeBretagne):
     
     return "%s/%s_%s_raw3.tif" % (out, filename, name)
     
-def ExtractClip(fichier, out, dataType, ShapeBretagne):
+def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
     """
     Extract, clip and reproject hdf files.
     """
@@ -102,7 +102,11 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
             BandMath([OutRaster], \
                         "%s/%s_%s.tif" % (out, filename, name), \
                         "im1b1*0.02")
-                        
+            
+            command = "gdal_translate -co COMPRESS=DEFLATE %s/%s_%s.tif %s/%s_%s.tif"\
+                        % (out, filename, name, out, name, date)
+            os.system(command)
+            
             os.remove(RastClip)           
             os.remove(OutRaster)   
             
@@ -110,7 +114,7 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne):
     return ListFilesNames, filename
     
 
-def CalcNDVI(ListFilesBands, out, filenameBand):
+def CalcNDVI(ListFilesBands, out, filenameBand, date):
     """
     Calcule le NDVI et ne conserve que les valeurs entre 0 et 1 (necessaire 
     a cause des valeurs se situant sur la mer).
@@ -122,7 +126,12 @@ def CalcNDVI(ListFilesBands, out, filenameBand):
     # Supprime valeurs aberrantes du NDVI causee par la mer              
     NDVI = BandMath([NDVITemp], \
                     out+"/"+filenameBand+"_Ndvi.tif", \
-                    "im1b1<0||im1b1>1?0:im1b1")                       
+                    "im1b1<0||im1b1>1?0:im1b1")
+
+    command = "gdal_translate -co COMPRESS=DEFLATE %s/%s_Ndvi.tif %s/NDVI_%s.tif"\
+               % (out, filenameBand, out, date)
+    os.system(command)
+                       
     # Supprime le fichier intermediaire                
     os.remove(out+"/"+filenameBand+"_NdviTemp.tif")
     return NDVI
@@ -318,7 +327,7 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     plt.legend(handles=[pts, reg_moy, plot_reg_tot, plot_reg_humide])
     # Sauvegarde de la figure au format png
     plt.savefig(out, dpi=300)
-    plt.show()
+    #plt.show()
 
     return y_min_hum, reg_s_tot[0], reg_s_tot[1]
 
@@ -337,9 +346,14 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     EF = (delta/(delta+66))*Phi
 
     # Enregistre l'image
-    Functions.RastSave(out+"/EF_%s.tif" % (Date), Xsize_Tj, Ysize_Tj, \
+    Functions.RastSave(out+"/Temporaire.tif", Xsize_Tj, Ysize_Tj, \
                         Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
     
+    command = "gdal_translate -co COMPRESS=DEFLATE %s/Temporaire.tif %s/EF_%s.tif"\
+               % (out, out, Date)
+    os.system(command)
+    
+    os.remove("%s/Temporaire.tif" % (out))
     
 def BandMath(inFiles, outFile, expr):
     """
@@ -383,11 +397,11 @@ def Main(datas, out, ShapeBretagne):
         if not os.path.exists(out+"/EF_%s.tif" % (Date)):
             
             # Extract au format tif et clip les bandes et temperatures
-            ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne)
-            ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne)
+            ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne, Date)
+            ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne, Date)
     
             # Calcule le NDVI
-            NDVI = CalcNDVI(ListFilesBands, out, filenameBand)
+            NDVI = CalcNDVI(ListFilesBands, out, filenameBand, Date)
             
             # Calcule le FVC               
             FVC = CalcFVC(NDVI, out+"/"+filenameTemp+"_FVC.tif")   

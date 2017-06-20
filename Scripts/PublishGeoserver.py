@@ -7,6 +7,7 @@ import os
 import sys
 import argparse
 import requests
+import csv
 
 def GeoPublish(workspace, warehouse, login, password, url, raster):
         '''
@@ -90,7 +91,16 @@ def GeoPublish(workspace, warehouse, login, password, url, raster):
             gc.call(parameters_cmd, shell=True)
 
         return
-        
+
+def GeoPublishModis(login, password, raster, url):
+    """
+    """
+    command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' \
+    -d 'file:///home/data/gi2016/teledectBZH/EF_20170602.tif' \
+    'http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/coveragestores/EF_teledectBZH/external.imagemosaic'" % \
+    (login, password, raster, url)
+    os.system(command)
+
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         prog = os.path.basename(sys.argv[0])
@@ -106,11 +116,9 @@ if __name__ == "__main__":
         parser.add_argument("-wspace", dest="wspace", action="store",
                             help="Geoserver workspace", default="teledec") 
                             
-        parser.add_argument("-login", dest="login", action="store",
-                            help="Geoserver login", default="user")      
-                    
-        parser.add_argument("-password", dest="password", action="store",
-                            help="Geoserver password", default="mdp")
+        parser.add_argument("-co", dest="login", action="store",
+                            help="Connexion file with login and password \
+                            like login:password", default="user")      
                             
         parser.add_argument("-url", dest="url", action="store",
                             help="Geoserver url", default="http://localhost:8282/geoserver")
@@ -122,5 +130,14 @@ if __name__ == "__main__":
                             help="Raster to import")
                             
         args = parser.parse_args()
-
-    GeoPublish(args.wspace, args.warehouse, args.login, args.password, args.url, args.raster)
+    
+    # Recupere le login et password dans un fichier    
+    with open(args.co, "r") as coFile:
+        reader = csv.reader(coFile)
+        for row in reader:
+            login = row[0].split(":")[0]
+            password = row[0].split(":")[1]
+            break
+        
+    GeoPublishModis(login, password, args.raster, args.url)    
+    #GeoPublish(args.wspace, args.warehouse, login, password, args.url, args.raster)

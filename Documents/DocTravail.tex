@@ -86,16 +86,16 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
 
 \section{Réunion 16/06/2017 (Donatien, Hervé, Fabrice)}
 \begin{itemize}
-\item Estimer coût mémoire (stockage) et temps de téléchargement et calcul des données.
-\item Conserver les données brutes et les diffuser également
-\item Tif : compression "deflate" à ajouter
-\item Publier les bandes brutes decoupee/reechant/compress et les produits calculés.
+\item Fait : Estimer coût mémoire (stockage) 4mo par date pour résolution 250m et 1mo pour résolution 1km et temps de téléchargement et calcul des données.
+\item Fait : Conserver les données brutes et les diffuser également
+\item Fait : Compression "deflate" à ajouter
+\item Fait : Publier les bandes brutes decoupee/reechant/compress et les produits calculés.
 \item Coverage view -> vue sur le geoserver où l'on indique différents rasters (Donnees brutes + EF)
-\item Zone sans données -> on conserve les zones sans données pour le moment (solution avec interpolation pour recréer via la série temporelle ou faire des synthèse de 16j voir plus ?)
+\item Fait : Zone sans données -> on conserve les zones sans données pour le moment (solution avec interpolation pour recréer via la série temporelle ou faire des synthèse de 16j voir plus ?)
 \item Entre deux images (dates), quelle est la pertinence d'une valeur identique entre ces deux dates (déduction qu'il ne s'est rien passé ou pas de temps trop faible pour le voir ?)
 \item Pour présenter les valeurs EF, faire un découpage par zones pour donner les valeurs, courbes, etc... par zones et non pas à l'échelle du pixel.
 \item Organigramme -> traitement en verticale et publication vers la droite.
-\item Publier sur GeoSas des donnees.
+\item Fait : Publier sur GeoSas des donnees.
 \item Creer un GeoRss + mail + tweet + page html avec lien direct pour animation, donnees pour informer sur de la publication de donnees + lien vers mviewer.
 \item Geoxxx pour traitement et mise au point (temps telechargement, traitement, demo) et geoserver pour publication (Geowww) via un upload à partir de geoxxx
 \item wms time \verb!http://docs.geoserver.org/latest/en/user/services/wms/time.html! pour tester la visualisation + interaction (calendrier, frise chronologique)
@@ -103,7 +103,7 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
 \item coverage view = 1 workspace par date (probablement)
 \item Publication des temperatures jour/nuit avec data story (voici les villes, voila 2003 avec l'effet des secheresses, etc...). Pas uniquement présenter les donnees brutes, fournir une analyse.
 \item Activer partie temporelle via buildup sur le geoserver (buildup = exemple) avec liste de date, liste et intervalle
-\item parametre de connexion en indiquant l'url du fichier.
+\item FAIT : parametre de connexion en indiquant l'url des fichiers login.
 \item Est ce que toutes les dates doivent être referencee sur un index spatiale ou temporelle ?
 \item Geoserver utilise un shapefile pour lire l'emprise des fichiers tif. Pour l'ajout d'une date, il faut mettre à jour le shapefile cree par le geoserver pour lui indiquer l'emprise du fichier ou bien passer par un reload.
 \item Cron tab pour automatiser l'execution des scripts à une frequence de son choix ou jenkins.
@@ -175,6 +175,14 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)
 \end{enumerate}
 
 \subsection{Mise à jour d'une série temporelle (rasters) sur un GeoServer}
+
+\begin{enumerate}
+\item X : transférer le fichier sur le serveur Pydio uniquement.
+\item X : reload Configuration and catalog.
+\item X : mettre a jour manuellement le shapefile.
+\item V : \verb!curl -v -u gi2016:*gi2016* -XPOST -H "Content-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/coveragestores/EF_teledectBZH/external.imagemosaic"! \smallbreak
+Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se placer sur le dépôt et exécuter l'extension external.imagemosaic. Cette commande met à jour le shapefile faisant office de datasource.properties.
+\end{enumerate}
 
 \subsection{A faire}
 \begin{itemize}

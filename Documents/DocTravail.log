@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  19 JUN 2017 18:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  20 JUN 2017 16:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -584,13 +584,21 @@ EF_teledectBZH).
  []
 
 
-Overfull \hbox (196.73495pt too wide) in paragraph at lines 183--184
+Overfull \hbox (985.90225pt too wide) in paragraph at lines 183--183
+[]\T1/cmr/m/n/10 V : []\T1/cmtt/m/n/10 curl -v -u gi2016:*gi2016* -XPOST -H "Co
+ntent-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.ti
+f" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/cov
+eragestores/EF_teledectBZH/external.imagemosaic" 
+ []
+
+
+Overfull \hbox (196.73495pt too wide) in paragraph at lines 190--191
 []\T1/cmr/m/n/10 Lancer la pub-li-ca-tion d'une se-rie d'images []\T1/cmtt/m/n/
 10 http://docs.geoserver.org/latest/en/user/rest/examples/curl.html
  []
 
 
-Overfull \hbox (10.35767pt too wide) in paragraph at lines 187--188
+Overfull \hbox (10.35767pt too wide) in paragraph at lines 194--195
 \T1/cmr/m/n/10 Aqua data in north-west-ern China (http://ieeexplore.ieee.org/do
 cument/4423572/) 
  []
@@ -614,9 +622,9 @@ var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/font
 s/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb>
-Output written on DocTravail.pdf (6 pages, 114808 bytes).
+Output written on DocTravail.pdf (6 pages, 115521 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
+ 396 PDF objects out of 1000 (max. 8388607)
  53 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
