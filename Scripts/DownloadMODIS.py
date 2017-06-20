@@ -48,7 +48,7 @@ def ListLinksModis(url):
     return listUrls
 
 
-def Download(ListUrls, Path):
+def Download(ListUrls, Path, netrc):
     """
     Use Curl method from usgs informations to download datas
     (https://lpdaac.usgs.gov/sites/default/files/public/get_data/docs/
@@ -58,12 +58,13 @@ def Download(ListUrls, Path):
         ListFiles = ListLinksModis(url)
         for dl in ListFiles:
             if not os.path.exists(Path+os.path.basename(dl)):
-                command = "curl -n -L -c %s.cookies -b %s.cookies %s --output %s"\
-                            % (Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
+                print "Telechargement de l'image %s" % (dl)
+                command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
+                            % (netrc, Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
                 os.system(command)
 
 
-def Main(Path, dateStart, dateEnd=datetime.date.today()):
+def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
     """
     Fonction pour telecharger des produits MODIS
     """
@@ -102,15 +103,15 @@ def Main(Path, dateStart, dateEnd=datetime.date.today()):
     listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
     
     #telechargement des images
-    print "Telechargement"
+
     # Create .netrc file to download datas. This file must be create at the place
     # where script was executed (/home/Donatien)
     #with open(Path+"/.netrc", "w") as netrcFile:
         #netrcFile.write("machine urs.earthdata.nasa.gov\n login \n password ")
         #netrcFile.close()
-        
-    Download(listUrlsDl1, Path)
-    Download(listUrlsDl2, Path)
+    
+    Download(listUrlsDl1, Path, netrc)
+    Download(listUrlsDl2, Path, netrc)
 
 
 if __name__ == "__main__":
@@ -128,6 +129,10 @@ if __name__ == "__main__":
 
         parser.add_argument("-path", dest="path", action="store",
                             help="Directory where download datas")
+                            
+        parser.add_argument("-netrc", dest="netrc", action="store",
+                            help="Netrc file where url, login and password are\
+                            stored")
 
         parser.add_argument("-fdate", dest="fdate", action="store",
                             default=datetime.date.today(),
@@ -154,4 +159,4 @@ if __name__ == "__main__":
             else :
                 ldate = i
     
-    Main(args.path, fdate, ldate)
+    Main(args.path, args.netrc, fdate, ldate)
