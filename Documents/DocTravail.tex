@@ -58,11 +58,11 @@ La nomenclature des noms de fichiers est la suivante :
 L'évapotranspiration est disponible dans les données MODIS (MOD16A2) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16).
 
 \begin{enumerate}
-\item Lancement du script (-path pour le répertoire où sauvegarder les données, -date pour indiquer la date à partir de laquelle on souhaite télécharger les images. Si le paramètre n'est pas indiqué, c'est la date du jour qui est utilisé).
+\item Lancement du script (-path pour le répertoire où sauvegarder les données, -netrc pour indiquer le fichier contenant les identifiants pour télécharger les images, -fdate pour indiquer la date à partir de laquelle on souhaite télécharger les images, -ldate pour indiquer la date de fin de recherche des images).
 \item Liste toutes les dates entre celle indiqué en paramètre et la date du jour.
 \item Initialise l'url pour télécharger les données.
 \item Se place au niveau de l'url et liste tous les liens à télécharger.
-\item Télécharge les images (nécessité de générer un fichier .netrc contenant l'identifiant de connexion. Ce fichier est à placer à l'endroit où le terminal de commande est exécuté).
+\item Télécharge les images qui ne l'ont pas encore été.
 \end{enumerate}
 
 Concernant une perspective, il serait intéressant de donner des intervalles de temps et non pas une date de départ.
@@ -90,7 +90,7 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
 \item Fait : Conserver les données brutes et les diffuser également
 \item Fait : Compression "deflate" à ajouter
 \item Fait : Publier les bandes brutes decoupee/reechant/compress et les produits calculés.
-\item Coverage view -> vue sur le geoserver où l'on indique différents rasters (Donnees brutes + EF)
+\item Fait : Coverage view -> vue sur le geoserver où l'on indique différents rasters (Donnees brutes + EF)
 \item Fait : Zone sans données -> on conserve les zones sans données pour le moment (solution avec interpolation pour recréer via la série temporelle ou faire des synthèse de 16j voir plus ?)
 \item Entre deux images (dates), quelle est la pertinence d'une valeur identique entre ces deux dates (déduction qu'il ne s'est rien passé ou pas de temps trop faible pour le voir ?)
 \item Pour présenter les valeurs EF, faire un découpage par zones pour donner les valeurs, courbes, etc... par zones et non pas à l'échelle du pixel.
@@ -188,8 +188,12 @@ Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se plac
 \begin{itemize}
 \item Tester l'ajout d'une date sur le GeoServer.
 \item Lancer la publication d'une serie d'images \verb!http://docs.geoserver.org/latest/en/user/rest/examples/curl.html! uploading image mosaic
+\item Masquer la mer du raster NDVI (en assignant la valeur nodata).
 \end{itemize}
 \section{Bibliographie}
 
 Comparisons of normalized difference vegetation index from MODIS Terra and Aqua data in northwestern China (http://ieeexplore.ieee.org/document/4423572/)
 \end{document}
+
+\section{Tips}
+\verb!ssh://nomdutilisateur@nomduserveur.exemple.com/dossier!

@@ -122,8 +122,10 @@ def CalcNDVI(ListFilesBands, out, filenameBand, date):
     # Calcule le NDVI
     NDVITemp = BandMath(ListFilesBands, \
                     out+"/"+filenameBand+"_NdviTemp.tif", \
-                    "ndvi(im1b1, im2b1)")                   
-    # Supprime valeurs aberrantes du NDVI causee par la mer              
+                    "ndvi(im1b1, im2b1)")
+                    
+    # Supprime valeurs aberrantes du NDVI causee par la mer
+    # mais aussi pour se concentrer uniquement sur la vegetation
     NDVI = BandMath([NDVITemp], \
                     out+"/"+filenameBand+"_Ndvi.tif", \
                     "im1b1<0||im1b1>1?0:im1b1")
