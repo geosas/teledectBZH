@@ -54,8 +54,11 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
     ListFilesNames = []
     for i, name in zip(range(2), dataName):
         if dataType == "Bands":
-            RastClip = "%s/%s_%s_raw.tif" % (out, filename, name)
-            RastReproject = "%s/%s_%s_rproj.tif" % (out, filename, name)
+            if not os.path.exists(out+"/"+name):
+                os.mkdir(out+"/"+name)
+            outTif = out+"/"+name    
+            RastClip = "%s/%s_%s_raw.tif" % (outTif, filename, name)
+            RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
             
             # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 \
@@ -69,19 +72,22 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask(RastReproject, out, filename, name, ShapeBretagne)
+            OutRaster = DataMask(RastReproject, outTif, filename, name, ShapeBretagne)
             
             # Applique le scale factor           
             BandMath([OutRaster], \
-                        "%s/%s_%s.tif" % (out, filename, name), \
+                        "%s/%s_%s.tif" % (outTif, name, date), \
                         "im1b1*0.0001")
             
             os.remove(RastClip)
             os.remove(OutRaster)
             
         elif dataType == "Temp":
-            RastClip = "%s/%s_%s_raw.tif" % (out, filename, name)
-            RastReproject = "%s/%s_%s_rproj.tif" % (out, filename, name)
+            if not os.path.exists(out+"/"+name):
+                os.mkdir(out+"/"+name)
+            outTif = out+"/"+name
+            RastClip = "%s/%s_%s_raw.tif" % (outTif, filename, name)
+            RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
             
             # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 -r nearest -tr 231.656 231.656\
@@ -96,21 +102,22 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             
             # Masque les valeurs inutiles et aberrantes
             OutRaster = DataMask("%s" % (RastReproject), \
-                        out, filename, name, ShapeBretagne)
+                        outTif, filename, name, ShapeBretagne)
             
             # Applique le scale factor
             BandMath([OutRaster], \
-                        "%s/%s_%s.tif" % (out, filename, name), \
+                        "%s/%s_%s.tif" % (outTif, filename, name), \
                         "im1b1*0.02")
             
             command = "gdal_translate -co COMPRESS=DEFLATE %s/%s_%s.tif %s/%s_%s.tif"\
-                        % (out, filename, name, out, name, date)
+                        % (outTif, filename, name, outTif, name, date)
             os.system(command)
             
+            os.remove("%s/%s_%s.tif" % (outTif, filename, name))
             os.remove(RastClip)           
             os.remove(OutRaster)   
             
-        ListFilesNames.append(out+"/"+filename+"_%s.tif" % (name))
+        ListFilesNames.append(outTif+"/%s_%s.tif" % (name, date))
     return ListFilesNames, filename
     
 
@@ -136,7 +143,9 @@ def CalcNDVI(ListFilesBands, out, filenameBand, date):
                        
     # Supprime le fichier intermediaire                
     os.remove(out+"/"+filenameBand+"_NdviTemp.tif")
-    return NDVI
+    os.remove(out+"/"+filenameBand+"_Ndvi.tif")
+    
+    return "%s/NDVI_%s.tif" % (out, date)
     
     
 def CalcFVC(raster, out):
@@ -396,21 +405,32 @@ def Main(datas, out, ShapeBretagne):
         YDate = datetime.datetime.strptime(filename[9:16], "%Y%j")
         Date = datetime.datetime.strftime(YDate, "%Y%m%d")
         
-        if not os.path.exists(out+"/EF_%s.tif" % (Date)):
+        if not os.path.exists(out+"/EF"):
+            os.mkdir(out+"/EF")
+            
+        if not os.path.exists(out+"/EF/EF_%s.tif" % (Date)):
             
             # Extract au format tif et clip les bandes et temperatures
             ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne, Date)
             ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne, Date)
     
             # Calcule le NDVI
-            NDVI = CalcNDVI(ListFilesBands, out, filenameBand, Date)
+            if not os.path.exists(out+"/NDVI"):
+                os.mkdir(out+"/NDVI")
+                
+            NDVI = CalcNDVI(ListFilesBands, out+"/NDVI", filenameBand, Date)
             
-            # Calcule le FVC               
-            FVC = CalcFVC(NDVI, out+"/"+filenameTemp+"_FVC.tif")   
+            # Calcule le FVC       
+            if not os.path.exists(out+"/FVC"):
+                os.mkdir(out+"/FVC")
+                
+            FVC = CalcFVC(NDVI, out+"/FVC/FVC_"+Date+".tif")   
             
             # Calcule Tj - Tn
+            if not os.path.exists(out+"/TjTn"):
+                os.mkdir(out+"/TjTn")
             TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
-                = CalcTjTn(ListFilesTemp, out+"/"+filenameTemp+"_TjTn.tif")
+                = CalcTjTn(ListFilesTemp, out+"/TjTn/TjTn_"+Date+".tif")
             
             # Supprime les valeurs de FVC ou la temperature n'est pas disponible
             FVC[np.where(TjTn==0)]=np.nan
@@ -419,11 +439,13 @@ def Main(datas, out, ShapeBretagne):
             (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn)
             
             # Calcule les droites de regression et les donnees necessaire pour calculer EF
+            if not os.path.exists(out+"/graphiques"):
+                os.mkdir(out+"/graphiques")
             TminHumide, SlopeSec, InterceptSec = Graph(25, 1, PtsInfMean, PtsSupMean, \
-                PtsInf, PtsSup, out+"/"+filenameTemp+"_Phi_%s_%s.png" % (25, 1))
+                PtsInf, PtsSup, out+"/graphiques/Phi_%s_%s_%s.png" % (25, 1, Date))
             
             # Calcul d'EF
-            CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
+            CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
                 Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
 
         

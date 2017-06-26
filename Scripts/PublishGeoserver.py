@@ -8,8 +8,111 @@ import sys
 import argparse
 import requests
 import csv
+import xml.etree.ElementTree as ET
 
-def GeoPublish(url, workspace, store, login, password, raster, datadir):
+
+def UpdateMviewer(xml, date):
+    """
+    
+    """
+    tree = ET.parse(xml)
+    root = tree.getroot()
+    layer = root.findall("./themes/theme/layer")
+    for l in layer:
+        dates = l.get("timevalues")
+        newDates = dates +","+ date
+        l.set("timevalues",newDates)
+    tree.write(open(xml, "w"))
+    print "Fichier xml mis a jour"
+
+
+def CreateMviewer(xml, date):
+    """
+    
+    """
+    tree = ET.parse(xml)
+    root = tree.getroot()
+    layer = root.findall("./themes/theme/layer")
+    for l in layer:
+        dates = l.get("timevalues")
+        newDates = dates +","+ date
+        l.set("timevalues",newDates)
+    tree.write(open(xml, "w"))
+    print "Fichier xml mis a jour"
+    
+    
+def CoverageXML(store):
+    """
+    """
+    coverage_xml = '''\
+                    <coverage>\
+                        <title>'''+ store +'''</title>\
+                        <metadata>\
+                            <entry key="time">\
+                                <dimensionInfo>\
+                                    <enabled>true</enabled>\
+                                    <presentation>LIST</presentation>\
+                                    <units>ISO8601</units>\
+                                    <defaultValue/>\
+                                </dimensionInfo>\
+                            </entry>\
+                        </metadata>\
+                        <parameters>\
+                            <entry>\
+                                <string>SORTING</string>\
+                                <string>'''"ingestion D"'''</string>\
+                            </entry>\
+                        </parameters>\
+                    </coverage>'''
+                    
+    # Enlever les doubles espaces
+    coverage_xml = coverage_xml.replace("  ", "")
+    return coverage_xml
+    
+    
+def UpdateStore(login, password, raster, urlStore, xml):
+    """
+    
+    """
+    command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' \
+    -d '%s' '%s/external.imagemosaic'" % \
+    (login, password, raster, urlStore)
+    os.system(command)
+    date = os.path.basename(raster).split("_")[-1][:-4]
+    UpdateMviewer(xml, date)
+    
+    print "L'entrepot et le viewer ont ete mis a jour"
+
+def CreateStore(datadir, login, password, store, workspace, url):
+    """
+    """
+    print"Creation des fichiers properties\n"
+    with open("%s/indexer.properties" % (datadir), "w") as txtfile:
+        txtfile.write("TimeAttribute=ingestion \nElevationAttribute=elevation \
+        \nSchema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer \
+        \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)")
+
+    with open("%s/timeregex.properties" % (datadir), "w") as txtfile:
+        txtfile.write("regex=[0-9]{8}\n")
+        
+    print"Creation du store\n"
+    command = "curl -u %s:%s -v -XPUT -H 'Content-type: text/plain' \
+     -d %s %s/%s/coveragestores/%s/external.imagemosaic?coverageName=%s&configure=all"\
+     % (login, password, datadir, url, workspace, store, store)
+    os.system(command)
+    
+    coverage_xml = CoverageXML(store)
+    
+    print"Modification des parametre de la mosaic\n"
+    command = "curl -u %s:%s -v -XPUT -H \
+    'Content-type: application/xml' -d %s \
+    %s/%s/coveragestores/%s/coverages/%s.xml" %\
+    (login, password, coverage_xml, url, workspace, store, store)
+    os.system(command)
+    
+    #CreateMviewer(xml, date)
+        
+def GeoPublish(url, workspace, store, login, password, raster, datadir, xml):
         '''
         Cree un workspace, puis un entrepot de donnees temporelle 's'ils
         n'existent pas) et publie une image dedans.
@@ -35,62 +138,13 @@ def GeoPublish(url, workspace, store, login, password, raster, datadir):
 
         r = requests.get(urlStore, headers=Headers, auth=(login, password))
 
-        # Si l'entrepot existe, ajouter le raster
         if r.ok:
-            command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' \
-            -d '%s' '%s/external.imagemosaic'" % \
-            (login, password, raster, urlStore)
-            os.system(command)
+            UpdateStore(login, password, raster, urlStore, xml)
             
-            print "L'entrepot a ete mis a jour"
-            
-            ###fix me
-            # mettre a jour le fichier config du viewer pour ajouter la date
         else:
-            print("Creation des fichiers properties\n")
-            with open("%s/indexer.properties" % (datadir), "w") as txtfile:
-                txtfile.write("TimeAttribute=ingestion \nElevationAttribute=elevation \
-                \nSchema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer \
-                \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)")
-
-            with open("%s/timeregex.properties" % (datadir), "w") as txtfile:
-                txtfile.write("regex=[0-9]{8}\n")
-
-            coverage_xml = '''\
-                            <coverage>\
-                                <title>'''+ titre +'''</title>\
-                                <metadata>\
-                                    <entry key="time">\
-                                        <dimensionInfo>\
-                                            <enabled>true</enabled>\
-                                            <presentation>LIST</presentation>\
-                                            <units>ISO8601</units>\
-                                            <defaultValue/>\
-                                        </dimensionInfo>\
-                                    </entry>\
-                                </metadata>\
-                                <parameters>\
-                                    <entry>\
-                                        <string>InputTransparentColor</string>\
-                                        <string>''' + in_trans_color + '''</string>\
-                                    </entry>\
-                                </parameters>\
-                            </coverage>'''
-            # Enlever les doubles espaces
-            coverage_xml = coverage_xml.replace("  ", "")
-
-            # Creation de la mosaique
-            mosaic_cmd = "curl -u {0}:{1} -v -XPUT -H 'Content-type: text/plain' -d 'file://{2}' {3}/rest/workspaces/{4}/coveragestores/{5}/external.imagemosaic?coverageName={5}&configure=all".format(login, password, mosaic_dir, url, workspace, nom_mosaic)
-
-            print ("Creation de la mosaique : %s" % (mosaic_cmd))
-            gc.call(mosaic_cmd, shell=True)
-
-            # Modification des parameters de la mosaic
-            parameters_cmd = "curl -u {0}:{1} -v -XPUT -H 'Content-type: application/xml' -d '{2}' {3}/rest/workspaces/{4}/coveragestores/{5}/coverages/{5}.xml".format(login, password, coverage_xml, url, workspace, nom_mosaic)
-
-            print("Modification des parameters  : %s" % (parameters_cmd))
-            gc.call(parameters_cmd, shell=True)
-
+            CreateStore(datadir, login, password, store, workspace, url)
+        
+        print "Fin de la publication"
         return
 
 if __name__ == "__main__":
@@ -125,6 +179,9 @@ if __name__ == "__main__":
         
         parser.add_argument("-raster", dest="raster", action="store",
                             help="Raster to import")
+        
+        parser.add_argument("-xml", dest="mviewer", action="store",
+                            help="Mviewer xml file")
                             
         args = parser.parse_args()
     
@@ -136,4 +193,4 @@ if __name__ == "__main__":
             password = row[0].split(":")[1]
             break
         
-    GeoPublish(args.url, args.workspace, args.store, login, password, args.raster, args.datadir)
+    GeoPublish(args.url, args.workspace, args.store, login, password, args.raster, args.datadir, args.mviewer)
