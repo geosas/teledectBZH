@@ -54,13 +54,16 @@ def Download(ListUrls, Path, netrc):
     (https://lpdaac.usgs.gov/sites/default/files/public/get_data/docs/
     Command%20Line%20Access%20Tips%20for%20Utilizing%20Earthdata%20Login.docx)
     """
+    if not os.path.exists(Path+"/usgs/"):
+        os.mkdir(Path+"/usgs/")
+        
     for url in ListUrls:
         ListFiles = ListLinksModis(url)
         for dl in ListFiles:
-            if not os.path.exists(Path+os.path.basename(dl)):
+            if not os.path.exists(Path+"/usgs/"+os.path.basename(dl)):
                 print "Telechargement de l'image %s" % (dl)
                 command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
-                            % (netrc, Path+"/", Path+"/", url+dl, Path+"/"+os.path.basename(dl))
+                            % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
                 os.system(command)
 
 
