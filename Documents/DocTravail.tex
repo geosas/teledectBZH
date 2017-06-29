@@ -180,10 +180,35 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)
 \item X : transférer le fichier sur le serveur Pydio uniquement.
 \item X : reload Configuration and catalog.
 \item X : mettre a jour manuellement le shapefile.
-\item V : \verb!curl -v -u gi2016:*gi2016* -XPOST -H "Content-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/coveragestores/EF_teledectBZH/external.imagemosaic"! \smallbreak
+\item V : \verb!curl -v -u login:password -XPOST -H "Content-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/coveragestores/EF_teledectBZH/external.imagemosaic"! \smallbreak
 Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se placer sur le dépôt et exécuter l'extension external.imagemosaic. Cette commande met à jour le shapefile faisant office de datasource.properties.
 \end{enumerate}
 
+\section{Réunion 27/06/2017}
+\begin{itemize}
+\item SLD ajouter information pour les indices (genre évapore peu, etc..)
+\item Appliquer une couleurs aux valeurs nodata
+\item Eviter la transparence pour les données, spliter raster/orthophoto+localisant (route, ville, contour administratif)
+\item Sviewer : Augmenter la taille de la police de la date affiché en bas à gauche
+\item WebMap Context : état d'un projet (avec les couches à afficher, ordre, etc...). Ainsi, générer des wmc selon les thématiques. Ainsi, un sviewer pour le NDVI avec x info, EF avec d'autres etc... Donc au lieu de montre plusieurs couches. ATTENTION, priorité entre wmc et couche à afficher pouvant empêcher l'affichage de certaines infos.
+\item Pour générer un wmc, aller sur le visualiseur de geoxxx et faire un export lien sur visualiseur mobile.
+\item Fournir un produit où il est possible de combiner facilement des informations de teledect + d'autres infos pour sensibiliser les gens à combiner ces infos pour leurs études et décisions.
+\end{itemize}
+\begin{itemize}
+\item Augmenter la dimension temporelle (1 an) pour les indices et voir coment réagit le slider.
+\item Faire des wmc (tuto + boites à cocher pour générer et ajouter des urls, etc... si possible).
+\item Générer des urls pour chaque indices avec des wmc associés pour le sviewer (contour département + villes).
+\item Gérer l'ordre des couches pour avoir le raster toujours en premier (attention de ne pas prendre de fond de carte pour cacher les infos).
+\item Faire un tuto pour rajouter des infos dans le sviewer 
+\item Pour le calcul d'EF, changer les pourcentages (non pas 1\% mais autre), et prendre le bord humide constant (ligne rouge).
+\item Faire métadonnées (geoserver - catalogue). Définir modele de métadonnées, ajouter l'url de la métadonnées dans le layer, nom explicite, etc... car moissonné.
+\end{itemize}
+\begin{enumerate}
+\item Mettre au point le service : SLD (couleurs et légendes), ajout dates
+\item Métadonnées : générer un fichiers permettant de décrire les fichiers et comprendre les données. Métadonnées sur le site à pointer vers ce fichier.
+\item Générer des WMC
+\item ATTENTION, DVP SUR MASTER ET FAIRE TEST SUR AUTRE DOSSIER (GEOUEST!=DALLERY)
+\end{enumerate}
 \subsection{A faire}
 \begin{itemize}
 \item Tester l'ajout d'une date sur le GeoServer.
