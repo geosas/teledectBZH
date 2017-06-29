@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  27 JUN 2017 15:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  29 JUN 2017 10:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -578,26 +578,44 @@ EF_teledectBZH).
  []
 
 
-Overfull \hbox (985.90225pt too wide) in paragraph at lines 183--183
-[]\T1/cmr/m/n/10 V : []\T1/cmtt/m/n/10 curl -v -u gi2016:*gi2016* -XPOST -H "Co
-ntent-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.ti
-f" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/cov
-eragestores/EF_teledectBZH/external.imagemosaic" 
+Overfull \hbox (980.65353pt too wide) in paragraph at lines 183--183
+[]\T1/cmr/m/n/10 V : []\T1/cmtt/m/n/10 curl -v -u login:password -XPOST -H "Con
+tent-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif
+" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/cove
+ragestores/EF_teledectBZH/external.imagemosaic" 
  []
 
-[6]
-Overfull \hbox (196.73495pt too wide) in paragraph at lines 221--222
+
+Overfull \hbox (9.72507pt too wide) in paragraph at lines 191--192
+[]\T1/cmr/m/n/10 Eviter la trans-parence pour les don-nées, spliter raster/orth
+ophoto+localisant
+ []
+
+[6] [7]
+Overfull \hbox (50.07019pt too wide) in paragraph at lines 242--243
+\T1/cmr/m/n/10 : []\T1/cmtt/m/n/10 http://geoxxx.agrocampus-ouest.fr/geouest/mv
+iewer/?config=demo/geouest.xml 
+ []
+
+
+Overfull \hbox (223.2779pt too wide) in paragraph at lines 257--258
+\T1/cmr/m/n/10 pour vi-su-aliser le ré-sul-tat : []\T1/cmtt/m/n/10 http://geoxx
+x.agrocampus-ouest.fr/geouest/timeviewer/?timeLayer=geouest:EF_teledectBZH 
+ []
+
+
+Overfull \hbox (196.73495pt too wide) in paragraph at lines 262--263
 []\T1/cmr/m/n/10 Lancer la pub-li-ca-tion d'une se-rie d'images []\T1/cmtt/m/n/
 10 http://docs.geoserver.org/latest/en/user/rest/examples/curl.html
  []
 
 
-Overfull \hbox (10.35767pt too wide) in paragraph at lines 226--227
+Overfull \hbox (10.35767pt too wide) in paragraph at lines 267--268
 \T1/cmr/m/n/10 Aqua data in north-west-ern China (http://ieeexplore.ieee.org/do
 cument/4423572/) 
  []
 
-[7] (./DocTravail.aux) ) 
+[8] (./DocTravail.aux) ) 
 Here is how much of TeX's memory you used:
  1703 strings out of 494910
  17985 string characters out of 6179837
@@ -616,10 +634,10 @@ var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/font
 s/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljf
 our/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy10.pfb>
-Output written on DocTravail.pdf (7 pages, 119201 bytes).
+Output written on DocTravail.pdf (8 pages, 122437 bytes).
 PDF statistics:
- 408 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 413 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
