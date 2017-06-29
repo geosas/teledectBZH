@@ -60,7 +60,7 @@ def CoverageXML(store):
                         <parameters>\
                             <entry>\
                                 <string>SORTING</string>\
-                                <string>'''"ingestion D"'''</string>\
+                                <string>'''"time D"'''</string>\
                             </entry>\
                         </parameters>\
                     </coverage>'''
@@ -88,9 +88,9 @@ def CreateStore(datadir, login, password, store, workspace, url):
     """
     print"Creation des fichiers properties\n"
     with open("%s/indexer.properties" % (datadir), "w") as txtfile:
-        txtfile.write("TimeAttribute=ingestion \nElevationAttribute=elevation \
-        \nSchema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer \
-        \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)")
+        txtfile.write("TimeAttribute=time \nElevationAttribute=elevation \
+        \nSchema=*the_geom:Polygon,location:String,time:java.util.Date,elevation:Integer \
+        \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)")
 
     with open("%s/timeregex.properties" % (datadir), "w") as txtfile:
         txtfile.write("regex=[0-9]{8}\n")

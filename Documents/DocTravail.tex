@@ -36,7 +36,7 @@ La méthodologie correspond à une chaîne de traitement développée en Python.
 \subsection{Téléchargement des données MODIS}
 
 \begin{itemize}
-\item Les données MODIS se situent sur le site \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
+\item Les données MODIS se situent sur le site :\newline \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
 \item Pour la Bretagne, il faut télécharger la tuile h17v04. 
 \item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007) et aussi pour les autres informations.
 \item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 avec les produits LST day et night (température en Kelvin) avec un scale factor de 0.02.
@@ -98,7 +98,7 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
 \item Fait : Publier sur GeoSas des donnees.
 \item Creer un GeoRss + mail + tweet + page html avec lien direct pour animation, donnees pour informer sur de la publication de donnees + lien vers mviewer.
 \item Geoxxx pour traitement et mise au point (temps telechargement, traitement, demo) et geoserver pour publication (Geowww) via un upload à partir de geoxxx
-\item wms time \verb!http://docs.geoserver.org/latest/en/user/services/wms/time.html! pour tester la visualisation + interaction (calendrier, frise chronologique)
+\item wms time : \newline \verb!http://docs.geoserver.org/latest/en/user/services/wms/time.html! pour tester la visualisation + interaction (calendrier, frise chronologique)
 \item \verb!http://kartenn.region-bretagne.fr/mviewer/! pour trouver exemple time dans le wms pour generer une couche appelant toutes les dates.
 \item coverage view = 1 workspace par date (probablement)
 \item Publication des temperatures jour/nuit avec data story (voici les villes, voila 2003 avec l'effet des secheresses, etc...). Pas uniquement présenter les donnees brutes, fournir une analyse.
@@ -121,10 +121,10 @@ Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge
 \end{verbatim}
 \item Créer un fichier indexer.properties :
 \begin{verbatim}
-	TimeAttribute=ingestion
+	TimeAttribute=time
 	ElevationAttribute=elevation
-Schema=*the_geom:Polygon,location:String,ingestion:java.util.Date,elevation:Integer
-PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](ingestion)
+Schema=*the_geom:Polygon,location:String,time:java.util.Date,elevation:Integer
+PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)
 \end{verbatim}
 \item Importer les rasters et les deux fichiers properties sur le serveur. Dans notre cas, sur Pydio Geoxxx.
 \item Sur le GeoServer, créer un workspace (\verb!https://geoxxx.agrocampus-ouest.fr/teledectBZH!).
@@ -209,6 +209,53 @@ Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se plac
 \item Générer des WMC
 \item ATTENTION, DVP SUR MASTER ET FAIRE TEST SUR AUTRE DOSSIER (GEOUEST!=DALLERY)
 \end{enumerate}
+
+\section{Mviewer : configuration}
+La configuration du Mviewer passe par un fichier XML placé dans le dossier demo. Dans ce fichier, les balises <themes> <theme> et <layer> permettent de configurer les couches et la temporalité.
+
+\begin{itemize}
+\item <themes> : cette balise permet d'ajouter plusieurs thèmes (groupe) dans un même viewer.
+\item <theme> : cette balise correspond à un groupe pouvant contenir au moins une couche.
+\begin{itemize}
+\item name="nom du groupe"
+\item id="identifiant du groupe"
+\item icon="icône du groupe"
+\end{itemize}
+\item <layer> : correspond à une couche. Plusieurs layers peuvent être ajouté dans un <theme>.
+\begin{itemize}
+\item id="nom de la couche sur le geoserver"
+\item name="nom de la couche à afficher"
+\item timefilter="True"
+\item timeinterval="day|month|year"
+\item timemin="YYYY-MM-DD" et timemax="YYYY-MM-DD" (calendar)
+\item timecontrol="calendar|slider" (slider permet d'animer les dates)
+\item timevalues="dates disponibles YYYY-MM-DD"
+\item style="style à appliquer"
+\item url="url du serveur"
+\end{itemize}
+\end{itemize}
+
+Avec ces balises et variables, il est possible de gérer l'aspect temporel d'un entrepôt, de configurer la symbologie, les noms et les données à afficher.
+
+P.S : corriger l'affichage en gras des dates du calendrier même quand il n'y a pas de données.
+
+Ensuite, il reste à appeler dans une url le fichier xml pour visualiser le résultat : \verb!http://geoxxx.agrocampus-ouest.fr/geouest/mviewer/?config=demo/geouest.xml!
+
+\section{Sviewer : configuration}
+Le Sviewer possède également un fichier de configuration situé dans le dossier \verb!js/sviewer.js!
+
+La configuration du viewer passe par plusieurs variables.
+\begin{itemize}
+\item hardConfig :
+\begin{itemize}
+\item title: "titre du viewer et de l'onglet assimilé"
+\item geOrchestraBaseUrl: "url de base du geoserver"
+\item 
+\end{itemize}
+\end{itemize}
+
+Ensuite, il reste à appeler dans une url la couche que l'on souhaite afficher pour visualiser le résultat : \verb!http://geoxxx.agrocampus-ouest.fr/geouest/timeviewer/?timeLayer=geouest:EF_teledectBZH!
+
 \subsection{A faire}
 \begin{itemize}
 \item Tester l'ajout d'une date sur le GeoServer.
