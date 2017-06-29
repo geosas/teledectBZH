@@ -6,38 +6,87 @@ Script pour calculer l'evaporative fraction (EF)
 import os
 import sys
 import numpy as np
-import otbApplication as otb
 import argparse
 import glob
 import gdal
 import datetime
-import Functions
 from scipy.stats import linregress
 import matplotlib.pyplot as plt
 
-def DataMask(InRaster, out, filename, name, ShapeBretagne):
+def OpenRaster(inRaster, band):
+    """
+    Open raster and return some information about it.
+    
+    in :
+        name : raster name
+    out :
+        datas : numpy array from raster dataset
+        xsize : xsize of raster dataset
+        ysize : ysize of raster dataset
+        projection : projection of raster dataset
+        transform : coordinates and pixel size of raster dataset
+    """    
+    raster = gdal.Open(inRaster, 0)
+    rasterBand = raster.GetRasterBand(band)
+    
+    #property of raster
+    projection = raster.GetProjectionRef()
+    transform = raster.GetGeoTransform()
+    xsize = raster.RasterXSize
+    ysize = raster.RasterYSize
+    
+    #convert raster to an array
+    datas = rasterBand.ReadAsArray()
+    
+    return datas, xsize, ysize, projection, transform
+    
+
+def SaveRaster(name, xsize, ysize, transform, datas, projection, encode):
+    """
+    Save an array to a raster.
+    
+    in :
+        name : raster name
+        xsize : xsize of raster to be created
+        ysize : ysize of raster to be created
+        transform : coordinates and pixel size of raster to be created
+        data : data of raster to be created
+        projection : projection of raster to be created
+        encode : encode of raster (gdal.GDT_UInt32, gdal.GDT_Byte) 
+    """
+    driver = gdal.GetDriverByName("GTiff")
+    outRaster = driver.Create(name, xsize, ysize, 1, encode)
+    outband = outRaster.GetRasterBand(1)
+    outband.WriteArray(datas)
+    outRaster.SetProjection(projection)
+    outRaster.SetGeoTransform(transform)
+
+    del outRaster, outband
+    return name
+    
+def DataMask(inRaster, out, filename, name, ShapeBretagne):
     """
     Masque des valeurs en dehors du territoire breton.
     """
     # Initialise un raster vide
-    BandMath([InRaster], \
-            "%s/%s_%s_raw2.tif" % (out, filename, name), \
-            "im1b1*0")
+    data, xsize, ysize, projection, transform = OpenRaster(inRaster, 1)
+    dataZero = data * 0
+    rasterMask = SaveRaster("%s/%s_%s_raw2.tif" % (out, filename, name), xsize,\
+                            ysize, transform, dataZero, projection, gdal.GDT_Byte)
+
     # Initialise a 1 l'emplacement du departement
-    command = "gdal_rasterize -burn 1 %s %s"%(ShapeBretagne, \
-                "%s/%s_%s_raw2.tif" % (out, filename, name))
+    command = "gdal_rasterize -burn 1 %s %s"%(ShapeBretagne, "%s" % (rasterMask))
     os.system(command)
     
     # Conserve uniquement les valeurs se situant sur le departement
-    BandMath([InRaster, "%s/%s_%s_raw2.tif" % (out, filename, name)], \
-                "%s/%s_%s_raw3.tif" % (out, filename, name), \
-                "im2b1==0?0:im1b1")
+    dataMask, xsizeMask, ysizeMask, projectionMask, transformMask = OpenRaster(rasterMask, 1)
+    dataDprtmnt = np.where(dataMask==0, 0, data)
     
     # Supprime les fichiers intermediaires
-    os.remove(InRaster)
-    os.remove("%s/%s_%s_raw2.tif" % (out, filename, name))    
+    os.remove(inRaster)
+    os.remove(rasterMask)    
     
-    return "%s/%s_%s_raw3.tif" % (out, filename, name)
+    return dataDprtmnt, xsize, ysize, projection, transform
     
 def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
     """
@@ -72,15 +121,22 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask(RastReproject, outTif, filename, name, ShapeBretagne)
+            data, xsize, ysize, projection, transform = DataMask(RastReproject,\
+                outTif, filename, name, ShapeBretagne)
             
-            # Applique le scale factor           
-            BandMath([OutRaster], \
-                        "%s/%s_%s.tif" % (outTif, name, date), \
-                        "im1b1*0.0001")
+            # Applique le scale factor
+            dataScaled = data*0.0001
+            outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, name, date), xsize,\
+                        ysize, transform, dataScaled, projection, gdal.GDT_Float32)
+
+            command = "gdal_translate -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
+                        % (outRaster, outTif, name, date)
+            os.system(command)
             
+            os.remove(outRaster)            
             os.remove(RastClip)
-            os.remove(OutRaster)
+            
+            outRaster = "%s/%s_%s.tif" % (outTif, name, date)
             
         elif dataType == "Temp":
             if not os.path.exists(out+"/"+name):
@@ -101,23 +157,24 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
-            OutRaster = DataMask("%s" % (RastReproject), \
-                        outTif, filename, name, ShapeBretagne)
+            data, xsize, ysize, projection, transform = DataMask(RastReproject,\
+                outTif, filename, name, ShapeBretagne)
             
             # Applique le scale factor
-            BandMath([OutRaster], \
-                        "%s/%s_%s.tif" % (outTif, filename, name), \
-                        "im1b1*0.02")
+            dataScaled = data*0.02
+            outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, filename, name), xsize,\
+                        ysize, transform, dataScaled, projection, gdal.GDT_Float32)
             
-            command = "gdal_translate -co COMPRESS=DEFLATE %s/%s_%s.tif %s/%s_%s.tif"\
-                        % (outTif, filename, name, outTif, name, date)
+            command = "gdal_translate -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
+                        % (outRaster, outTif, name, date)
             os.system(command)
             
-            os.remove("%s/%s_%s.tif" % (outTif, filename, name))
-            os.remove(RastClip)           
-            os.remove(OutRaster)   
+            os.remove(outRaster)
+            os.remove(RastClip)             
             
-        ListFilesNames.append(outTif+"/%s_%s.tif" % (name, date))
+            outRaster = "%s/%s_%s.tif" % (outTif, name, date)
+            
+        ListFilesNames.append(outRaster)
     return ListFilesNames, filename
     
 
@@ -127,23 +184,22 @@ def CalcNDVI(ListFilesBands, out, filenameBand, date):
     a cause des valeurs se situant sur la mer).
     """
     # Calcule le NDVI
-    NDVITemp = BandMath(ListFilesBands, \
-                    out+"/"+filenameBand+"_NdviTemp.tif", \
-                    "ndvi(im1b1, im2b1)")
-                    
+    red, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[0], 1)
+    nir, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[1], 1)
+    NDVITemp = ((nir-red)/(nir+red))
+    NDVI = np.where(((NDVITemp<=0) | (NDVITemp>1)), 0, NDVITemp)       
+         
     # Supprime valeurs aberrantes du NDVI causee par la mer
     # mais aussi pour se concentrer uniquement sur la vegetation
-    NDVI = BandMath([NDVITemp], \
-                    out+"/"+filenameBand+"_Ndvi.tif", \
-                    "im1b1<0||im1b1>1?0:im1b1")
+    outRaster = SaveRaster(out+"/"+filenameBand+"_Ndvi.tif", xsize,\
+                        ysize, transform, NDVI, projection, gdal.GDT_Float32)
 
-    command = "gdal_translate -co COMPRESS=DEFLATE %s/%s_Ndvi.tif %s/NDVI_%s.tif"\
-               % (out, filenameBand, out, date)
+    command = "gdal_translate -co COMPRESS=DEFLATE %s %s/NDVI_%s.tif"\
+               % (outRaster, out, date)
     os.system(command)
                        
     # Supprime le fichier intermediaire                
-    os.remove(out+"/"+filenameBand+"_NdviTemp.tif")
-    os.remove(out+"/"+filenameBand+"_Ndvi.tif")
+    os.remove(outRaster)
     
     return "%s/NDVI_%s.tif" % (out, date)
     
@@ -152,9 +208,13 @@ def CalcFVC(raster, out):
     """
     Calcule le Fractional Vegetation Cover.
     """
-    Data, Xsize, Ysize, Projection, Transform, RasterBand = Functions.RastOpen(raster, 1)
-    FVC = ((Data - np.min(Data))/(np.max(Data)-np.min(Data)))**2
-    Functions.RastSave(out, Xsize, Ysize, Transform, FVC, Projection, gdal.GDT_Float32)
+    Data, Xsize, Ysize, Projection, Transform = OpenRaster(raster, 1)
+    FVC = ((Data - 0)/(np.nanmax(Data)-0))**2
+    outRaster = SaveRaster(out+"_uncompressed.tif", Xsize, Ysize, Transform, FVC, Projection, gdal.GDT_Float32)
+    command = "gdal_translate -co COMPRESS=DEFLATE %s %s"\
+               % (outRaster, out+".tif")
+    os.system(command)
+    os.remove(outRaster)
     return FVC
 
 
@@ -165,17 +225,17 @@ def CalcTjTn(ListFilesTemp, out):
     temperatures aberrantes suite a la soustraction.
     """
     # Ouvre les raster de temperature de jour et de nuit
-    Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, RasterBand_Tj = \
-        Functions.RastOpen(ListFilesTemp[0], 1)
-    Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn, RasterBand_Tn = \
-        Functions.RastOpen(ListFilesTemp[1], 1) 
+    Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj = \
+        OpenRaster(ListFilesTemp[0], 1)
+    Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn = \
+        OpenRaster(ListFilesTemp[1], 1) 
     # Identifie les cellules en nodata et supprime leur equivalent dans les deux images
     Tj[np.where(Tn==0)]=np.nan
     Tn[np.where(Tj==0)]=np.nan 
     # Applique Tj_Tn
     TjTn = Tj - Tn  
     # Enregistre l'image
-    Functions.RastSave(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
+    outRaster = SaveRaster(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
                         Projection_Tj, gdal.GDT_Float32)
     return TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn
 
@@ -304,7 +364,7 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     temp_hum = pts_inf_mean.copy()
     arg = np.argsort(temp_hum[:, 1])
     y_min_hum = temp_hum[:, 1][arg][1]
-    plot_reg_humide, = ax.plot(x_reg, [y_min_hum, y_min_hum],'r-', lw=2, label="Droite du bord humide")
+    plot_reg_humide = ax.plot(x_reg, [y_min_hum, y_min_hum],'r-', lw=2, label="Droite du bord humide")
     
     # Tous les points
     print("*** Régression avec l'ensemble des points ***")
@@ -332,10 +392,10 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
     # Affichage de la régression de tous les points du bord sec
     plot_reg_tot, = ax.plot(x_reg, y_sup,'b-', label="Regression de l'ensemble des points")
     
-    ax.set_title("\nNombre d'intervalle = %d - Pourcentage = %.1f%%"  % (nbInterval, pourcentage), fontsize=16)
+    ax.set_title("\nNombre d'intervalle = %d - Pourcentage = %s"  % (nbInterval, pourcentage), fontsize=16)
     ax.set_xlabel("FVC", fontsize=16)
     ax.set_ylabel("Tj - Tn", fontsize=16)
-    plt.legend(handles=[pts, reg_moy, plot_reg_tot, plot_reg_humide])
+    plt.legend([pts, reg_moy, plot_reg_tot, plot_reg_humide], ["Points moyens","Regression des points moyens","Regression de l'ensemble des points","Droite du bord humide"])
     # Sauvegarde de la figure au format png
     plt.savefig(out, dpi=300)
     #plt.show()
@@ -355,27 +415,17 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     ESatTa = 1000 * np.exp(52.57633 - (6790.4985 / tmoy) - 5.02808 * np.log(tmoy))
     delta = (ESatTa / tmoy) * ((6790.4985 / tmoy) - 5.02808)
     EF = (delta/(delta+66))*Phi
-
+    EF[np.isnan(EF)] = -999
+    
     # Enregistre l'image
-    Functions.RastSave(out+"/Temporaire.tif", Xsize_Tj, Ysize_Tj, \
+    outRaster = SaveRaster(out+"/Temporaire.tif", Xsize_Tj, Ysize_Tj, \
                         Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
     
-    command = "gdal_translate -co COMPRESS=DEFLATE %s/Temporaire.tif %s/EF_%s.tif"\
-               % (out, out, Date)
+    command = "gdal_translate -co COMPRESS=DEFLATE %s %s/EF_%s.tif"\
+               % (outRaster, out, Date)
     os.system(command)
     
-    os.remove("%s/Temporaire.tif" % (out))
-    
-def BandMath(inFiles, outFile, expr):
-    """
-    Application Bandmath de l'orpheo tools box
-    """
-    BandMath = otb.Registry.CreateApplication("BandMath")   
-    BandMath.SetParameterStringList("il", inFiles)
-    BandMath.SetParameterString("out", outFile)
-    BandMath.SetParameterString("exp", expr)
-    BandMath.ExecuteAndWriteOutput()
-    return outFile
+    os.remove(outRaster)
 
 
 def Main(datas, out, ShapeBretagne):
@@ -413,7 +463,7 @@ def Main(datas, out, ShapeBretagne):
             # Extract au format tif et clip les bandes et temperatures
             ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne, Date)
             ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne, Date)
-    
+            
             # Calcule le NDVI
             if not os.path.exists(out+"/NDVI"):
                 os.mkdir(out+"/NDVI")
@@ -424,7 +474,7 @@ def Main(datas, out, ShapeBretagne):
             if not os.path.exists(out+"/FVC"):
                 os.mkdir(out+"/FVC")
                 
-            FVC = CalcFVC(NDVI, out+"/FVC/FVC_"+Date+".tif")   
+            FVC = CalcFVC(NDVI, out+"/FVC/FVC_"+Date)   
             
             # Calcule Tj - Tn
             if not os.path.exists(out+"/TjTn"):
@@ -436,13 +486,13 @@ def Main(datas, out, ShapeBretagne):
             FVC[np.where(TjTn==0)]=np.nan
     
             # Calcule les donnees necessaires pour calculer les droites de regression)
-            (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn)
+            (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(FVC, TjTn, 25, 0.1)
             
             # Calcule les droites de regression et les donnees necessaire pour calculer EF
             if not os.path.exists(out+"/graphiques"):
                 os.mkdir(out+"/graphiques")
-            TminHumide, SlopeSec, InterceptSec = Graph(25, 1, PtsInfMean, PtsSupMean, \
-                PtsInf, PtsSup, out+"/graphiques/Phi_%s_%s_%s.png" % (25, 1, Date))
+            TminHumide, SlopeSec, InterceptSec = Graph(25, "0.1", PtsInfMean, PtsSupMean, \
+                PtsInf, PtsSup, out+"/graphiques/Phi_%s_%s_%s.png" % (25, "0.1", Date))
             
             # Calcul d'EF
             CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
@@ -472,7 +522,7 @@ if __name__ == "__main__":
                             help="Shapefile de la Bretagne")
                             
         args = parser.parse_args()
-    
+    np.seterr(divide='ignore', invalid='ignore')
     if not os.path.exists(args.out):
         os.mkdir(args.out)
         
