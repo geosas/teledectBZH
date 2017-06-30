@@ -10,6 +10,7 @@ import requests
 import csv
 import xml.etree.ElementTree as ET
 import subprocess
+import commands
 
 def UpdateMviewer(xml, date):
     """
@@ -143,8 +144,11 @@ def GeoPublish(url, workspace, store, login, password, datadir):
             # test les dates existantes
             command = "curl -v -u %s:%s -XGET \
             '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
-            indexStore = subprocess.check_output(command, shell=True)
-            
+            # python > 2.7
+            #indexStore = subprocess.check_output(command, shell=True)
+            #python < 2.7
+            indexStore = commands.getstatusoutput(command)
+
             # liste les rasters dans le datadir et leur date
             for path, dossiers, rasters in os.walk(datadir):
                 for raster in rasters :
