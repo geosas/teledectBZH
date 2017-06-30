@@ -77,6 +77,7 @@ def UpdateStore(login, password, raster, urlStore):
     """
     command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' -d 'file://%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
+    print command
     os.system(command)
     #date = os.path.basename(raster).split("_")[-1][:-4]
     #UpdateMviewer(xml, date)
@@ -154,8 +155,7 @@ def GeoPublish(url, workspace, store, login, password, datadir):
                 for raster in rasters :
                     if ".tif" in raster :
                         date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
-                        print date
-                        if indexStore.find(date) != -1:
+                        if indexStore.find(date) == -1:
                             UpdateStore(login, password, path+raster, urlStore)
 
         else:
