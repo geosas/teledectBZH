@@ -147,8 +147,9 @@ def GeoPublish(url, workspace, store, login, password, datadir):
             # python > 2.7
             #indexStore = subprocess.check_output(command, shell=True)
             #python < 2.7
-            indexStore = commands.getstatusoutput(command)
-
+            indexStoreTuple = commands.getstatusoutput(command)
+            indexStore = str(indexStoreTuple)
+            
             # liste les rasters dans le datadir et leur date
             for path, dossiers, rasters in os.walk(datadir):
                 for raster in rasters :
