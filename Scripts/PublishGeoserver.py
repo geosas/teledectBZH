@@ -9,7 +9,7 @@ import argparse
 import requests
 import csv
 import xml.etree.ElementTree as ET
-
+import subprocess
 
 def UpdateMviewer(xml, date):
     """
@@ -70,7 +70,7 @@ def CoverageXML(store):
     return coverage_xml
     
     
-def UpdateStore(login, password, raster, urlStore, xml):
+def UpdateStore(login, password, raster, urlStore):
     """
     
     """
@@ -78,8 +78,8 @@ def UpdateStore(login, password, raster, urlStore, xml):
     -d '%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
     os.system(command)
-    date = os.path.basename(raster).split("_")[-1][:-4]
-    UpdateMviewer(xml, date)
+    #date = os.path.basename(raster).split("_")[-1][:-4]
+    #UpdateMviewer(xml, date)
     
     print "L'entrepot et le viewer ont ete mis a jour"
 
@@ -112,7 +112,7 @@ def CreateStore(datadir, login, password, store, workspace, url):
     
     #CreateMviewer(xml, date)
         
-def GeoPublish(url, workspace, store, login, password, raster, datadir, xml):
+def GeoPublish(url, workspace, store, login, password, datadir):
         '''
         Cree un workspace, puis un entrepot de donnees temporelle 's'ils
         n'existent pas) et publie une image dedans.
@@ -139,8 +139,21 @@ def GeoPublish(url, workspace, store, login, password, raster, datadir, xml):
         r = requests.get(urlStore, headers=Headers, auth=(login, password))
 
         if r.ok:
-            UpdateStore(login, password, raster, urlStore, xml)
+            print "Le store existe"
+            # test les dates existantes
+            command = "curl -v -u %s:%s -XGET \
+            '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
+            indexStore = subprocess.check_output(command, shell=True)
             
+            # liste les rasters dans le datadir et leur date
+            for path, dossiers, rasters in os.walk(datadir):
+                for raster in rasters :
+                    if ".tif" in raster :
+                        print raster
+                        date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
+                        if indexStore.find(date) != -1:
+                            UpdateStore(login, password, path+"/"+raster, urlStore)
+
         else:
             CreateStore(datadir, login, password, store, workspace, url)
         
@@ -177,20 +190,17 @@ if __name__ == "__main__":
                             help="Connexion file with login and password \
                             like login:password", default="user")      
         
-        parser.add_argument("-raster", dest="raster", action="store",
-                            help="Raster to import")
-        
         parser.add_argument("-xml", dest="mviewer", action="store",
                             help="Mviewer xml file")
                             
         args = parser.parse_args()
     
     # Recupere le login et password dans un fichier    
-    with open(args.co, "r") as coFile:
+    with open(args.login, "r") as coFile:
         reader = csv.reader(coFile)
         for row in reader:
             login = row[0].split(":")[0]
             password = row[0].split(":")[1]
             break
         
-    GeoPublish(args.url, args.workspace, args.store, login, password, args.raster, args.datadir, args.mviewer)
+    GeoPublish(args.url, args.wspace, args.store, login, password, args.datadir)
