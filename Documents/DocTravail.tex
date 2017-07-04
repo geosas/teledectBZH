@@ -184,6 +184,12 @@ PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)
 Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se placer sur le dépôt et exécuter l'extension external.imagemosaic. Cette commande met à jour le shapefile faisant office de datasource.properties.
 \end{enumerate}
 
+Ainsi, la méthode est la suivante :
+\begin{enumerate}
+\item Placer les fichiers dans le répertoire de données du store
+\item Lancer le script
+\end{enumerate}
+
 \section{Réunion 27/06/2017}
 \begin{itemize}
 \item SLD ajouter information pour les indices (genre évapore peu, etc..)
@@ -208,6 +214,14 @@ Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se plac
 \item Métadonnées : générer un fichiers permettant de décrire les fichiers et comprendre les données. Métadonnées sur le site à pointer vers ce fichier.
 \item Générer des WMC
 \item ATTENTION, DVP SUR MASTER ET FAIRE TEST SUR AUTRE DOSSIER (GEOUEST!=DALLERY)
+\item permettre de lier les données wmc avec le sviewer quand on touche dessus.
+\item Essayer d'effectuer un test sur les layers pour savoir si elle est temporelle et si oui, activer le time viewer.
+\item permettre de toujours interagir avec le time, meme si des données ajoutée.
+\item permettre la gestion de plusieurs images temporelles à imbriquer les unes dans els autres.
+\item generer via gdal tiled=true
+\item automatiser la detection de la dimension temporelle de layers.
+\item Faire des getFeaturesInfo, pour recuperer des valeurs, dates, recueprer les valeurs et faire des courbes pour visualiser l'évolution temporelle sur un seul graphique.
+\item 
 \end{enumerate}
 
 \section{Mviewer : configuration}
@@ -256,11 +270,20 @@ La configuration du viewer passe par plusieurs variables.
 
 Ensuite, il reste à appeler dans une url la couche que l'on souhaite afficher pour visualiser le résultat : \verb!http://geoxxx.agrocampus-ouest.fr/geouest/timeviewer/?timeLayer=geouest:EF_teledectBZH!
 
+Pour ajouter un wmc, il faut aller chercher des données au même endroit que l'url du serveur. Donc, dans notre cas, geoxxx.etc... et non pas geobretagne, etc...
 \subsection{A faire}
 \begin{itemize}
-\item Tester l'ajout d'une date sur le GeoServer.
-\item Lancer la publication d'une serie d'images \verb!http://docs.geoserver.org/latest/en/user/rest/examples/curl.html! uploading image mosaic
-\item Masquer la mer du raster NDVI (en assignant la valeur nodata).
+\item Publication sur geosas
+\item métadonnées
+\item texte de description des images
+\item gdal=tiled
+\item publier ETR + EF landsat
+\item corriger les nuages sur les bandes modis
+\item Verifier légendes/sld
+\item Activer jenkins pour automatisation dse scripts
+\item Supprimer nuages NDVI
+\item migrer les images sur geosas
+\item modifier le sviewer pour detecter automatiquement la capacité spatiale d'une couche.
 \end{itemize}
 \section{Bibliographie}
 
@@ -269,3 +292,6 @@ Comparisons of normalized difference vegetation index from MODIS Terra and Aqua 
 
 \section{Tips}
 \verb!ssh://nomdutilisateur@nomduserveur.exemple.com/dossier!
+\begin{itemize}
+\item Pour afficher des fichiers sur 
+\end{itemize}

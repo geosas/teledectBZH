@@ -115,7 +115,8 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_b0%s \
             %s" % (fichier, int(i)+1, RastClip)
             os.system(command)
-            
+            #gdal_translate -co COMPRESS=DEFLATE -co "TILED=YES" ETR_20170716proj.tif ETR_20170716.tif
+
             # Reprojete le raster en EPSG:2154
             command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
