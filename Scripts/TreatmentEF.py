@@ -154,7 +154,7 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             os.system(command)
             
             # Reprojete le raster en EPSG:2154
-            command = "gdalwarp -t_srs EPSG:2154 -r nearest -tr 231.656 231.656 %s %s" % (RastClip, RastReproject)
+            command = "gdalwarp -t_srs EPSG:2154 -r near -tr 231.656 231.656 %s %s" % (RastClip, RastReproject)
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
