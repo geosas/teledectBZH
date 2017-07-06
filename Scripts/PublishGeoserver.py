@@ -193,9 +193,6 @@ if __name__ == "__main__":
         parser.add_argument("-co", dest="login", action="store",
                             help="Connexion file with login and password \
                             like login:password", default="user")      
-        
-        parser.add_argument("-xml", dest="mviewer", action="store",
-                            help="Mviewer xml file")
                             
         args = parser.parse_args()
     

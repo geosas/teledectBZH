@@ -65,6 +65,8 @@ def Download(ListUrls, Path, netrc):
                 command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
                             % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
                 os.system(command)
+	    else :
+	        print "L'image %s existe deja" % (dl)
 
 
 def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):

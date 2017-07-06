@@ -160,7 +160,7 @@ def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
             # Reprojete le raster en EPSG:2154
             command = "gdalwarp -t_srs EPSG:2154 -r near -tr 243.134 -243.057 %s %s" % (RastClip, RastReproject)
             os.system(command)
-            sys.exit()
+
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
                 outTif, filename, name, maskShp, clipShp)
@@ -508,6 +508,9 @@ def Main(datas, out, clipShp, maskShp):
             # Calcul d'EF
             CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
                 Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
+
+	else :
+	    print "La date %s a deja ete traitee" % (Date)
 
         
 if __name__ == "__main__":
