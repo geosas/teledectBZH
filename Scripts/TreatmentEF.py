@@ -64,18 +64,23 @@ def SaveRaster(name, xsize, ysize, transform, datas, projection, encode):
     del outRaster, outband
     return name
     
-def DataMask(inRaster, out, filename, name, ShapeBretagne):
+def DataMask(inRaster, out, filename, name, maskShp, clipShp):
     """
     Masque des valeurs en dehors du territoire breton.
     """
+    clipfile = os.path.dirname(inRaster)+"/clip.tif"
+    #decoupe le raster selon un shapefile
+    command = "gdalwarp -cutline %s -crop_to_cutline %s %s" % (clipShp, inRaster, clipfile)
+    os.system(command)
+
     # Initialise un raster vide
-    data, xsize, ysize, projection, transform = OpenRaster(inRaster, 1)
+    data, xsize, ysize, projection, transform = OpenRaster(clipfile, 1)
     dataZero = data * 0
     rasterMask = SaveRaster("%s/%s_%s_raw2.tif" % (out, filename, name), xsize,\
                             ysize, transform, dataZero, projection, gdal.GDT_Byte)
 
     # Initialise a 1 l'emplacement du departement
-    command = "gdal_rasterize -burn 1 %s %s"%(ShapeBretagne, "%s" % (rasterMask))
+    command = "gdal_rasterize -burn 1 %s %s"%(maskShp, "%s" % (rasterMask))
     os.system(command)
     
     # Conserve uniquement les valeurs se situant sur le departement
@@ -84,11 +89,12 @@ def DataMask(inRaster, out, filename, name, ShapeBretagne):
     
     # Supprime les fichiers intermediaires
     os.remove(inRaster)
+    os.remove(clipfile)
     os.remove(rasterMask)    
     
     return dataDprtmnt, xsize, ysize, projection, transform
     
-def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
+def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
     """
     Extract, clip and reproject hdf files.
     """
@@ -108,10 +114,9 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             outTif = out+"/"+name    
             RastClip = "%s/%s_%s_raw.tif" % (outTif, filename, name)
             RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
-            
+
             # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 \
-            -projwin -386371 5533708 -3708 5211341 \
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_b0%s \
             %s" % (fichier, int(i)+1, RastClip)
             os.system(command)
@@ -123,14 +128,14 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
-                outTif, filename, name, ShapeBretagne)
+                outTif, filename, name, maskShp, clipShp)
             
             # Applique le scale factor
             dataScaled = data*0.0001
             outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, name, date), xsize,\
                         ysize, transform, dataScaled, projection, gdal.GDT_Float32)
 
-            command = "gdal_translate -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
+            command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
                         % (outRaster, outTif, name, date)
             os.system(command)
             
@@ -148,25 +153,24 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             
             # Decoupe le raster et le converti au format tif
             command = "gdal_translate -ot Float32 \
-            -projwin -386371 5533108 -3976 5211056 \
             HDF4_EOS:EOS_GRID:'%s':MODIS_Grid_8Day_1km_LST:LST_%s_1km \
             %s" % (fichier, name, RastClip)            
             os.system(command)
             
             # Reprojete le raster en EPSG:2154
-            command = "gdalwarp -t_srs EPSG:2154 -r near -tr 231.656 231.656 %s %s" % (RastClip, RastReproject)
+            command = "gdalwarp -t_srs EPSG:2154 -r near -tr 243.134 -243.057 %s %s" % (RastClip, RastReproject)
             os.system(command)
-            
+            sys.exit()
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
-                outTif, filename, name, ShapeBretagne)
+                outTif, filename, name, maskShp, clipShp)
             
             # Applique le scale factor
             dataScaled = data*0.02
             outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, filename, name), xsize,\
                         ysize, transform, dataScaled, projection, gdal.GDT_Float32)
             
-            command = "gdal_translate -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
+            command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
                         % (outRaster, outTif, name, date)
             os.system(command)
             
@@ -195,7 +199,7 @@ def CalcNDVI(ListFilesBands, out, filenameBand, date):
     outRaster = SaveRaster(out+"/"+filenameBand+"_Ndvi.tif", xsize,\
                         ysize, transform, NDVI, projection, gdal.GDT_Float32)
 
-    command = "gdal_translate -co COMPRESS=DEFLATE %s %s/NDVI_%s.tif"\
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/NDVI_%s.tif"\
                % (outRaster, out, date)
     os.system(command)
                        
@@ -212,7 +216,7 @@ def CalcFVC(raster, out):
     Data, Xsize, Ysize, Projection, Transform = OpenRaster(raster, 1)
     FVC = ((Data - 0)/(np.nanmax(Data)-0))**2
     outRaster = SaveRaster(out+"_uncompressed.tif", Xsize, Ysize, Transform, FVC, Projection, gdal.GDT_Float32)
-    command = "gdal_translate -co COMPRESS=DEFLATE %s %s"\
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s"\
                % (outRaster, out+".tif")
     os.system(command)
     os.remove(outRaster)
@@ -236,8 +240,14 @@ def CalcTjTn(ListFilesTemp, out):
     # Applique Tj_Tn
     TjTn = Tj - Tn  
     # Enregistre l'image
-    outRaster = SaveRaster(out, Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
+    outRaster = SaveRaster(out+"_uncompressed.tif", Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
                         Projection_Tj, gdal.GDT_Float32)
+
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s"\
+               % (outRaster, out)
+    os.system(command)
+    os.remove(outRaster)
+
     return TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn
 
 
@@ -422,14 +432,14 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     outRaster = SaveRaster(out+"/Temporaire.tif", Xsize_Tj, Ysize_Tj, \
                         Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
     
-    command = "gdal_translate -co COMPRESS=DEFLATE %s %s/EF_%s.tif"\
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/EF_%s.tif"\
                % (outRaster, out, Date)
     os.system(command)
     
     os.remove(outRaster)
 
 
-def Main(datas, out, ShapeBretagne):
+def Main(datas, out, clipShp, maskShp):
     """
     Fonction consistant a lister tous les fichiers MODIS se trouvant dans un
     dossier. Puis, trie par ordre chronologique ces fichiers, puis utilise
@@ -462,8 +472,8 @@ def Main(datas, out, ShapeBretagne):
         if not os.path.exists(out+"/EF/EF_%s.tif" % (Date)):
             
             # Extract au format tif et clip les bandes et temperatures
-            ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", ShapeBretagne, Date)
-            ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", ShapeBretagne, Date)
+            ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", clipShp, maskShp, Date)
+            ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", clipShp, maskShp, Date)
             
             # Calcule le NDVI
             if not os.path.exists(out+"/NDVI"):
@@ -518,15 +528,17 @@ if __name__ == "__main__":
         parser.add_argument("-out", dest="out", action="store",
                             help="Out directory")
         
-        parser.add_argument("-shp", dest="shp", action="store",
-                            default = "/home/donatien/ProjectGeoBretagne/Datas/Bretagne.shp", 
-                            help="Shapefile de la Bretagne")
+        parser.add_argument("-clipshp", dest="clipShp", action="store", 
+                            help="Shapefile de decoupage")
+
+	parser.add_argument("-maskshp", dest="maskShp", action="store",
+                            help="Shapefile de masquage")
                             
         args = parser.parse_args()
     np.seterr(divide='ignore', invalid='ignore')
     if not os.path.exists(args.out):
         os.mkdir(args.out)
         
-    Main(args.datas, args.out, args.shp)
+    Main(args.datas, args.out, args.clipShp, args.maskShp)
     
     print "\nToutes les dates (rasters) telechargees ont ete traitees. Fin"
