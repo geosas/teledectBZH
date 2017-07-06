@@ -147,14 +147,14 @@ def ExtractClip(fichier, out, dataType, ShapeBretagne, date):
             RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
             
             # Decoupe le raster et le converti au format tif
-            command = "gdal_translate -ot Float32 \
+            command = "gdal_translate -ot Float32 -r nearest -tr 231.656 231.656\
             -projwin -386371 5533108 -3976 5211056 \
             HDF4_EOS:EOS_GRID:'%s':MODIS_Grid_8Day_1km_LST:LST_%s_1km \
             %s" % (fichier, name, RastClip)            
             os.system(command)
             
             # Reprojete le raster en EPSG:2154
-            command = "gdalwarp -t_srs EPSG:2154 -r near -tr 231.656 231.656 %s %s" % (RastClip, RastReproject)
+            command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
             
             # Masque les valeurs inutiles et aberrantes
