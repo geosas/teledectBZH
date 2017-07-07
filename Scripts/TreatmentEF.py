@@ -513,6 +513,9 @@ def Main(datas, out, clipShp, maskShp):
 	else :
 	    print "La date %s a deja ete traitee" % (Date)
 
+	else :
+	    print "La date %s a deja ete traitee" % (Date)
+
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:
