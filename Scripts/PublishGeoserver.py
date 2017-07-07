@@ -156,7 +156,7 @@ def GeoPublish(url, workspace, store, login, password, datadir):
                     if ".tif" in raster :
                         date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
                         if indexStore.find(date) == -1:
-                            UpdateStore(login, password, path+raster, urlStore)
+                            UpdateStore(login, password, path+"/"+raster, urlStore)
 
         else:
             CreateStore(datadir, login, password, store, workspace, url)

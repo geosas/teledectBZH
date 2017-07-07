@@ -11,6 +11,8 @@ import glob
 import gdal
 import datetime
 from scipy.stats import linregress
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 def OpenRaster(inRaster, band):
@@ -508,6 +510,8 @@ def Main(datas, out, clipShp, maskShp):
             # Calcul d'EF
             CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
                 Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
+	else :
+	    print "La date %s a deja ete traitee" % (Date)
 
         
 if __name__ == "__main__":
