@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  7 JUL 2017 17:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  10 JUL 2017 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -565,12 +565,9 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: img/modis.png Graphic file (type png)
  <use img/modis.png>
 Package pdftex.def Info: img/modis.png used on input line 57.
-(pdftex.def)             Requested size: 216.80946pt x 273.5212pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<img/modisGrid.png, id=18, 501.875pt x 280.04625pt>
+(pdftex.def)             Requested size: 173.44492pt x 218.81361pt.
+ [2 <./img/spectre-electromagnetique.png> <./img/modis.png>]
+<img/modisGrid.png, id=23, 501.875pt x 280.04625pt>
 File: img/modisGrid.png Graphic file (type png)
  <use img/modisGrid.png>
 Package pdftex.def Info: img/modisGrid.png used on input line 66.
@@ -580,200 +577,216 @@ Overfull \hbox (6.31009pt too wide) in paragraph at lines 66--67
  [][] 
  []
 
+[3 <./img/modisGrid.png>]
+<img/spectral_signatures.jpg, id=29, 800.0289pt x 402.5439pt>
+File: img/spectral_signatures.jpg Graphic file (type jpg)
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+<use img/spectral_signatures.jpg>
+Package pdftex.def Info: img/spectral_signatures.jpg used on input line 96.
+(pdftex.def)             Requested size: 320.00589pt x 161.0147pt.
+ [4 <./img/spectral_signatures.jpg>]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 124.
 
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 86.
+
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [2 <./img/spectre-electromagnetique.png>] [3 <./img/modis.png> <./img/modisGr
-id.png>] [4] [5]
-Overfull \hbox (10.66928pt too wide) in paragraph at lines 148--149
+) [5] [6]
+Overfull \hbox (10.66928pt too wide) in paragraph at lines 186--187
 []\T1/cmtt/m/n/10 http://docs.geoserver.org/latest/en/user/services/wms/time.ht
 ml
  []
 
-
-Overfull \hbox (89.40005pt too wide) in paragraph at lines 173--173
+[7]
+Overfull \hbox (89.40005pt too wide) in paragraph at lines 211--211
  []\T1/cmtt/m/n/10 Schema=*the_geom:Polygon,location:String,time:java.util.Date
 ,elevation:Integer[] 
  []
 
 
-Overfull \hbox (21.16672pt too wide) in paragraph at lines 174--174
+Overfull \hbox (21.16672pt too wide) in paragraph at lines 212--212
  []\T1/cmtt/m/n/10 PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](
 time)[] 
  []
 
-[6]
-Overfull \hbox (91.91333pt too wide) in paragraph at lines 177--178
+
+Overfull \hbox (91.91333pt too wide) in paragraph at lines 215--216
 []\T1/cmr/m/n/10 Sur le GeoServer, créer un workspace ([]\T1/cmtt/m/n/10 https:
 //geoxxx.agrocampus-ouest.fr/teledectBZH\T1/cmr/m/n/10 ). 
  []
 
 
-Overfull \hbox (18.47293pt too wide) in paragraph at lines 178--179
+Overfull \hbox (18.47293pt too wide) in paragraph at lines 216--217
 \T1/cmr/m/n/10 les rasters et fichiers prop-er-ties ([]\T1/cmtt/m/n/10 file:///
 home/data/gi2016/teledectBZH/\T1/cmr/m/n/10 ).
  []
 
 
-Overfull \hbox (703.50009pt too wide) in paragraph at lines 182--182
+Overfull \hbox (703.50009pt too wide) in paragraph at lines 220--220
  []\T1/cmtt/m/n/10 <sld:StyledLayerDescriptor version="1.0.0" xmlns="http://www
 .opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.
 opengis.net/ogc" xmlns:sld="http://www.opengis.net/sld">[] 
  []
 
-
-Overfull \hbox (42.16159pt too wide) in paragraph at lines 195--195
+[8]
+Overfull \hbox (42.16159pt too wide) in paragraph at lines 233--233
  []                            \T1/cmtt/m/n/10 <ogc:PropertyName>grid</ogc:Prop
 ertyName>[] 
  []
 
 
-Overfull \hbox (231.11545pt too wide) in paragraph at lines 199--199
+Overfull \hbox (231.11545pt too wide) in paragraph at lines 237--237
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#d7191
 c" quantity="0" label="0 - 0.1" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 200--200
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 238--238
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#e34a3
 3" quantity="0.1" label="0.1 - 0.2" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 201--201
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 239--239
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#f07c4
 a" quantity="0.2" label="0.2 - 0.3" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 202--202
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 240--240
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#fdae6
 1" quantity="0.3" label="0.3 - 0.4" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 203--203
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 241--241
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#fdc98
 0" quantity="0.4" label="0.4 - 0.5" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 204--204
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 242--242
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#fee49
 f" quantity="0.5" label="0.5 - 0.6" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 205--205
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 243--243
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#ffffb
 f" quantity="0.6" label="0.6 - 0.7" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 206--206
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 244--244
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#e3f2c
 d" quantity="0.7" label="0.7 - 0.8" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 207--207
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 245--245
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#c7e5d
 b" quantity="0.8" label="0.8 - 0.9" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 208--208
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 246--246
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#abd9e
 9" quantity="0.9" label="0.9 - 1.0" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (241.61288pt too wide) in paragraph at lines 209--209
+Overfull \hbox (241.61288pt too wide) in paragraph at lines 247--247
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#80b9d
 8" quantity="1" label="1.0 - 1.1" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (252.11032pt too wide) in paragraph at lines 210--210
+Overfull \hbox (252.11032pt too wide) in paragraph at lines 248--248
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#569ac
 7" quantity="1.1" label="1.1 - 1.2" opacity="1"/>[] 
  []
 
 
-Overfull \hbox (257.35904pt too wide) in paragraph at lines 211--211
+Overfull \hbox (257.35904pt too wide) in paragraph at lines 249--249
  []                            \T1/cmtt/m/n/10 <sld:ColorMapEntry color="#2c7bb
 6" quantity="1.2" label="1.2 - 1.26" opacity="1"/>[] 
  []
 
-[7]
-Overfull \hbox (21.2778pt too wide) in paragraph at lines 220--221
+
+Overfull \hbox (21.2778pt too wide) in paragraph at lines 258--259
 []\T1/cmr/m/n/10 Créer un layer selon le workspace et l'entrepôt (teledect-BZH:
 EF_teledectBZH).
  []
 
 
-Overfull \hbox (980.65353pt too wide) in paragraph at lines 230--230
+Overfull \hbox (980.65353pt too wide) in paragraph at lines 268--268
 []\T1/cmr/m/n/10 V : []\T1/cmtt/m/n/10 curl -v -u login:password -XPOST -H "Con
 tent-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif
 " "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/cove
 ragestores/EF_teledectBZH/external.imagemosaic" 
  []
 
-
-Overfull \hbox (9.72507pt too wide) in paragraph at lines 244--245
+[9]
+Overfull \hbox (9.72507pt too wide) in paragraph at lines 282--283
 []\T1/cmr/m/n/10 Eviter la trans-parence pour les don-nées, spliter raster/orth
 ophoto+localisant
  []
 
-[8] [9]
-Overfull \hbox (50.07019pt too wide) in paragraph at lines 303--304
+[10] [11]
+Overfull \hbox (50.07019pt too wide) in paragraph at lines 341--342
 \T1/cmr/m/n/10 : []\T1/cmtt/m/n/10 http://geoxxx.agrocampus-ouest.fr/geouest/mv
 iewer/?config=demo/geouest.xml 
  []
 
 
-Overfull \hbox (223.2779pt too wide) in paragraph at lines 318--319
+Overfull \hbox (223.2779pt too wide) in paragraph at lines 356--357
 \T1/cmr/m/n/10 pour vi-su-aliser le ré-sul-tat : []\T1/cmtt/m/n/10 http://geoxx
 x.agrocampus-ouest.fr/geouest/timeviewer/?timeLayer=geouest:EF_teledectBZH 
  []
 
-[10]
-Overfull \hbox (10.35767pt too wide) in paragraph at lines 337--338
-\T1/cmr/m/n/10 Aqua data in north-west-ern China (http://ieeexplore.ieee.org/do
-cument/4423572/) 
+[12]
+Overfull \hbox (3.14334pt too wide) in paragraph at lines 378--379
+\T1/cmr/m/n/10 Ama-zon", Pro-ceed-ings of the Na-tional Academy of Sci-ences, 1
+03(39):14637. 
  []
 
-[11] (./Metadonnee.aux)
 
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+Overfull \hbox (1.10681pt too wide) in paragraph at lines 379--380
+\T1/cmr/m/n/10 stress sta-tus in semi-arid range-land ecosys-tems". Re-mote sen
+s., 6, pp.6300-
+ []
 
- ) 
+
+Overfull \hbox (19.30606pt too wide) in paragraph at lines 383--384
+\T1/cmr/m/n/10 mon-i-tor-ing veg-e-ta-tion", Re-mote Sens-ing of the En-vi-ron-
+ment, no.8, pp.127^^U150. 
+ []
+
+[13] (./Metadonnee.aux) ) 
 Here is how much of TeX's memory you used:
- 2986 strings out of 494910
- 37174 string characters out of 6179837
- 99072 words of memory out of 5000000
- 6210 multiletter control sequences out of 15000+600000
+ 2993 strings out of 494910
+ 37340 string characters out of 6179837
+ 98078 words of memory out of 5000000
+ 6215 multiletter control sequences out of 15000+600000
  17483 words of font info for 51 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,6n,24p,437b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </hom
-e/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/donati
-en/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/donatien/.texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/donatien/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/donatien/.texmf-var/fonts/pk/l
-jfour/jknappen/ec/ecrm0900.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/e
-c/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm17
-28.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on Metadonnee.pdf (11 pages, 883276 bytes).
+ 37i,6n,24p,824b,331s stack positions out of 5000i,500n,10000p,200000b,80000s
+ </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/e
+c/ectt1000.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
+00.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk
+> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home
+/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/donatie
+n/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/donatien/.texmf
+-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/lj
+four/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+Output written on Metadonnee.pdf (13 pages, 1416442 bytes).
 PDF statistics:
- 444 PDF objects out of 1000 (max. 8388607)
- 72 compressed objects within 1 object stream
+ 491 PDF objects out of 1000 (max. 8388607)
+ 83 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

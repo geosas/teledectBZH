@@ -14,10 +14,10 @@
 \maketitle
 
 \begin{abstract}
-GéoBretagne a décidé d'intégrer des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
+GéoBretagne a intégré des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
 \begin{itemize}
 \item le NDVI pour la distinction des surfaces végétales/non végétales
-\item l'Evaporative Fraction pour estimer l'évaporation d'un sol et donc, son potentiel hydrique
+\item l'Evaporative Fraction (EF) pour estimer l'évaporation d'un sol et donc, son potentiel hydrique
 \item les températures moyenne sur 8 jours de jour, comme de nuit
 \end{itemize}
 Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ces indices de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
@@ -29,10 +29,10 @@ La définition officielle de la télédétection est « l’ensemble des connais
 
 La notion de "sans contact matériel avec ceux-ci" correspond à l'acquisition d'informations sur la Terre à partir de satellites, avions, drones ou simplement d'un appareil photo jeté en l'air (à vos risques et périls). Pour l'étude d'autres planètes, les télescopes effectuent également de la télédétection étant donné qu'ils ne sont pas en contact avec celles-ci.\smallbreak
 
-L'acquisition d'informations s'opère par la mesure du  spectre électromagnétiques dans différents domaines (figure \ref{spectreElectro}) :
+L'acquisition d'informations s'opère par la mesure du  spectre électromagnétiques dans les domaines (figure \ref{spectreElectro}) :
 \begin{itemize}
-\item dans le visible pour l'oeil humain, comme un appareil photo
-\item dans l'invisible pour l'oeil humain :
+\item du visible pour l'oeil humain, comme un appareil photo
+\item de l'invisible pour l'oeil humain :
 \begin{itemize}
 \item l'infrarouge (télécommande, capteur thermique)
 \item les micro-ondes (téléphone, radar)
@@ -50,16 +50,16 @@ Dans le cadre de cette introduction à la télédétection, les données employ�
 
 \subsection{Capteur MODIS}
 
-Le capteur MODIS est un spectroradiomètre imageur (un appareil appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées par l'United States Geological Survey (USGS) .
+Le capteur MODIS est un spectroradiomètre imageur (un appareil appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées gratuitement par l'United States Geological Survey (USGS) .
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.5]{img/modis.png}
+\includegraphics[scale=0.4]{img/modis.png}
 \caption{Représentation du satellite Terra avec le capteur MODIS}
 \label{modis}
 \end{figure}
 
-Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière (vers 10h00). Une image de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
+Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière (photo vers 10h00). Une image (tuile) de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
 
 \begin{figure}[!h]
 \centering
@@ -68,17 +68,55 @@ Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomè
 \label{modisGrid}
 \end{figure}
 
-\subsection{Plan de travail}
+Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien que généralement, les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne :
 \begin{itemize}
-\item Téléchargement et stockage automatique des images MODIS (bandes + TempJour et TempNuit S8)
-\item Calcul du NDVI, bord chaud/froid via nuage de points, récupérer 5\% min et max pour calculer EF
-\item Remplir une fiche de métadonnées
-\item Présenter le résultat
+\item une résolution temporelle journalière et des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours)
+\item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer EF)
+\item des archives importantes (il est possible d'avoir des données jusqu'en 2000) pour l'aspect temporel mis en avant sur GéoBretagne
 \end{itemize}
+
+Bien que la résolution du capteur ne soit pas adapté au paysage bretons à cause du paysage fragmentés
+\subsection{Produits disponibles sur GéoBretagne}
+
+Les premiers produits diffusés ont tous une dimension temporelle avec un pas de temps de 8 jours.
+
+\subsubsection{NDVI}
+
+Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation standard dans l'étude de la végétation (Gao, 1996). Cet indice se calcule avec les bandes électromagnétiques du rouge (R) et du proche infrarouge (Pir). Le résultat est normalisé entre -1 (autre que végétation tel l'eau) et 1 (végétation dynamique).\smallbreak
+
+\begin{center}
+\textrm{NDVI}=$ \frac{Pir-R}{Pir+R} $
+\end{center}\smallbreak
+
+Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance celle du proche infrarouge.\smallbreak
+La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcul la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Ensuite, concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité), les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{img/spectral_signatures.jpg}
+\caption{Signatures spectrales du sol, de l'eau et de la végétation vis à vis du spectre électromagnétique entre 350 et 2500nm. Source: SEOS Project}
+\label{signSpectr}
+\end{figure}
+
+Cet indice permet d'effectuer une classification de l'occupation du sol. De part l'aspect temporel mis en avant sur GéoBretagne, cet indice permet également de suivre la phénologie de la végétation. De cette manière, il est possible de déterminer l'usage des sols (Patakamuri et al., 2014).
+
+\subsubsection{Evaporative Fraction}
+
+L'Evaporative Fraction est un indice permettant d'estimer la capacité d'un sol à évaporer et donc son humidité (Bastiaanssen et al., 2003; Nutini et al., 2014). Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (sol imperméable et sec) à 1.26 (eau libre). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employées pour calculer EF. \smallbreak
+De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne). En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse. Cet indice est également employé pour estimer l'évapotranspiration, mais aussi la biomasse à partir de modèles (Nutini et al., 2014).
+
+\subsubsection{Température de jour et de nuit}
+
+Ces deux données sont mis à disposition par l'USGS-LP DAAC sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours en journée et de nuit. Cette donnée est utilisée pour calculer EF. Ces températures sont également disponibles sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbain avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour (lors de fortes chaleurs) ou de nuit.
 
 \section{Méthodologie}
 
-La méthodologie correspond à une chaîne de traitement développée en Python.
+La méthodologie correspond à une chaîne de traitement développée en Python pour :
+\begin{enumerate}
+\item Téléchargement des images MODIS
+\item Calcul des produits
+\item Publication sur un geoserver
+\end{enumerate}
 
 \subsection{Téléchargement des données MODIS}
 
@@ -334,7 +372,18 @@ Pour ajouter un wmc, il faut aller chercher des données au même endroit que l'
 \end{itemize}
 \section{Bibliographie}
 
-Comparisons of normalized difference vegetation index from MODIS Terra and Aqua data in northwestern China (http://ieeexplore.ieee.org/document/4423572/)
+\begin{itemize}
+\item Bastiaanssen W.G.M., Ali, S. (2003). "A new crop yield forecasting model based on satellite measurements applied across the Indus Basin, Pakistan". Agric. Ecosyst. Environ. 94, pp.321–340.
+\item Gao B.-C. (1996). "NDWI : A  Normalized  Difference  Water  Index  for  remote  sensing  of vegetation liquid water from space", Proceeding of SPIE.Vol.58, no.3, pp.257-266.
+\item Morton, D. C., DeFries, R. S., Shimabukuro, Y. E., Anderson, L. O., Arai, E., del Bon Espirito-Santo, F.,  Freitas,  R.  et  Morisette,  J.,  (2006). "Cropland expansion changes deforestation dynamics in the southern Brazilian Amazon", Proceedings of the National Academy of Sciences, 103(39):14637. 
+\item Nutini F., Boschetti M., Candiani G., Bocchi S., Brivio P.A., (2014). "Evaporative Fraction as an indicator of moisture condition and water stress status in semi-arid rangeland ecosystems". Remote sens., 6, pp.6300-6323.
+\item Patakamuri S.K., Agrawal S., Krishnaveni M. (2014). "Time-series analysis of MODIS NDVI data along with ancillary data for land use/land cover mapping of Uttarakhand". The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences. XL-8, ISPRS Technical Commission VIII Symposium, pp.1491–1500
+\item Roerink G., Su Z., Menenti M. (2000). "S-SEBI: A simple remote sensing algorithm to estimate the surface energy balance". Phys. Chem. Earth Part B 25, pp.147–157.
+\item Rouse and Haas, (1973). "Monitoring vegetation systems in the great plain with ERTS", Third ERTS Symposium, Washington DC: NASA, no.1, pp.309-317.
+\item Tucker, (1979). "Red and photographic infrared linear combinations for monitoring vegetation", Remote Sensing of the Environment, no.8, pp.127–150. 
+\item Wardlow, B.D., Kastens, J.H. et Egbert, S.L. (2006). "Using USDA crop progress data for the evaluation of greenup onset date calculated from MODIS 250meter data", Photogrammetric Engineering and Remote Sensing 72(11), 1225-1234. 
+\end{itemize}
+
 \end{document}
 
 \section{Tips}
