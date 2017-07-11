@@ -194,21 +194,30 @@ def CalcNDVI(ListFilesBands, out, filenameBand, date):
     red, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[0], 1)
     nir, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[1], 1)
     NDVITemp = ((nir-red)/(nir+red))
-    NDVI = np.where(((NDVITemp<=0) | (NDVITemp>1)), 0, NDVITemp)       
-         
     # Supprime valeurs aberrantes du NDVI causee par la mer
     # mais aussi pour se concentrer uniquement sur la vegetation
+    NDVI = np.where(((NDVITemp<=0) | (NDVITemp>1)), 0, NDVITemp)       
+    
     outRaster = SaveRaster(out+"/"+filenameBand+"_Ndvi.tif", xsize,\
-                        ysize, transform, NDVI, projection, gdal.GDT_Float32)
+                        ysize, transform, NDVITemp, projection, gdal.GDT_Float32)
 
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/NDVI_%s.tif"\
                % (outRaster, out, date)
+    os.system(command)
+    
+    os.remove(outRaster)
+    
+    outRaster = SaveRaster(out+"/"+filenameBand+"_Ndvi.tif", xsize,\
+                        ysize, transform, NDVI, projection, gdal.GDT_Float32)
+
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/NDVI_aeffacer.tif"\
+               % (outRaster, out)
     os.system(command)
                        
     # Supprime le fichier intermediaire                
     os.remove(outRaster)
     
-    return "%s/NDVI_%s.tif" % (out, date)
+    return "%s/NDVI_aeffacer.tif" % (out)
     
     
 def CalcFVC(raster, out):
@@ -222,6 +231,7 @@ def CalcFVC(raster, out):
                % (outRaster, out+".tif")
     os.system(command)
     os.remove(outRaster)
+    os.remove(raster)
     return FVC
 
 
@@ -510,9 +520,6 @@ def Main(datas, out, clipShp, maskShp):
             # Calcul d'EF
             CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
                 Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
-	else :
-	    print "La date %s a deja ete traitee" % (Date)
-
 	else :
 	    print "La date %s a deja ete traitee" % (Date)
 

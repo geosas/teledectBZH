@@ -16,10 +16,11 @@
 \begin{abstract}
 GéoBretagne a intégré des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
 \begin{itemize}
-\item le NDVI pour la distinction des surfaces végétales/non végétales
+\item un indice de végétation (NDVI) pour la distinction des surfaces végétales/non végétales
 \item l'Evaporative Fraction (EF) pour estimer l'évaporation d'un sol et donc, son potentiel hydrique
-\item les températures moyenne sur 8 jours de jour, comme de nuit
+\item la température moyenne sur 8 jours de jour et de nuit
 \end{itemize}
+
 Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ces indices de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
 \end{abstract}
 
@@ -29,7 +30,8 @@ La définition officielle de la télédétection est « l’ensemble des connais
 
 La notion de "sans contact matériel avec ceux-ci" correspond à l'acquisition d'informations sur la Terre à partir de satellites, avions, drones ou simplement d'un appareil photo jeté en l'air (à vos risques et périls). Pour l'étude d'autres planètes, les télescopes effectuent également de la télédétection étant donné qu'ils ne sont pas en contact avec celles-ci.\smallbreak
 
-L'acquisition d'informations s'opère par la mesure du  spectre électromagnétiques dans les domaines (figure \ref{spectreElectro}) :
+L'acquisition d'informations s'opère par la mesure du spectre électromagnétiques dans les domaines (figure \ref{spectreElectro}) :
+
 \begin{itemize}
 \item du visible pour l'oeil humain, comme un appareil photo
 \item de l'invisible pour l'oeil humain :
@@ -46,11 +48,11 @@ L'acquisition d'informations s'opère par la mesure du  spectre électromagnéti
 \label{spectreElectro}
 \end{figure}
 
-Dans le cadre de cette introduction à la télédétection, les données employées se situent dans les domaines du visible et de l'invisible (infrarouge) et proviennent du capteur MODIS.
+Dans le cadre de cette introduction à la télédétection, les données employées se situent dans les domaines du visible et de l'invisible (infrarouge).
 
 \subsection{Capteur MODIS}
 
-Le capteur MODIS est un spectroradiomètre imageur (un appareil appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées gratuitement par l'United States Geological Survey (USGS) .
+Le capteur MODIS est un spectroradiomètre imageur (un appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées gratuitement par l'United States Geological Survey (USGS) .
 
 \begin{figure}[!h]
 \centering
@@ -59,7 +61,7 @@ Le capteur MODIS est un spectroradiomètre imageur (un appareil appareil photo) 
 \label{modis}
 \end{figure}
 
-Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière (photo vers 10h00). Une image (tuile) de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
+Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière. Une image (tuile) de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
 
 \begin{figure}[!h]
 \centering
@@ -72,10 +74,9 @@ Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien q
 \begin{itemize}
 \item une résolution temporelle journalière et des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours)
 \item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer EF)
-\item des archives importantes (il est possible d'avoir des données jusqu'en 2000) pour l'aspect temporel mis en avant sur GéoBretagne
+\item des archives importantes (il est possible d'avoir des données à partir de l'an 2000) pour l'aspect temporel mis en avant sur GéoBretagne
 \end{itemize}
 
-Bien que la résolution du capteur ne soit pas adapté au paysage bretons à cause du paysage fragmentés
 \subsection{Produits disponibles sur GéoBretagne}
 
 Les premiers produits diffusés ont tous une dimension temporelle avec un pas de temps de 8 jours.
@@ -88,8 +89,9 @@ Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation stand
 \textrm{NDVI}=$ \frac{Pir-R}{Pir+R} $
 \end{center}\smallbreak
 
-Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance celle du proche infrarouge.\smallbreak
-La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcul la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Ensuite, concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité), les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
+Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance pour celle du proche infrarouge.\smallbreak
+
+La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcule la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
 
 \begin{figure}[!h]
 \centering
@@ -102,274 +104,212 @@ Cet indice permet d'effectuer une classification de l'occupation du sol. De part
 
 \subsubsection{Evaporative Fraction}
 
-L'Evaporative Fraction est un indice permettant d'estimer la capacité d'un sol à évaporer et donc son humidité (Bastiaanssen et al., 2003; Nutini et al., 2014). Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (sol imperméable et sec) à 1.26 (eau libre). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employées pour calculer EF. \smallbreak
-De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne). En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse. Cet indice est également employé pour estimer l'évapotranspiration, mais aussi la biomasse à partir de modèles (Nutini et al., 2014).
+L'Evaporative Fraction est un indice permettant d'estimer la capacité d'un sol à évaporer et donc son humidité (Bastiaanssen et al., 2003; Nutini et al., 2014). Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
+
+De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne). En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse. Cet indice est également employé pour estimer l'évapotranspiration et la biomasse à partir de modèles (Nutini et al., 2014).
 
 \subsubsection{Température de jour et de nuit}
 
-Ces deux données sont mis à disposition par l'USGS-LP DAAC sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours en journée et de nuit. Cette donnée est utilisée pour calculer EF. Ces températures sont également disponibles sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbain avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour (lors de fortes chaleurs) ou de nuit.
+Ces deux données sont mis à disposition par l'USGS-LP DAAC sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours de jour et de nuit. Cette donnée est utilisée pour calculer EF. Ces températures sont également disponibles sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbains avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour ou de nuit étant donné leur amplitude thermique plus faible que le sol et la végétation.
 
 \section{Méthodologie}
 
-La méthodologie correspond à une chaîne de traitement développée en Python pour :
+La chaîne de traitement développée pour générer et rendre accessible ces produits sur GéoBretagne se divise en 3 parties :
+
 \begin{enumerate}
 \item Téléchargement des images MODIS
-\item Calcul des produits
-\item Publication sur un geoserver
+\item Génération des produits
+\item Publication sur un GeoServer
 \end{enumerate}
+
+Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif de respecter cette nomenclature : Nom\_YYYYMMDD.tif. Dans le cas contraire, le GeoServer (dans la configuration actuelle), ne sera pas capable de gérer l'aspect temporel de l'image.
 
 \subsection{Téléchargement des données MODIS}
 
-\begin{itemize}
-\item Les données MODIS se situent sur le site :\newline \verb!https://lpdaac.usgs.gov/data_access/data_pool.!
-\item Pour la Bretagne, il faut télécharger la tuile h17v04. 
-\item Le capteur MODIS Terra va être celui qui sera utilisé pour calculer le NDVI (J. Wang et al., 2007) et aussi pour les autres informations.
-\item Pour les températures jour/nuit S8 à 1km, le produit est MOD11A2 avec les produits LST day et night (température en Kelvin) avec un scale factor de 0.02.
-\item Les bandes Red et Nir MODIS sont disponibles via le produit MOD09Q1 S8 à 250m avec un scale factor de 0.0001.
-\end{itemize}  
+Les produits MODIS nécessaires pour les traitements sont MOD09Q1 (bandes du rouge et du proche infrarouge) à 250m de résolution spatiale et MOD11A2 (température de jour et de nuit) à 1km. La tuile à télécharger est la h17v04. Ces produits sont disponibles sur la plateforme de téléchargement LP DAAC de l'USGS \verb!https://lpdaac.usgs.gov/data_access/data_pool.! Les archives pour ces produits débutent au 18 Février 2000 et une nouvelle image est ajoutée tous les 8 jours (approximativement).\smallbreak
 
-La nomenclature des noms de fichiers est la suivante :
-\begin{itemize}
-\item MYD11A2.AYYYYDDD.hHHvVV.CCC.YYYYDDDHHMMSS.hdf
-\begin{itemize}
-\item YYYYDDD = Year and Day of Year of acquisition
-\item hHH = Horizontal tile number (0-35)
-\item vVV = Vertical tile number (0-17)
-\item CCC = Collection number
-\item YYYYDDDHHMMSS = Production Date and Time
-\end{itemize}
-\end{itemize}
+Le téléchargement des images repose sur différents critères, c'est à dire le site de téléchargement (fixe), le produit (fixe), la tuile (fixe) et la date du produit (variable) dont voici le fonctionnement (figure \ref{orgDL}) :\newpage
 
-L'évapotranspiration est disponible dans les données MODIS (MOD16A2) calculé selon cette méthode (http://www.ntsg.umt.edu/project/mod16).
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{img/orgDownload.pdf}
+\caption{Organigramme des étapes nécessaires pour le téléchargement des produits MODIS.}
+\label{orgDL}
+\end{figure}
+
+\subsection{Génération des produits}
+
+La production des produits diffusés s'opère en 3 étapes :
 
 \begin{enumerate}
-\item Lancement du script (-path pour le répertoire où sauvegarder les données, -netrc pour indiquer le fichier contenant les identifiants pour télécharger les images, -fdate pour indiquer la date à partir de laquelle on souhaite télécharger les images, -ldate pour indiquer la date de fin de recherche des images).
-\item Liste toutes les dates entre celle indiqué en paramètre et la date du jour.
-\item Initialise l'url pour télécharger les données.
-\item Se place au niveau de l'url et liste tous les liens à télécharger.
-\item Télécharge les images qui ne l'ont pas encore été.
+\item Contrôle des dates déjà traitées
+\item Prétraitement des images
+\item Génération des produits
 \end{enumerate}
 
-Concernant une perspective, il serait intéressant de donner des intervalles de temps et non pas une date de départ.
+Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretagne est le suivant (figure \ref{orgIndex}) :\newpage
 
-\subsection{Calcul de l'Evaporative Fraction (EF)}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.48]{img/orgIndices.pdf}
+\caption{Organigramme des étapes pour la génération des indices diffusés sur GéoBretagne.}
+\label{orgIndex}
+\end{figure}
 
-Lors de cette étape, nous disposons des bandes du rouge et du proche infrarouge, mais aussi des températures de jour et de nuit en Kelvin.
+Les paramètres en entrée du script sont :
+
+\begin{itemize}
+\item le dossier contenant les images téléchargées précédemment
+\item le dossier où enregistrer les produits générés
+\item un shapefile pour découper les images
+\item un shapefile pour masquer les pixels de la mer
+\end{itemize}
+
+\subsubsection{Prétraitements}
+
+Les images téléchargées nécessitent des prétraitements avant de générer les produits. Ils consistent à :
+
+\begin{itemize}
+\item découper les images à l'échelle de la Bretagne et supprimer les pixels de la mer
+\item changer le format de fichier des images (hdf vers tif)
+\item rééchantillonner les images des températures (1km vers 250m)
+\item recalculer les valeurs selon un facteur indiqué sur le site de l'USGS
+\end{itemize}
+
+Les températures sont directement publiables, aucun traitement supplémentaire ne sera effectué.
+
+\subsubsection{NDVI}
+
+L'étape suivante consiste à calculer le NDVI. Pour les étapes suivantes, les valeurs inférieures à 0 et supérieures à 1 (quelques pixels de mer non masqués ayant des valeurs aberrantes) sont supprimés. Le NDVI ne dispose alors que de valeurs allant de 0 à 1, caractéristique nécessaire pour calculer EF. Ce changement de valeurs n'est pas répercuté sur le produit NDVI diffusé sur GéoBretagne.
+
+\subsubsection{Modèle S-SEBI et coefficient Priestley-Taylor}
+
+Pour pouvoir appliquer le modèle S-SEBI et générer le coefficient de Priestley-Taylor, il est nécessaire de calculer le Fractional Vegetation Cover (FVC) et calculer la température de surface (figure \ref{graphFVCTemp}).
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.313]{img/graph_fvc_temp.png}
+\caption{Graphique représentant le modèle S-SEBI pour générer le coefficient de Priestley-Taylor afin de calculer l'Evaporative Fraction.}
+\label{graphFVCTemp}
+\end{figure}
 
 \begin{enumerate}
-\item Liste tous les fichiers téléchargés.
-\item  Pour chaque fichier, converti le type .hdf vers .GeoTiff et rééchantillonne les températures à la résolution spatiale des bandes du rouge et proche infrarouge (1km vers 250m).
-\item Utilisation d'un shapefile de la région Bretonne pour découper la tuile MODIS et masquer les valeurs aberrantes de la mer.
-\item Calcule le NDVI et supprime les valeurs <0 et >1 (valeurs aberrantes se situant dans la mer et qui ne peuvent être masquée sans rogner sur le territoire).
-\item Calcul du FVC via le NDVI.
-\item Supprime les pixels sans données (Nan) sur les images (si un pixel est Nan sur une image, supprime le même pixel sur l'autre) et calcule Tj-Tn.
-\item Assigne une valeur Nan au FVC aux endroits où il n'y a pas de données sur Tj-Tn.
-\item Génère un nuage de points pour employer la méthode de Priestley-Taylor pour déterminer EF par l'utilisation d'une équation de droite selon les bords sec et humide.
-\item Génère les droites de régression et détermine l'équation pour calculer EF pour chacun des points.
-\item Calcule EF et génère une image selon cette donnée.
+\item[(a)]FVC \medbreak
+Cet indice représente la couverture de la végétation sur le sol. Plus l'indice est proche de 1, plus le sol est recouvert par la végétation et inversement. Il se calcule de la manière suivante :
+\begin{center}
+\textrm{FVC}=$ (\frac{NDVI-minNDVI}{maxNDVI-minNDVI})^2 $
+\end{center}\smallbreak
+
+\item[(b)]Température Tj - Tn \medbreak
+Pour calculer cette valeur, il est d'abord nécessaire de reporter les pixels sans données d'une image sur l'autre. Si cette étape n'est pas effectuée, des températures aberrantes vont être générées suite à la soustraction. Ces pixels sans données seront également à supprimer sur le FVC avant d'opérer le traitement suivant.
 \end{enumerate}
 
-\section{Réunion 16/06/2017 (Donatien, Hervé, Fabrice)}
-\begin{itemize}
-\item Fait : Estimer coût mémoire (stockage) 4mo par date pour résolution 250m et 1mo pour résolution 1km et temps de téléchargement et calcul des données.
-\item Fait : Conserver les données brutes et les diffuser également
-\item Fait : Compression "deflate" à ajouter
-\item Fait : Publier les bandes brutes decoupee/reechant/compress et les produits calculés.
-\item Fait : Coverage view -> vue sur le geoserver où l'on indique différents rasters (Donnees brutes + EF)
-\item Fait : Zone sans données -> on conserve les zones sans données pour le moment (solution avec interpolation pour recréer via la série temporelle ou faire des synthèse de 16j voir plus ?)
-\item Entre deux images (dates), quelle est la pertinence d'une valeur identique entre ces deux dates (déduction qu'il ne s'est rien passé ou pas de temps trop faible pour le voir ?)
-\item Pour présenter les valeurs EF, faire un découpage par zones pour donner les valeurs, courbes, etc... par zones et non pas à l'échelle du pixel.
-\item Organigramme -> traitement en verticale et publication vers la droite.
-\item Fait : Publier sur GeoSas des donnees.
-\item Creer un GeoRss + mail + tweet + page html avec lien direct pour animation, donnees pour informer sur de la publication de donnees + lien vers mviewer.
-\item Geoxxx pour traitement et mise au point (temps telechargement, traitement, demo) et geoserver pour publication (Geowww) via un upload à partir de geoxxx
-\item wms time : \newline \verb!http://docs.geoserver.org/latest/en/user/services/wms/time.html! pour tester la visualisation + interaction (calendrier, frise chronologique)
-\item \verb!http://kartenn.region-bretagne.fr/mviewer/! pour trouver exemple time dans le wms pour generer une couche appelant toutes les dates.
-\item coverage view = 1 workspace par date (probablement)
-\item Publication des temperatures jour/nuit avec data story (voici les villes, voila 2003 avec l'effet des secheresses, etc...). Pas uniquement présenter les donnees brutes, fournir une analyse.
-\item Activer partie temporelle via buildup sur le geoserver (buildup = exemple) avec liste de date, liste et intervalle
-\item FAIT : parametre de connexion en indiquant l'url des fichiers login.
-\item Est ce que toutes les dates doivent être referencee sur un index spatiale ou temporelle ?
-\item Geoserver utilise un shapefile pour lire l'emprise des fichiers tif. Pour l'ajout d'une date, il faut mettre à jour le shapefile cree par le geoserver pour lui indiquer l'emprise du fichier ou bien passer par un reload.
-\item Cron tab pour automatiser l'execution des scripts à une frequence de son choix ou jenkins.
-\item             lco tile=True (tuilage interne du format
-            compress = deflate)
-\end{itemize}
+Avec le FVC et l'image Tj - Tn, nous pouvons produire le nuage de point des valeurs (figure \ref{graphFVCTemp}) et récupérer uniquement les points composant les bords sec et humides pour calculer le coefficient de Priestley-Taylor. Ce coefficient ainsi que l'équation de droite associé sont obtenus après une double interpolation pour ces deux bords suivis d'une régression linaire entre eux (figure \ref{graphPriestley}).
 
-\subsection{Publication d'une série temporelle (rasters) sur un GeoServer}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.35]{img/graph_priestley.png}
+\caption{Estimation du coefficient de Priestley-Taylor par double interpolation afin de calculer l'Evaporative Fraction.}
+\label{graphPriestley}
+\end{figure}
+
+\subsubsection{Evaporative Fraction}
+
+Le calcul de cet indice se déroule en plusieurs étapes :
+\begin{enumerate}
+\item Calcul de la température maximale d'après l'équation de droite obtenue précédemment
+\item Avec cette température, calcul du coefficient de Priestley-Taylor :
+\begin{center}
+\textrm{Phi}=$ (\frac{Tmax-TjTn}{Tmax-Tmin})*1.26 $
+\end{center}\smallbreak
+\item Calcul de la température moyenne :
+\begin{center}
+\textrm{Tmoy}=$ ({Tj+Tn})/2 $
+\end{center}\smallbreak
+\item Calcul de ESatTa :
+\begin{center}
+\textrm{ESatTa}=$ (1000*exp(52.57633-(\frac{6790.4985}{Tmoy})-5.02808*log(Tmoy))) $
+\end{center}\smallbreak
+\item Calcul de delta :
+\begin{center}
+\textrm{delta}=$ (\frac{ESatTa}{Tmoy}) * ((\frac{6790.4985}{Tmoy})-5.02808) $
+\end{center}\smallbreak
+\item Calcul de EF :
+\begin{center}
+\textrm{EF}=$ (\frac{delta}{(delta+66)})*Phi $
+\end{center}\smallbreak
+\end{enumerate}
+
+Nous obtenons alors une image renseignant sur la capacité d'un sol à évaporer. L'étape suivante consiste alors à publier ces données sur un GeoServer.
+
+\subsection{Publication des produits sur un GeoServer}
+
+\subsubsection{Initialisation du workspace, du store et du répertoire de données pour des données temporelles}
+
+Ci-dessous la démarche à adopter pour générer un store temporel avec des données formalisés pour celui-ci.
 
 \begin{enumerate}
-\item Normaliser le nom des rasters : indice\_date.tif (EF\_20170525.tif).
-\item Créer un fichier timeregex.properties pour indiquer le nombre de caractères constituant la date :
-\begin{verbatim}
-	regex=[0-9]{8}
-\end{verbatim}
-\item Créer un fichier indexer.properties :
-\begin{verbatim}
-	TimeAttribute=time
-	ElevationAttribute=elevation
-Schema=*the_geom:Polygon,location:String,time:java.util.Date,elevation:Integer
-PropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)
-\end{verbatim}
-\item Importer les rasters et les deux fichiers properties sur le serveur. Dans notre cas, sur Pydio Geoxxx.
-\item Sur le GeoServer, créer un workspace (\verb!https://geoxxx.agrocampus-ouest.fr/teledectBZH!).
-\item Créer un entrepôt ImageMosaic en indiquant le workspace créé précédemment, un nom d'entrepôt, une description et l'url du dossier où sont stockés les rasters et fichiers properties (\verb!file:///home/data/gi2016/teledectBZH/!). Dans cette configuration, un shapefile est automatiquement créé et a pour rôle d'indexer les différents raster par ordre chronologique et de les spatialiser.
-\item Créer un sld correspondant aux valeurs de la série temporelle :
-\begin{verbatim}
-<?xml version="1.0" ?>
-<sld:StyledLayerDescriptor version="1.0.0" xmlns="http://www.opengis.net/sld" xmlns:gml="http://www.opengis.net/gml" xmlns:ogc="http://www.opengis.net/ogc" xmlns:sld="http://www.opengis.net/sld">
-    <sld:UserLayer>
-        <sld:LayerFeatureConstraints>
-            <sld:FeatureTypeConstraint/>
-        </sld:LayerFeatureConstraints>
-        <sld:UserStyle>
-            <sld:Name>NDVI_05_12_16</sld:Name>
-            <sld:Title/>
-            <sld:FeatureTypeStyle>
-                <sld:Name/>
-                <sld:Rule>
-                    <sld:RasterSymbolizer>
-                        <sld:Geometry>
-                            <ogc:PropertyName>grid</ogc:PropertyName>
-                        </sld:Geometry>
-                        <sld:Opacity>1</sld:Opacity>
-                        <sld:ColorMap type="ramp">
-                            <sld:ColorMapEntry color="#d7191c" quantity="0" label="0 - 0.1" opacity="1"/>
-                            <sld:ColorMapEntry color="#e34a33" quantity="0.1" label="0.1 - 0.2" opacity="1"/>
-                            <sld:ColorMapEntry color="#f07c4a" quantity="0.2" label="0.2 - 0.3" opacity="1"/>
-                            <sld:ColorMapEntry color="#fdae61" quantity="0.3" label="0.3 - 0.4" opacity="1"/>
-                            <sld:ColorMapEntry color="#fdc980" quantity="0.4" label="0.4 - 0.5" opacity="1"/>
-                            <sld:ColorMapEntry color="#fee49f" quantity="0.5" label="0.5 - 0.6" opacity="1"/>
-                            <sld:ColorMapEntry color="#ffffbf" quantity="0.6" label="0.6 - 0.7" opacity="1"/>
-                            <sld:ColorMapEntry color="#e3f2cd" quantity="0.7" label="0.7 - 0.8" opacity="1"/>
-                            <sld:ColorMapEntry color="#c7e5db" quantity="0.8" label="0.8 - 0.9" opacity="1"/>
-                            <sld:ColorMapEntry color="#abd9e9" quantity="0.9" label="0.9 - 1.0" opacity="1"/>
-                            <sld:ColorMapEntry color="#80b9d8" quantity="1" label="1.0 - 1.1" opacity="1"/>
-                            <sld:ColorMapEntry color="#569ac7" quantity="1.1" label="1.1 - 1.2" opacity="1"/>
-                            <sld:ColorMapEntry color="#2c7bb6" quantity="1.2" label="1.2 - 1.26" opacity="1"/>
-                        </sld:ColorMap>
-                    </sld:RasterSymbolizer>
-                </sld:Rule>
-            </sld:FeatureTypeStyle>
-        </sld:UserStyle>
-    </sld:UserLayer>
-</sld:StyledLayerDescriptor>
-\end{verbatim}
-\item Créer un layer selon le workspace et l'entrepôt (teledectBZH:EF\_teledectBZH). Penser à renseigner les métadonnées, projection (Force declared), indiquer "ingestion D" dans la cellule SORTING, nommer l'attribut du raster (EF) et son échelle de valeurs (0 - 1.26), indiquer le sld dans l'onglet Publishing et dans l'onglet Dimensions activer le Time et choisir l'option "List".
-\item Finalement, aller dans Layer Preview, sélectionner le layer et dans l'url, rajouter \&time=date pour choisir la date à afficher (\&time=2017-05-25).
+\item création du workspace de manière standard en nommant celui-ci.
+\item copier, si elles n'ont pas été générée sur le GeoServer, les images dans un dossier accessible par celui-ci. De plus, ajouter dans ce dossier deux fichiers de configurations pour exploiter la dimension temporelle des images :
+\begin{itemize}
+\item indexer.properties avec :
+\begin{itemize}
+\item TimeAttribute=time (nom de l'attribut temporel)
+\item ElevationAttribute=elevation (dans le cas d'une dimension altitudinale)
+\item \verb!Schema=*the_geom:Polygon,location:String,!\newline \verb!time:java.util.Date,elevation:Integer!
+\item PropertyCollectors=TimestampFileNameExtractorSPI \newline [timeregex](time)
+\end{itemize}
+\item timeregex.properties avec :
+\begin{itemize}
+\item regex=[0-9]{8} (pour indiquer que la date est au format YYYYMMDD)
+\end{itemize}
+\end{itemize}
+\item création du store avec l'extension ImageMosaic et en indiquant de répertoire contenant les images et les deux fichiers de configuration
+\item création du layer en renseignant :  :
+\begin{itemize}
+\item onglet Data : dans la cellule sorting "time D" pour trier les dates (time correspondant au nom de l'attribut indiqué dans indexer.properties) par ordre décroissant (D)
+\item onglet Dimensions : activer le time et choisir une présentation "List"
+\end{itemize}
+\item le store temporel est configuré, la mise à jour passera par un script
 \end{enumerate}
 
-\subsection{Mise à jour d'une série temporelle (rasters) sur un GeoServer}
+\subsubsection{Mise à jour d'un store temporel existant}
 
-\begin{enumerate}
-\item X : transférer le fichier sur le serveur Pydio uniquement.
-\item X : reload Configuration and catalog.
-\item X : mettre a jour manuellement le shapefile.
-\item V : \verb!curl -v -u login:password -XPOST -H "Content-type: text/plain" -d "file:///home/data/gi2016/teledectBZH/EF_20170602.tif" "http://geoxxx.agrocampus-ouest.fr/geoserver/rest/workspaces/teledectBZH/coveragestores/EF_teledectBZH/external.imagemosaic"! \smallbreak
-Avec -d qui est le chemin du fichier sur le serveur et l'url consiste à se placer sur le dépôt et exécuter l'extension external.imagemosaic. Cette commande met à jour le shapefile faisant office de datasource.properties.
-\end{enumerate}
-
-Ainsi, la méthode est la suivante :
-\begin{enumerate}
-\item Placer les fichiers dans le répertoire de données du store
-\item Lancer le script
-\end{enumerate}
-
-\section{Réunion 27/06/2017}
-\begin{itemize}
-\item SLD ajouter information pour les indices (genre évapore peu, etc..)
-\item Appliquer une couleurs aux valeurs nodata
-\item Eviter la transparence pour les données, spliter raster/orthophoto+localisant (route, ville, contour administratif)
-\item Sviewer : Augmenter la taille de la police de la date affiché en bas à gauche
-\item WebMap Context : état d'un projet (avec les couches à afficher, ordre, etc...). Ainsi, générer des wmc selon les thématiques. Ainsi, un sviewer pour le NDVI avec x info, EF avec d'autres etc... Donc au lieu de montre plusieurs couches. ATTENTION, priorité entre wmc et couche à afficher pouvant empêcher l'affichage de certaines infos.
-\item Pour générer un wmc, aller sur le visualiseur de geoxxx et faire un export lien sur visualiseur mobile.
-\item Fournir un produit où il est possible de combiner facilement des informations de teledect + d'autres infos pour sensibiliser les gens à combiner ces infos pour leurs études et décisions.
-\end{itemize}
-\begin{itemize}
-\item Augmenter la dimension temporelle (1 an) pour les indices et voir coment réagit le slider.
-\item Faire des wmc (tuto + boites à cocher pour générer et ajouter des urls, etc... si possible).
-\item Générer des urls pour chaque indices avec des wmc associés pour le sviewer (contour département + villes).
-\item Gérer l'ordre des couches pour avoir le raster toujours en premier (attention de ne pas prendre de fond de carte pour cacher les infos).
-\item Faire un tuto pour rajouter des infos dans le sviewer 
-\item Pour le calcul d'EF, changer les pourcentages (non pas 1\% mais autre), et prendre le bord humide constant (ligne rouge).
-\item Faire métadonnées (geoserver - catalogue). Définir modele de métadonnées, ajouter l'url de la métadonnées dans le layer, nom explicite, etc... car moissonné.
-\end{itemize}
-\begin{enumerate}
-\item Mettre au point le service : SLD (couleurs et légendes), ajout dates
-\item Métadonnées : générer un fichiers permettant de décrire les fichiers et comprendre les données. Métadonnées sur le site à pointer vers ce fichier.
-\item Générer des WMC
-\item ATTENTION, DVP SUR MASTER ET FAIRE TEST SUR AUTRE DOSSIER (GEOUEST!=DALLERY)
-\item permettre de lier les données wmc avec le sviewer quand on touche dessus.
-\item Essayer d'effectuer un test sur les layers pour savoir si elle est temporelle et si oui, activer le time viewer.
-\item permettre de toujours interagir avec le time, meme si des données ajoutée.
-\item permettre la gestion de plusieurs images temporelles à imbriquer les unes dans els autres.
-\item generer via gdal tiled=true
-\item automatiser la detection de la dimension temporelle de layers.
-\item Faire des getFeaturesInfo, pour recuperer des valeurs, dates, recueprer les valeurs et faire des courbes pour visualiser l'évolution temporelle sur un seul graphique.
-\item 
-\end{enumerate}
-
-\section{Mviewer : configuration}
-La configuration du Mviewer passe par un fichier XML placé dans le dossier demo. Dans ce fichier, les balises <themes> <theme> et <layer> permettent de configurer les couches et la temporalité.
+Un script effectue cette étape et possède 5 paramètres en entrée :
 
 \begin{itemize}
-\item <themes> : cette balise permet d'ajouter plusieurs thèmes (groupe) dans un même viewer.
-\item <theme> : cette balise correspond à un groupe pouvant contenir au moins une couche.
+\item l'url du Geoserver
+\item le workspace du produit
+\item le store du produit
+\item un fichier d'identifiant pour le GeoServer
+\item le répertoire sur le serveur contenant le produit à publier
+\end{itemize}
+
+Ce script publie un seul produit à la fois, il est donc à exécuter autant de fois que nécessaire.\smallbreak
+Remarque : si les produits ne sont pas accessible par le GeoServer, il est impératif de les déplacer sur le serveur de celui-ci. De plus, ce script effectue uniquement une mise à jour, le workspace et le store sont à générer manuellement. \newpage
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.5]{img/orgPublication.pdf}
+\caption{Organigramme des étapes pour la publication des indices sur un GeoServer.}
+\label{orgPublication}
+\end{figure}
+
+Ainsi, la publication passe par plusieurs test afin de contrôler si le workspace, le store et la couche existent déjà (figure \ref{orgPublication}). Dans les deux premiers test, il n'est pas possible de publier la couche en leur absence et le troisième test évite de publier plusieurs fois la même image.\smallbreak
+Si les tests sont réussis, alors cette commande est exécutée pour publier l'image :\newline 
+\verb!"curl -v -u login:password -XPOST -H 'Content-type: text/plain'!\newline \verb!-d 'file://data/NDVI_YYYYMMDD.tif' 'http://geoserver/rest!\newline \verb!/workspaces/workspace/coveragestores/store/external.imagemosaic'"!
+
+\section{Perspectives}
+
+Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limites :
 \begin{itemize}
-\item name="nom du groupe"
-\item id="identifiant du groupe"
-\item icon="icône du groupe"
-\end{itemize}
-\item <layer> : correspond à une couche. Plusieurs layers peuvent être ajouté dans un <theme>.
-\begin{itemize}
-\item id="nom de la couche sur le geoserver"
-\item name="nom de la couche à afficher"
-\item timefilter="True"
-\item timeinterval="day|month|year"
-\item timemin="YYYY-MM-DD" et timemax="YYYY-MM-DD" (calendar)
-\item timecontrol="calendar|slider" (slider permet d'animer les dates)
-\item timevalues="dates disponibles YYYY-MM-DD"
-\item style="style à appliquer"
-\item url="url du serveur"
-\end{itemize}
+\item la résolution spatiale de MODIS n'est pas adaptée au paysage Breton particulièrement fragmenté. Il n'est donc pas possible d'observer les bosquets, petites parcelles et les haies, entre autres. Il est donc envisagé d'utiliser le capteur Landsat avec une résolution spatiale de 30 mètres et une bande dans l'infrarouge thermique (critère obligatoire).
+\item dans le cas du produit EF MODIS et grâce à la série temporelle, avec un pas de temps court, il serait intéressant de calculer les données manquantes sur le territoire afin d'avoir constamment de la données (probablement par interpolation entre plusieurs dates).
+\item lors des prétraitements, il serait nécessaire de détecter et supprimer les nuages qui faussent les valeurs des produits.
 \end{itemize}
 
-Avec ces balises et variables, il est possible de gérer l'aspect temporel d'un entrepôt, de configurer la symbologie, les noms et les données à afficher.
+Pour finir, il est nécessaire de gérer l'exécution automatique des scripts.
 
-P.S : corriger l'affichage en gras des dates du calendrier même quand il n'y a pas de données.
-
-Ensuite, il reste à appeler dans une url le fichier xml pour visualiser le résultat : \verb!http://geoxxx.agrocampus-ouest.fr/geouest/mviewer/?config=demo/geouest.xml!
-
-\section{Sviewer : configuration}
-Le Sviewer possède également un fichier de configuration situé dans le dossier \verb!js/sviewer.js!
-
-La configuration du viewer passe par plusieurs variables.
-\begin{itemize}
-\item hardConfig :
-\begin{itemize}
-\item title: "titre du viewer et de l'onglet assimilé"
-\item geOrchestraBaseUrl: "url de base du geoserver"
-\item 
-\end{itemize}
-\end{itemize}
-
-Ensuite, il reste à appeler dans une url la couche que l'on souhaite afficher pour visualiser le résultat : \verb!http://geoxxx.agrocampus-ouest.fr/geouest/timeviewer/?timeLayer=geouest:EF_teledectBZH!
-
-Pour ajouter un wmc, il faut aller chercher des données au même endroit que l'url du serveur. Donc, dans notre cas, geoxxx.etc... et non pas geobretagne, etc...
-\subsection{A faire}
-\begin{itemize}
-\item Publication sur geosas
-\item métadonnées
-\item texte de description des images
-\item gdal=tiled
-\item publier ETR + EF landsat
-\item corriger les nuages sur les bandes modis
-\item Verifier légendes/sld
-\item Activer jenkins pour automatisation dse scripts
-\item Supprimer nuages NDVI
-\item migrer les images sur geosas
-\item modifier le sviewer pour detecter automatiquement la capacité spatiale d'une couche.
-\end{itemize}
 \section{Bibliographie}
 
 \begin{itemize}
@@ -385,9 +325,3 @@ Pour ajouter un wmc, il faut aller chercher des données au même endroit que l'
 \end{itemize}
 
 \end{document}
-
-\section{Tips}
-\verb!ssh://nomdutilisateur@nomduserveur.exemple.com/dossier!
-\begin{itemize}
-\item Pour afficher des fichiers sur 
-\end{itemize}
