@@ -189,17 +189,10 @@ def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
             
             # Applique le scale factor
             dataScaled = data*0.02
-            outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, filename, name), xsize,\
+            outRaster = SaveRaster("%s/%s_%s_%s.tif" % (outTif, filename, name, date), xsize,\
                         ysize, transform, dataScaled, projection, gdal.GDT_Float32)
             
-            command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
-                        % (outRaster, outTif, name, date)
-            os.system(command)
-            
-            os.remove(outRaster)
             os.remove(RastClip)             
-            
-            outRaster = "%s/%s_%s.tif" % (outTif, name, date)
         
         elif dataType == "State" :            
             if not os.path.exists(out+"/"+name):
@@ -277,7 +270,7 @@ def CalcFVC(ndvi, xsize, ysize, transform, projection, out):
     return fvc
 
 
-def CalcTjTn(ListFilesTemp, out):
+def CalcTjTn(ListFilesTemp, out, date):
     """
     Calcule Tj - Tn et, pour les pixels n'ayant aucune donnée sur une des
     images, supprime les même pixels sur l'autre. Cela évite d'avoir des
@@ -294,12 +287,36 @@ def CalcTjTn(ListFilesTemp, out):
     # Applique Tj_Tn
     TjTn = Tj - Tn  
     # Enregistre l'image
-    outRaster = SaveRaster(out+"_uncompressed.tif", Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
+    outRaster = SaveRaster(out+"/TjTn/TjTn_uncompressed.tif", Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
                         Projection_Tj, gdal.GDT_Float32)
 
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s"\
-               % (outRaster, out)
-    os.system(command)
+               % (outRaster, out+"/TjTn/TjTn_"+date+".tif")
+    os.system(command)  
+    
+    #modifie les valeurs nan en valeur aberrante pour nodata
+    Tj[np.isnan(Tj)] = -999
+    Tn[np.isnan(Tn)] = -999
+    
+    os.remove(ListFilesTemp[0])
+    os.remove(ListFilesTemp[1])
+    
+    #enregistre les images avec ces nouvelles valeurs
+    outTj = SaveRaster("%s/Day.tif" % (out+"/Day"), Xsize_Tj,\
+                        Ysize_Tj, Transform_Tj, Tj, Projection_Tj, gdal.GDT_Float32)
+    outTn = SaveRaster("%s/Night.tif" % (out+"/Night"), Xsize_Tj,\
+                        Ysize_Tj, Transform_Tj, Tn, Projection_Tj, gdal.GDT_Float32)
+    
+    #compresse les images                        
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/Day_%s.tif"\
+                        % (outTj, out+"/Day", date)
+    os.system(command)   
+    os.remove(outTj)           
+    command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/Night_%s.tif"\
+                        % (outTn, out+"/Night", date)
+    os.system(command)                    
+    os.remove(outTn)
+    
     os.remove(outRaster)
 
     return TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn
@@ -553,7 +570,7 @@ def Main(datas, out, clipShp, maskShp):
             if not os.path.exists(out+"/TjTn"):
                 os.mkdir(out+"/TjTn")
             TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
-                = CalcTjTn(ListFilesTemp, out+"/TjTn/TjTn_"+Date+".tif")
+                = CalcTjTn(ListFilesTemp, out, Date)
             
             # Supprime les valeurs de FVC ou la temperature n'est pas disponible
             fvc[np.where(TjTn==0)]=np.nan
