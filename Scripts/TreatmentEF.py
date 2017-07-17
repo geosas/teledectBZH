@@ -376,10 +376,10 @@ def courbes_phi(indice, temp, nb_interval=25, pourcentage=1):
             mean_sup = np.array([x_mid, np.nanmean(y_sup), i])
 
             if i == 0:
-                pts_inf = arr_inf
-                pts_sup = arr_sup
-                pts_inf_mean = mean_inf
-                pts_sup_mean = mean_sup
+		pts_inf = arr_inf
+		pts_sup = arr_sup
+		pts_inf_mean = mean_inf
+		pts_sup_mean = mean_sup
             else:
                 pts_inf = np.vstack((pts_inf, arr_inf))
                 pts_sup = np.vstack((pts_sup, arr_sup))
@@ -559,13 +559,23 @@ def Main(datas, out, clipShp, maskShp):
             fvc[np.where(TjTn==0)]=np.nan
     
             # Calcule les donnees necessaires pour calculer les droites de regression)
-            (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(fvc, TjTn, 25, 1)
+            # Initialise le pourcentage de points à prendre a 1 et l'incremente au besoin
+            pourcentPoints = 1
+            nbPoints = False
+            
+            #gere les erreurs si aucun point ne se situe dans l'intervalle choisi
+            while nbPoints == False:
+                try :
+                    (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(fvc, TjTn, 25, pourcentPoints)
+                    nbPoints = True
+                except UnboundLocalError :
+                    pourcentPoints += 1       
             
             # Calcule les droites de regression et les donnees necessaire pour calculer EF
             if not os.path.exists(out+"/graphiques"):
                 os.mkdir(out+"/graphiques")
-            TminHumide, SlopeSec, InterceptSec = Graph(25, "1", PtsInfMean, PtsSupMean, \
-                PtsInf, PtsSup, out+"/graphiques/Phi_%s_%s_%s.png" % (25, "1", Date))
+            TminHumide, SlopeSec, InterceptSec = Graph(25, "%s" % (pourcentPoints), PtsInfMean, PtsSupMean, \
+                PtsInf, PtsSup, out+"/graphiques/Phi_%s_%s_%s.png" % (25, "%s" % (pourcentPoints), Date))
             
             # Calcul d'EF
             CalcEF(fvc, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
