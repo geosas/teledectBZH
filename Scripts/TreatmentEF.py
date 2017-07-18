@@ -539,7 +539,7 @@ def Main(datas, out, clipShp, maskShp):
         
         if not os.path.exists(out+"/EF"):
             os.mkdir(out+"/EF")
-            
+
         if not os.path.exists(out+"/EF/EF_%s.tif" % (Date)):
             
             # Extract au format tif et clip les bandes et temperatures
