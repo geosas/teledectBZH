@@ -9,66 +9,63 @@ import argparse
 import requests
 import csv
 import xml.etree.ElementTree as ET
-import subprocess
 import commands
+    
+#def CoverageXML(store):
+#    """
+#    """
+#    coverage_xml = '''\
+#                    <coverage>\
+#                        <title>'''+ store +'''</title>\
+#                        <metadata>\
+#                            <entry key="time">\
+#                                <dimensionInfo>\
+#                                    <enabled>true</enabled>\
+#                                    <presentation>LIST</presentation>\
+#                                    <units>ISO8601</units>\
+#                                    <defaultValue/>\
+#                                </dimensionInfo>\
+#                            </entry>\
+#                        </metadata>\
+#                        <parameters>\
+#                            <entry>\
+#                                <string>SORTING</string>\
+#                                <string>'''"time D"'''</string>\
+#                            </entry>\
+#                        </parameters>\
+#                    </coverage>'''
+#                    
+#    # Enlever les doubles espaces
+#    coverage_xml = coverage_xml.replace("  ", "")
+#    return coverage_xml
 
-def UpdateMviewer(xml, date):
-    """
-    
-    """
-    tree = ET.parse(xml)
-    root = tree.getroot()
-    layer = root.findall("./themes/theme/layer")
-    for l in layer:
-        dates = l.get("timevalues")
-        newDates = dates +","+ date
-        l.set("timevalues",newDates)
-    tree.write(open(xml, "w"))
-    print "Fichier xml mis a jour"
 
-
-def CreateMviewer(xml, date):
-    """
-    
-    """
-    tree = ET.parse(xml)
-    root = tree.getroot()
-    layer = root.findall("./themes/theme/layer")
-    for l in layer:
-        dates = l.get("timevalues")
-        newDates = dates +","+ date
-        l.set("timevalues",newDates)
-    tree.write(open(xml, "w"))
-    print "Fichier xml mis a jour"
-    
-    
-def CoverageXML(store):
-    """
-    """
-    coverage_xml = '''\
-                    <coverage>\
-                        <title>'''+ store +'''</title>\
-                        <metadata>\
-                            <entry key="time">\
-                                <dimensionInfo>\
-                                    <enabled>true</enabled>\
-                                    <presentation>LIST</presentation>\
-                                    <units>ISO8601</units>\
-                                    <defaultValue/>\
-                                </dimensionInfo>\
-                            </entry>\
-                        </metadata>\
-                        <parameters>\
-                            <entry>\
-                                <string>SORTING</string>\
-                                <string>'''"time D"'''</string>\
-                            </entry>\
-                        </parameters>\
-                    </coverage>'''
-                    
-    # Enlever les doubles espaces
-    coverage_xml = coverage_xml.replace("  ", "")
-    return coverage_xml
+#def CreateStore(datadir, login, password, store, workspace, url):
+#    """
+#    """
+#    print"Creation des fichiers properties\n"
+#    with open("%s/indexer.properties" % (datadir), "w") as txtfile:
+#        txtfile.write("TimeAttribute=time \nElevationAttribute=elevation \
+#        \nSchema=*the_geom:Polygon,location:String,time:java.util.Date,elevation:Integer \
+#        \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)")
+#
+#    with open("%s/timeregex.properties" % (datadir), "w") as txtfile:
+#        txtfile.write("regex=[0-9]{8}\n")
+#        
+#    print"Creation du store\n"
+#    command = "curl -u %s:%s -v -XPUT -H 'Content-type: text/plain' \
+#     -d %s %s/%s/coveragestores/%s/external.imagemosaic?coverageName=%s&configure=all"\
+#     % (login, password, datadir, url, workspace, store, store)
+#    os.system(command)
+#    
+#    coverage_xml = CoverageXML(store)
+#    
+#    print"Modification des parametre de la mosaic\n"
+#    command = "curl -u %s:%s -v -XPUT -H \
+#    'Content-type: application/xml' -d %s \
+#    %s/%s/coveragestores/%s/coverages/%s.xml" %\
+#    (login, password, coverage_xml, url, workspace, store, store)
+#    os.system(command)
     
     
 def UpdateStore(login, password, raster, urlStore):
@@ -78,41 +75,10 @@ def UpdateStore(login, password, raster, urlStore):
     command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' -d 'file://%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
     print command
-    os.system(command)
-    #date = os.path.basename(raster).split("_")[-1][:-4]
-    #UpdateMviewer(xml, date)
-    
+    os.system(command)  
     print "L'entrepot a ete mis a jour"
 
-def CreateStore(datadir, login, password, store, workspace, url):
-    """
-    """
-    print"Creation des fichiers properties\n"
-    with open("%s/indexer.properties" % (datadir), "w") as txtfile:
-        txtfile.write("TimeAttribute=time \nElevationAttribute=elevation \
-        \nSchema=*the_geom:Polygon,location:String,time:java.util.Date,elevation:Integer \
-        \nPropertyCollectors=TimestampFileNameExtractorSPI[timeregex](time)")
-
-    with open("%s/timeregex.properties" % (datadir), "w") as txtfile:
-        txtfile.write("regex=[0-9]{8}\n")
-        
-    print"Creation du store\n"
-    command = "curl -u %s:%s -v -XPUT -H 'Content-type: text/plain' \
-     -d %s %s/%s/coveragestores/%s/external.imagemosaic?coverageName=%s&configure=all"\
-     % (login, password, datadir, url, workspace, store, store)
-    os.system(command)
-    
-    coverage_xml = CoverageXML(store)
-    
-    print"Modification des parametre de la mosaic\n"
-    command = "curl -u %s:%s -v -XPUT -H \
-    'Content-type: application/xml' -d %s \
-    %s/%s/coveragestores/%s/coverages/%s.xml" %\
-    (login, password, coverage_xml, url, workspace, store, store)
-    os.system(command)
-    
-    #CreateMviewer(xml, date)
-        
+     
 def GeoPublish(url, workspace, store, login, password, datadir):
         '''
         Cree un workspace, puis un entrepot de donnees temporelle 's'ils
@@ -144,9 +110,6 @@ def GeoPublish(url, workspace, store, login, password, datadir):
             # test les dates existantes
             command = "curl -v -u %s:%s -XGET \
             '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
-            # python > 2.7
-            #indexStore = subprocess.check_output(command, shell=True)
-            #python < 2.7
             indexStoreTuple = commands.getstatusoutput(command)
             indexStore = str(indexStoreTuple)
             
@@ -159,7 +122,9 @@ def GeoPublish(url, workspace, store, login, password, datadir):
                             UpdateStore(login, password, path+"/"+raster, urlStore)
 
         else:
-            CreateStore(datadir, login, password, store, workspace, url)
+            print "Le store n'existe pas, impossible de publier"
+            sys.exit()
+            #CreateStore(datadir, login, password, store, workspace, url)
         
         print "Fin de la publication"
         return
