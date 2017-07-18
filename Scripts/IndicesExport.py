@@ -82,6 +82,6 @@ if __name__ == "__main__":
                 password = row[0].split(":")[1]
                 break
             
-        exportRasters(inUrl, inServer, outUrl, outServer, login, password)
+        exportRasters(args.inUrl, args.inServer, args.outUrl, args.outServer, login, password)
         
         print "\nExport Terminee"
