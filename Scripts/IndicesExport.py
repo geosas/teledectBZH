@@ -25,6 +25,7 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
             #s'il fait parti des fichiers a exporter
             if (indice in raster for indice in indices.keys()) :
                 print raster
+                indice = raster[:-13]
                 # existe t'il dans le dossier de destination ?
                 resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
                 '%s@%s' % (login, outServer), 'test', '-e',\
