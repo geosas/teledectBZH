@@ -12,7 +12,7 @@ import csv
 
 def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
     """
-    scp -r -p user@serveur1:chemin/vers/dossier/source user@serveur2:chemin/vers/dossier/destination
+	Exporte les indices calcules sur un serveur vers un autre
     """
     # repertoires a exporter
     indices = {"Day":"tempjour_modis_bretagne", "Night":"tempnuit_modis_bretagne",\
@@ -23,12 +23,11 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
         #pour chaque fichier
         for raster in rasters :
             #s'il fait parti des fichiers a exporter
-            if (indice in raster for indice in indices.keys()) :
-                print raster
+            if (indice in raster for indice in indices.keys()) :	
                 indice = raster[:-13]
                 # existe t'il dans le dossier de destination ?
                 resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
-                '%s@%s' % (login, outServer), 'test', '-e',\
+                '%s@%s' % (login, outUrl), 'test', '-e',\
                 '%s/%s/%s' %(outServer, indices[indice], raster)])
                 #si non, exporte le fichier
                 if resp == 1:
