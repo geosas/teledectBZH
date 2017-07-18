@@ -622,7 +622,7 @@ if __name__ == "__main__":
         parser.add_argument("-clipshp", dest="clipShp", action="store", 
                             help="Shapefile de decoupage")
 
-	parser.add_argument("-maskshp", dest="maskShp", action="store",
+        parser.add_argument("-maskshp", dest="maskShp", action="store",
                             help="Shapefile de masquage")
                             
         args = parser.parse_args()
