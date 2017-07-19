@@ -3,7 +3,7 @@
 
 """
 Cree le 2017/06/07
-Script pour le telechargement et l'enregistrement d'images (actuellement MODIS)
+Script pour le telechargement et l'enregistrement d'images MODIS
 """
 
 import sys
@@ -29,10 +29,13 @@ def DateAndYJ(date):
 
 def ListUrlDates(url):
     """
-    Liste les urls des images a telecharger.
+    Liste les urls des dates.
     """
+    # requete l'url
     r = requests.get(url)
+    # recupere toutes les informations de la page
     soup = BeautifulSoup(r.content, "html.parser")
+    # liste toutes les dates disponibles
     listDates = [link.get("href") for link in soup.findAll("a")]
     return listDates
     
@@ -41,8 +44,11 @@ def ListLinksModis(url):
     """
     Liste les urls des images a telecharger.
     """
+    # requete l'url
     r = requests.get(url)
+    # recupere toutes les informations de la page
     soup = BeautifulSoup(r.content, "html.parser")
+    # recupere les url des images a telecharger selon la tuile et l'extension
     listUrls = [link.get("href") for link in soup.findAll("a") if "h17v04"\
                 in link.get("href") and ".hdf" in link.get("href")]
     return listUrls
@@ -50,18 +56,27 @@ def ListLinksModis(url):
 
 def Download(ListUrls, Path, netrc):
     """
-    Use Curl method from usgs informations to download datas
-    (https://lpdaac.usgs.gov/sites/default/files/public/get_data/docs/
-    Command%20Line%20Access%20Tips%20for%20Utilizing%20Earthdata%20Login.docx)
+    Utilise curl pour telecharger les images (d'apres la doc usgs).
+    Rq : obligation d'utiliser un fichier .netrc car la methode visant
+    a rentrer directement le login:mdp ne fonctionne pas.
     """
+    # enrgistre les images dans un dossier nomme usgs
     if not os.path.exists(Path+"/usgs/"):
         os.mkdir(Path+"/usgs/")
-        
+    
+    # pour chaque url
     for url in ListUrls:
+        # liste les urls des images correspondant a la tuile et 
+        # l'extension a telecharger
         ListFiles = ListLinksModis(url)
+        
+        # pour chaque image
         for dl in ListFiles:
+            # si elle n'existe pas deja, telecharge avec curl
             if not os.path.exists(Path+"/usgs/"+os.path.basename(dl)):
                 print "Telechargement de l'image %s" % (dl)
+                # les cookies sont necessaires car l'identification se passe
+                # sur un autre site
                 command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
                             % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
                 os.system(command)
@@ -102,19 +117,12 @@ def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
                 % (dateStart)
         sys.exit()
         
-    #genere une liste des urls des images a telecharger
+    # genere une liste des urls des images a telecharger
     print "Generation des urls des images"
     listUrlsDl1 = [baseUrlMOD09Q1+date for date in listDatesDl1]
     listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
     
-    #telechargement des images
-
-    # Create .netrc file to download datas. This file must be create at the place
-    # where script was executed (/home/Donatien)
-    #with open(Path+"/.netrc", "w") as netrcFile:
-        #netrcFile.write("machine urs.earthdata.nasa.gov\n login \n password ")
-        #netrcFile.close()
-    
+    # telechargement des images   
     Download(listUrlsDl1, Path, netrc)
     Download(listUrlsDl2, Path, netrc)
 
@@ -129,8 +137,8 @@ if __name__ == "__main__":
     else:
         usage = "usage: %prog [options] "
         parser = argparse.ArgumentParser(description="Script permettant de\
-            telecharger des images MODIS necessaires pour calculer l'Evapora-\
-            tive Fraction (EF) sur la Bretagne.")
+            telecharger des images MODIS necessaires pour calculer des indices\
+            a diffuser sur geobretagne.")
 
         parser.add_argument("-path", dest="path", action="store",
                             help="Directory where download datas")
@@ -141,13 +149,11 @@ if __name__ == "__main__":
 
         parser.add_argument("-fdate", dest="fdate", action="store",
                             default=datetime.date.today(),
-                            help="Date a partir de laquelle telecharger des\
-                            donnees (normalisee ainsi : YYYY-MM-DD)")
+                            help="First date to download datas : YYYY-MM-DD")
                             
         parser.add_argument("-ldate", dest="ldate", action="store",
                             default=datetime.date.today(),
-                            help="Derniere date a laquelle telecharger des\
-                            donnees (normalisee ainsi : YYYY-MM-DD)")
+                            help="Last date to download datas : YYYY-MM-DD")
 
         args = parser.parse_args()
 
