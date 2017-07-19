@@ -1,5 +1,6 @@
 #!/bin/sh
-python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate 2017-06-30
+today=$(date +%Y-%m-%d)
+python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate $today
 
 python '/home/dallery/teledectBZH/Scripts/TreatmentEF.py' -d '/home/dallery/teledectBZH/Datas/usgs/' -out '/home/dallery/teledectBZH/Datas/output' -clipshp '/home/dallery/teledectBZH/GeoserverFiles/clip.shp' -maskshp '/home/dallery/teledectBZH/GeoserverFiles/mask.shp'
 
