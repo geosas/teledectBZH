@@ -66,68 +66,98 @@ import commands
 #    %s/%s/coveragestores/%s/coverages/%s.xml" %\
 #    (login, password, coverage_xml, url, workspace, store, store)
 #    os.system(command)
-    
-    
+
+     
+#def GeoPublish(url, workspace, store, login, password, datadir):
+#        '''
+#        Cree un workspace, puis un entrepot de donnees temporelle 's'ils
+#        n'existent pas) et publie une image dedans.
+#
+#        '''
+#
+#        # Check if workspace exists
+#        Headers = {'content-type': 'text/xml'}
+#        urlWorkspace = "%s/%s" % (url, workspace)
+#        urlStore = "%s/coveragestores/%s" % (urlWorkspace, store)
+#        
+#        r = requests.get(urlWorkspace, headers=Headers, auth=(login, password))
+#
+#        if not r.ok:
+#            command = "curl -u %s:%s -XPOST -H 'content-type: text/xml' \
+#            -d '<workspace><name>%s</name></workspace>' %s" \
+#            % (login, password, workspace, urlWorkspace)
+#            os.system(command)
+#            
+#            print "Creation du workspace."
+#        else:
+#            print "Le workspace existe."
+#
+#        r = requests.get(urlStore, headers=Headers, auth=(login, password))
+#
+#        if r.ok:
+#            print "Le store existe"
+#            # test les dates existantes
+#            command = "curl -v -u %s:%s -XGET \
+#            '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
+#            indexStoreTuple = commands.getstatusoutput(command)
+#            indexStore = str(indexStoreTuple)
+#            
+#            # liste les rasters dans le datadir et leur date
+#            for path, dossiers, rasters in os.walk(datadir):
+#                for raster in rasters :
+#                    if ".tif" in raster :
+#                        date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
+#                        if indexStore.find(date) == -1:
+#                            UpdateStore(login, password, path+"/"+raster, urlStore)
+#
+#        else:
+#            print "Le store n'existe pas, impossible de publier"
+#            sys.exit()
+#            #CreateStore(datadir, login, password, store, workspace, url)
+#        
+#        print "Fin de la publication"
+#        return
+  
 def UpdateStore(login, password, raster, urlStore):
     """
     
     """
     command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' -d 'file://%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
-    print command
     os.system(command)  
     print "L'entrepot a ete mis a jour"
 
-     
+      
 def GeoPublish(url, workspace, store, login, password, datadir):
-        '''
-        Cree un workspace, puis un entrepot de donnees temporelle 's'ils
-        n'existent pas) et publie une image dedans.
+    '''
+    Cree un workspace, puis un entrepot de donnees temporelle 's'ils
+    n'existent pas) et publie une image dedans.
 
-        '''
+    '''
+    
+    # genere l'url du workspace
+    urlWorkspace = "%s/%s" % (url, workspace)
+    # genere l'url du store
+    urlStore = "%s/coveragestores/%s" % (urlWorkspace, store)
+    # liste toutes les dates disponibles sur le geoserver
+    command = "curl -v -u %s:%s -XGET \
+    '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
+    indexStoreTuple = commands.getstatusoutput(command)
+    indexStore = str(indexStoreTuple)
+    
+    # liste les rasters dans le datadir et leur date
+    for path, dossiers, rasters in os.walk(datadir):
+        for raster in rasters :
+            if ".tif" in raster :
+                date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
+                # si le raster n'est pas deja publie (d'apres sa date)
+                if indexStore.find(date) == -1:
+                    # publie le raster
+                    UpdateStore(login, password, path+"/"+raster, urlStore)
 
-        # Check if workspace exists
-        Headers = {'content-type': 'text/xml'}
-        urlWorkspace = "%s/%s" % (url, workspace)
-        urlStore = "%s/coveragestores/%s" % (urlWorkspace, store)
+    print "Fin de la publication"
+    return
         
-        r = requests.get(urlWorkspace, headers=Headers, auth=(login, password))
-
-        if not r.ok:
-            command = "curl -u %s:%s -XPOST -H 'content-type: text/xml' \
-            -d '<workspace><name>%s</name></workspace>' %s" \
-            % (login, password, workspace, urlWorkspace)
-            os.system(command)
-            
-            print "Creation du workspace."
-        else:
-            print "Le workspace existe."
-
-        r = requests.get(urlStore, headers=Headers, auth=(login, password))
-
-        if r.ok:
-            print "Le store existe"
-            # test les dates existantes
-            command = "curl -v -u %s:%s -XGET \
-            '%s/coverages/%s/index/granules.xml'" % (login, password, urlStore, store)
-            indexStoreTuple = commands.getstatusoutput(command)
-            indexStore = str(indexStoreTuple)
-            
-            # liste les rasters dans le datadir et leur date
-            for path, dossiers, rasters in os.walk(datadir):
-                for raster in rasters :
-                    if ".tif" in raster :
-                        date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
-                        if indexStore.find(date) == -1:
-                            UpdateStore(login, password, path+"/"+raster, urlStore)
-
-        else:
-            print "Le store n'existe pas, impossible de publier"
-            sys.exit()
-            #CreateStore(datadir, login, password, store, workspace, url)
-        
-        print "Fin de la publication"
-        return
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
