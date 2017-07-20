@@ -8,7 +8,6 @@
 \usepackage{verbatim}
 \usepackage{graphicx}
 
-\author{Donatien Dallery}
 \title{La télédétection et GéoBretagne : méthodes, produits et analyses}
 \begin{document}
 \maketitle
@@ -16,12 +15,12 @@
 \begin{abstract}
 GéoBretagne a intégré des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
 \begin{itemize}
-\item un indice de végétation (NDVI) pour la distinction des surfaces végétales/non végétales
-\item l'Evaporative Fraction (EF) pour estimer l'évaporation d'un sol et donc, son potentiel hydrique
-\item la température moyenne sur 8 jours de jour et de nuit
+\item le Normalized Difference Vegetation Index (NDVI) qui est un indice de végétation mettant en valeur le dynamisme de la végétation, par sa teneur en chlorophylle et la structure du couvert végétal
+\item l'Evaporative Fraction (EF), un indice indiquant la capacité d'une surface à évaporer qu’elle soit composée de végétation, ou non. Par exemple, il représente un indicateur pour identifier des situations de stress hydrique
+\item la température moyenne sur 8 jours de jour et de nuit par temps clair
 \end{itemize}
 
-Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ces indices de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
+Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ceux-ci de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
 \end{abstract}
 
 \section{Introduction}
@@ -48,7 +47,7 @@ L'acquisition d'informations s'opère par la mesure du spectre électromagnétiq
 \label{spectreElectro}
 \end{figure}
 
-Dans le cadre de cette introduction à la télédétection, les données employées se situent dans les domaines du visible et de l'invisible (infrarouge).
+Dans le cadre de cette introduction à la télédétection, les données dans les micro-ondes (radar) ne sont pas abordées.
 
 \subsection{Capteur MODIS}
 
@@ -73,7 +72,7 @@ Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomè
 Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien que généralement, les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne :
 \begin{itemize}
 \item une résolution temporelle journalière et des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours)
-\item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer EF)
+\item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer EF), particulièrement de jour et de nuit
 \item des archives importantes (il est possible d'avoir des données à partir de l'an 2000) pour l'aspect temporel mis en avant sur GéoBretagne
 \end{itemize}
 
@@ -89,7 +88,7 @@ Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation stand
 \textrm{NDVI}=$ \frac{Pir-R}{Pir+R} $
 \end{center}\smallbreak
 
-Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance pour celle du proche infrarouge.\smallbreak
+Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est majoritairement absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi principalement par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance pour celle du proche infrarouge.\smallbreak
 
 La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcule la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
 
@@ -104,9 +103,10 @@ Cet indice permet d'effectuer une classification de l'occupation du sol. De part
 
 \subsubsection{Evaporative Fraction}
 
-L'Evaporative Fraction est un indice permettant d'estimer la capacité d'un sol à évaporer et donc son humidité (Bastiaanssen et al., 2003; Nutini et al., 2014). Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
+L'Evaporative Fraction est un indice mettant en valeur la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. Il représente ainsi un indicateur pour, par exemple, identifier des situations de stress hydrique (Bastiaanssen et al., 2003; Nutini et al., 2014). Elle est aussi une donnée servant à alimenter des modèles qui permettront l’estimation de l'évapotranspiration réelle des surfaces continentales. Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
 
-De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne). En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse. Cet indice est également employé pour estimer l'évapotranspiration et la biomasse à partir de modèles (Nutini et al., 2014).
+De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne), mais aussi en combinant d'autres informations. En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse.
 
 \subsubsection{Température de jour et de nuit}
 
@@ -122,7 +122,7 @@ La chaîne de traitement développée pour générer et rendre accessible ces pr
 \item Publication sur un GeoServer
 \end{enumerate}
 
-Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif de respecter cette nomenclature : Nom\_YYYYMMDD.tif. Dans le cas contraire, le GeoServer (dans la configuration actuelle), ne sera pas capable de gérer l'aspect temporel de l'image.
+Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif de respecter cette nomenclature : Nom\_YYYYMMDD.tif. Dans le cas contraire, le GeoServer (dans la configuration actuelle) ne sera pas capable de gérer l'aspect temporel de l'image.
 
 \subsection{Téléchargement des données MODIS}
 
@@ -161,7 +161,7 @@ Les paramètres en entrée du script sont :
 \begin{itemize}
 \item le dossier contenant les images téléchargées précédemment
 \item le dossier où enregistrer les produits générés
-\item un shapefile pour découper les images
+\item un shapefile pour découper les images (échelle de la Bretagne)
 \item un shapefile pour masquer les pixels de la mer
 \end{itemize}
 
@@ -174,13 +174,14 @@ Les images téléchargées nécessitent des prétraitements avant de générer l
 \item changer le format de fichier des images (hdf vers tif)
 \item rééchantillonner les images des températures (1km vers 250m)
 \item recalculer les valeurs selon un facteur indiqué sur le site de l'USGS
+\item éliminer les nuages des images
 \end{itemize}
 
 Les températures sont directement publiables, aucun traitement supplémentaire ne sera effectué.
 
 \subsubsection{NDVI}
 
-L'étape suivante consiste à calculer le NDVI. Pour les étapes suivantes, les valeurs inférieures à 0 et supérieures à 1 (quelques pixels de mer non masqués ayant des valeurs aberrantes) sont supprimés. Le NDVI ne dispose alors que de valeurs allant de 0 à 1, caractéristique nécessaire pour calculer EF. Ce changement de valeurs n'est pas répercuté sur le produit NDVI diffusé sur GéoBretagne.
+L'étape suivante consiste à calculer le NDVI. Pour calculer EF, les valeurs inférieures à 0 et supérieures à 1 (quelques pixels de mer non masqués ayant des valeurs aberrantes) sont supprimés. Ce changement de valeurs n'est pas répercuté sur le produit NDVI diffusé sur GéoBretagne.
 
 \subsubsection{Modèle S-SEBI et coefficient Priestley-Taylor}
 
@@ -188,7 +189,7 @@ Pour pouvoir appliquer le modèle S-SEBI et générer le coefficient de Priestle
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.313]{img/graph_fvc_temp.png}
+\includegraphics[scale=0.35]{img/graph_fvc_temp.png}
 \caption{Graphique représentant le modèle S-SEBI pour générer le coefficient de Priestley-Taylor afin de calculer l'Evaporative Fraction.}
 \label{graphFVCTemp}
 \end{figure}
@@ -240,7 +241,7 @@ Le calcul de cet indice se déroule en plusieurs étapes :
 \end{center}\smallbreak
 \end{enumerate}
 
-Nous obtenons alors une image renseignant sur la capacité d'un sol à évaporer. L'étape suivante consiste alors à publier ces données sur un GeoServer.
+Nous obtenons une image renseignant sur la capacité d'un sol à évaporer. L'étape suivante consiste à publier ces données sur un GeoServer.
 
 \subsection{Publication des produits sur un GeoServer}
 
@@ -249,8 +250,8 @@ Nous obtenons alors une image renseignant sur la capacité d'un sol à évaporer
 Ci-dessous la démarche à adopter pour générer un store temporel avec des données formalisés pour celui-ci.
 
 \begin{enumerate}
-\item création du workspace de manière standard en nommant celui-ci.
-\item copier, si elles n'ont pas été générée sur le GeoServer, les images dans un dossier accessible par celui-ci. De plus, ajouter dans ce dossier deux fichiers de configurations pour exploiter la dimension temporelle des images :
+\item création du workspace en nommant celui-ci.
+\item copier les images sur le GeoServer si elles n'ont pas été produites sur celui-ci. De plus, ajouter dans ce dossier deux fichiers de configurations pour exploiter la dimension temporelle des images :
 \begin{itemize}
 \item indexer.properties avec :
 \begin{itemize}
@@ -264,8 +265,8 @@ Ci-dessous la démarche à adopter pour générer un store temporel avec des don
 \item regex=[0-9]{8} (pour indiquer que la date est au format YYYYMMDD)
 \end{itemize}
 \end{itemize}
-\item création du store avec l'extension ImageMosaic et en indiquant de répertoire contenant les images et les deux fichiers de configuration
-\item création du layer en renseignant :  :
+\item création du store avec l'extension ImageMosaic et en indiquant le répertoire contenant les images et les deux fichiers de configuration
+\item création du layer en renseignant :
 \begin{itemize}
 \item onglet Data : dans la cellule sorting "time D" pour trier les dates (time correspondant au nom de l'attribut indiqué dans indexer.properties) par ordre décroissant (D)
 \item onglet Dimensions : activer le time et choisir une présentation "List"
@@ -297,18 +298,14 @@ Remarque : si les produits ne sont pas accessible par le GeoServer, il est impé
 
 Ainsi, la publication passe par plusieurs test afin de contrôler si le workspace, le store et la couche existent déjà (figure \ref{orgPublication}). Dans les deux premiers test, il n'est pas possible de publier la couche en leur absence et le troisième test évite de publier plusieurs fois la même image.\smallbreak
 Si les tests sont réussis, alors cette commande est exécutée pour publier l'image :\newline 
-\verb!"curl -v -u login:password -XPOST -H 'Content-type: text/plain'!\newline \verb!-d 'file://data/NDVI_YYYYMMDD.tif' 'http://geoserver/rest!\newline \verb!/workspaces/workspace/coveragestores/store/external.imagemosaic'"!
+\verb!"curl -v -u login:password -XPOST -H 'Content-type: text/plain'!\newline \verb!-d 'file://data/XX_YYYYMMDD.tif' 'http://geoserver/rest!\newline \verb!/workspaces/workspace/coveragestores/store/external.imagemosaic'"!
 
 \section{Perspectives}
 
 Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limites :
 \begin{itemize}
-\item la résolution spatiale de MODIS n'est pas adaptée au paysage Breton particulièrement fragmenté. Il n'est donc pas possible d'observer les bosquets, petites parcelles et les haies, entre autres. Il est donc envisagé d'utiliser le capteur Landsat avec une résolution spatiale de 30 mètres et une bande dans l'infrarouge thermique (critère obligatoire).
-\item dans le cas du produit EF MODIS et grâce à la série temporelle, avec un pas de temps court, il serait intéressant de calculer les données manquantes sur le territoire afin d'avoir constamment de la données (probablement par interpolation entre plusieurs dates).
-\item lors des prétraitements, il serait nécessaire de détecter et supprimer les nuages qui faussent les valeurs des produits.
+\item la résolution spatiale de MODIS n'est pas adaptée au paysage Breton particulièrement fragmenté. Il n'est donc pas possible d'observer les bosquets, petites parcelles et les haies, entre autres. Il est donc envisagé d'utiliser le capteur Landsat (résolution spatiale de 30 mètres et une bande dans l'infrarouge thermique (critère obligatoire)).
 \end{itemize}
-
-Pour finir, il est nécessaire de gérer l'exécution automatique des scripts.
 
 \section{Bibliographie}
 
