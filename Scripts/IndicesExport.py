@@ -22,6 +22,7 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
     for path, dossiers, rasters in os.walk(inServer):
         #pour chaque fichier
         for raster in rasters :
+	    print raster
             #s'il fait parti des fichiers a exporter
             if (indice in raster for indice in indices.keys()) :	
                 indice = raster[:-13]
@@ -32,8 +33,9 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
                 #si non, exporte le fichier
                 if resp == 1:
                     print ("Export")
-                    command = 'sshpass -p "%s" scp %s@%s:%s/%s/%s %s@%s:%s/%s/%s'\
-                    % (password, login, inUrl, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
+                    command = 'sshpass -p "%s" scp %s/%s/%s %s@%s:%s/%s/%s'\
+                    % (password, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
+		    print command
                     os.system(command)
                 #si oui, ne fait rien
                 elif resp == 0 :
