@@ -300,6 +300,57 @@ Ainsi, la publication passe par plusieurs test afin de contrôler si le workspac
 Si les tests sont réussis, alors cette commande est exécutée pour publier l'image :\newline 
 \verb!"curl -v -u login:password -XPOST -H 'Content-type: text/plain'!\newline \verb!-d 'file://data/XX_YYYYMMDD.tif' 'http://geoserver/rest!\newline \verb!/workspaces/workspace/coveragestores/store/external.imagemosaic'"!
 
+\section{Exemples d'interprétation des produits}
+
+Ce chapitre a pour objectif de présenter l'interprétation de chacun des produits diffusés.
+
+\subsection{Interprétation du NDVI}
+
+Le NDVI est un indice de végétation permettant de déterminer l'occupation du sol. D'après le fonctionnement de cet indice (1.2.1), il est possible de distinguer sur la figure \ref{NDVI1} les espaces forestiers avec un NDVI élevé, la ville de Rennes avec un NDVI nul et l'embouchure de la Loire avec des valeurs négatives.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{img/NDVI_interpretation1.pdf}
+\caption{NDVI au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers, la ville de Rennes et l'embouchure de la Loire.}
+\label{NDVI1}
+\end{figure}
+
+\subsection{Interprétation de l'Evaporative Fraction}
+
+L'Evaporative Fraction est un indice renseignant sur la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
+\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
+\label{EF1}
+\end{figure}
+
+\subsection{Température de jour}
+
+L'Evaporative Fraction est un indice renseignant sur la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
+\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
+\label{EF1}
+\end{figure}
+
+\subsection{Température de nuit}
+
+L'Evaporative Fraction est un indice renseignant sur la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
+\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
+\label{EF1}
+\end{figure}
+
 \section{Perspectives}
 
 Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limites :
