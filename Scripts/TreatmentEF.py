@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Script pour calculer l'evaporative fraction (EF)
+Script pour calculer les indices (NDVI, EF, temperatures jour et nuit)
 """
 
 import os
@@ -20,24 +20,30 @@ def OpenRaster(inRaster, band):
     Open raster and return some information about it.
     
     in :
-        name : raster name
+        name : string
+               raster name
     out :
-        datas : numpy array from raster dataset
-        xsize : xsize of raster dataset
-        ysize : ysize of raster dataset
-        projection : projection of raster dataset
-        transform : coordinates and pixel size of raster dataset
+        datas : array
+                numpy array from raster dataset
+        xsize : string
+                xsize of raster dataset
+        ysize : string
+                ysize of raster dataset
+        projection : string
+                     projection of raster dataset
+        transform : string
+                    coordinates and pixel size of raster dataset
     """    
     raster = gdal.Open(inRaster, 0)
     rasterBand = raster.GetRasterBand(band)
     
-    #property of raster
+    # property of raster
     projection = raster.GetProjectionRef()
     transform = raster.GetGeoTransform()
     xsize = raster.RasterXSize
     ysize = raster.RasterYSize
     
-    #convert raster to an array
+    # convert raster to an array
     datas = rasterBand.ReadAsArray()
     
     return datas, xsize, ysize, projection, transform
@@ -48,13 +54,20 @@ def SaveRaster(name, xsize, ysize, transform, datas, projection, encode):
     Save an array to a raster.
     
     in :
-        name : raster name
-        xsize : xsize of raster to be created
-        ysize : ysize of raster to be created
-        transform : coordinates and pixel size of raster to be created
-        data : data of raster to be created
-        projection : projection of raster to be created
-        encode : encode of raster (gdal.GDT_UInt32, gdal.GDT_Byte) 
+        name : string
+               raster name
+        xsize : string
+                xsize of raster to be created
+        ysize : string
+                ysize of raster to be created
+        transform : string
+                    coordinates and pixel size of raster to be created
+        data : array
+               data of raster to be created
+        projection : string
+                     projection of raster to be created
+        encode : string
+                 encode of raster (gdal.GDT_UInt32, gdal.GDT_Byte) 
     """
     driver = gdal.GetDriverByName("GTiff")
     outRaster = driver.Create(name, xsize, ysize, 1, encode)
@@ -65,48 +78,69 @@ def SaveRaster(name, xsize, ysize, transform, datas, projection, encode):
 
     del outRaster, outband
     return name
+    
 
 def cloudMask(raster, mask):
     """
-    Pour convertir les valeurs en bit :
+    Fonction pour supprimer les nuages d'une image selon l'image qualite
+    mis a disposition dans le produit MOD09Q1. Ne prendre que les valeurs <220
+    Rq : Pour convertir les valeurs en bit :
     np.array(map(bin, data.flatten())).reshape(data.shape)
-    sinon, prendre les valeurs <220
+    
+    in : 
+        raster : string
+                 chemin du raster avec les nuages a supprimer
+        mask : string
+               chemin du raster renseignant sur la qualite des mesures
     """
-    #ouvre le raster sur lequel supprimer des nuages
+    # ouvre le raster sur lequel supprimer des nuages
     dataRaster, xsize, ysize, projection, transform = OpenRaster(raster, 1)
-    #ouvre le raster de qualite pour generer le masque de nuage
+    # ouvre le raster de qualite pour generer le masque de nuage
     dataMask, xsize, ysize, projection, transform = OpenRaster(mask, 1)
-    #applique le masque de nuage
-    rasterWithoutCloud = np.where(dataMask>220,np.nan,dataRaster)
-    #ecrase l'ancien fichier
+    # genere et appliquer le masque
+    rasterWithoutCloud = np.where(dataMask>220, np.nan, dataRaster)
+    # ecrase l'ancien fichier
     rasterMask = SaveRaster(raster, xsize, ysize, transform, rasterWithoutCloud, \
         projection, gdal.GDT_Float32)
     
     
 def DataMask(inRaster, out, filename, name, maskShp, clipShp):
     """
-    Decoupe le raster, masque des valeurs
+    Decoupe un raster avec un shapefile et masque des valeurs avec un
+    shapefile.
     
+    in : 
+        inRaster : string
+                   raster a traiter
+        out : string 
+              nom repertoire ou enregistrer les donnees
+        filename : string
+                   nom du produit modis utilise
+        name : string
+               nom de l'indice
+        maskShp : string
+                  shapefile utilise pour masquer des valeurs
+        clipShp : string
+                  shapefile pour decouper le raster
+        
+    out : 
+        raster du produit en cours decoupee, avec des valeurs masquees.
     """
     clipfile = os.path.dirname(inRaster)+"/clip.tif"
-    #decoupe le raster selon un shapefile
+    # decoupe le raster selon un shapefile
     command = "gdalwarp -cutline %s -crop_to_cutline %s %s" % (clipShp, inRaster, clipfile)
     os.system(command)
-
     # Initialise un raster vide
     data, xsize, ysize, projection, transform = OpenRaster(clipfile, 1)
     dataZero = data * 0
     rasterMask = SaveRaster("%s/%s_%s_raw2.tif" % (out, filename, name), xsize,\
                             ysize, transform, dataZero, projection, gdal.GDT_Byte)
-
-    # Initialise a 1 l'emplacement du departement
+    # Initialise a la valeur 1 l'emplacement du departement
     command = "gdal_rasterize -burn 1 %s %s"%(maskShp, "%s" % (rasterMask))
     os.system(command)
-    
     # Conserve uniquement les valeurs se situant sur le departement
     dataMask, xsizeMask, ysizeMask, projectionMask, transformMask = OpenRaster(rasterMask, 1)
     dataDprtmnt = np.where(dataMask==0, 0, data)
-    
     # Supprime les fichiers intermediaires
     os.remove(inRaster)
     os.remove(clipfile)
@@ -117,10 +151,26 @@ def DataMask(inRaster, out, filename, name, maskShp, clipShp):
     
 def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
     """
-    Extract, clip and reproject hdf files.
+    Exporte, reprojete, decoupe, reechantillonne, masque les produits MODIS au format hdf.
+    
+    in : 
+        fichier : string
+                  produit modis au format hdf
+        out : string
+              chemin ou enregistrer les fichiers exporte
+        dataType : string
+                   type de donnees pour savoir si l'on genere des bandes, 
+                   des temperatures ou le masque de nuages
+        clipShp : string
+                  shapefile pour decouper le raster
+        maskShp : string
+                  shapefile pour supprimer des valeurs
+        date : string
+               date de l'image
+        
+    out : fichier tif decoupee, masquee
     """
-    # Extrait les bandes du red et nir de l'archive hdf et decoupe les images
-    # sur l'emprise de la bretagne.
+    # Determine le nom des fichiers qui vont etre a generer
     filename = os.path.basename(fichier)[:-4]
     if dataType == "Bands":
         dataName = ["Red", "Nir"]
@@ -128,35 +178,33 @@ def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
         dataName = ["Day", "Night"]
     elif dataType == "State":
         dataName = ["State"]
-        
+    
+    # pour chaque données    
     ListFilesNames = []
     for i, name in zip(range(len(dataName)), dataName):
+        # si ce sont les bandes du rouge et pir 
         if dataType == "Bands":
             if not os.path.exists(out+"/"+name):
                 os.mkdir(out+"/"+name)
             outTif = out+"/"+name    
             RastClip = "%s/%s_%s_raw.tif" % (outTif, filename, name)
             RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
-
-            # Decoupe le raster et le converti au format tif
+            # Exporte au format tif le raster
             command = "gdal_translate -ot Float32 \
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_b0%s \
             %s" % (fichier, int(i)+1, RastClip)
             os.system(command)
-
             # Reprojete le raster en EPSG:2154
             command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
-            
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
-                outTif, filename, name, maskShp, clipShp)
-            
-            # Applique le scale factor
+                outTif, filename, name, maskShp, clipShp)           
+            # Applique le scale factor d'apres l'usgs
             dataScaled = data*0.0001
             outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, name, date), xsize,\
                         ysize, transform, dataScaled, projection, gdal.GDT_Float32)
-
+            # compresse le fichier produit
             command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
                         % (outRaster, outTif, name, date)
             os.system(command)
@@ -165,7 +213,8 @@ def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
             os.remove(RastClip)
             
             outRaster = "%s/%s_%s.tif" % (outTif, name, date)
-            
+        
+        # si ce sont les bandes des temperatures
         elif dataType == "Temp":
             if not os.path.exists(out+"/"+name):
                 os.mkdir(out+"/"+name)
@@ -178,93 +227,110 @@ def ExtractClip(fichier, out, dataType, clipShp, maskShp, date):
             HDF4_EOS:EOS_GRID:'%s':MODIS_Grid_8Day_1km_LST:LST_%s_1km \
             %s" % (fichier, name, RastClip)            
             os.system(command)
-            
             # Reprojete le raster en EPSG:2154
             command = "gdalwarp -t_srs EPSG:2154 -r near -tr 243.134 -243.057 %s %s" % (RastClip, RastReproject)
             os.system(command)
-
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
                 outTif, filename, name, maskShp, clipShp)
-            
             # Applique le scale factor
             dataScaled = data*0.02
             outRaster = SaveRaster("%s/%s_%s_%s.tif" % (outTif, filename, name, date), xsize,\
                         ysize, transform, dataScaled, projection, gdal.GDT_Float32)
-            
             os.remove(RastClip)             
         
+        # si c'est le produit qualite pour les nuages
         elif dataType == "State" :            
             if not os.path.exists(out+"/"+name):
                 os.mkdir(out+"/"+name)
             outTif = out+"/"+name    
             RastClip = "%s/%s_%s_raw.tif" % (outTif, filename, name)
             RastReproject = "%s/%s_%s_rproj.tif" % (outTif, filename, name)
-
             #fichier qualite donnees pour generer masque nuage
             command = "gdal_translate -ot Int16 \
             HDF4_EOS:EOS_GRID:'%s':MOD_Grid_250m_Surface_Reflectance:sur_refl_state_250m \
             %s" % (fichier, RastClip)
             os.system(command)
-
             # Reprojete le raster en EPSG:2154
             command = "gdalwarp -t_srs EPSG:2154 %s %s" % (RastClip, RastReproject)
             os.system(command)
-            
             # Masque les valeurs inutiles et aberrantes
             data, xsize, ysize, projection, transform = DataMask(RastReproject,\
                 outTif, filename, name, maskShp, clipShp)
-            
-            # Applique le scale factor
+            # exporte et compresse le raster
             outRaster = SaveRaster("%s/%s_%s_uncompressed.tif" % (outTif, name, date), xsize,\
                         ysize, transform, data, projection, gdal.GDT_Int16)
-
             command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/%s_%s.tif"\
                         % (outRaster, outTif, name, date)
             os.system(command)
-            
             os.remove(outRaster)            
             os.remove(RastClip)
             
             outRaster = "%s/%s_%s.tif" % (outTif, name, date)
-            
+        
+        # ajoute le nom du raster dans une liste permettant d'utiliser ces
+        # fichiers pour calculer les indices
         ListFilesNames.append(outRaster)
     return ListFilesNames, filename
     
 
 def CalcNDVI(ListFilesBands, out, filenameBand, date):
     """
-    Calcule le NDVI et ne conserve que les valeurs entre 0 et 1 (necessaire 
-    a cause des valeurs se situant sur la mer).
+    Calcule le NDVI 
+    
+    in : 
+        ListFilesBands : list
+                         liste contenant les bandes du rouge et pir
+        out : string
+              dossier ou enregistrer le fichier
+        filenameBand : list
+                       nom du produit modis correspondant aux bandes
+        date : string
+               date
+    
+    out : 
+        - raster correspondant au NDVI a publier
+        - retourne un array contenant uniquement des valeurs entre 0 et 1
+            (necessaire pour calculer EF)
     """
-    # Calcule le NDVI
+    # ouvre les rasters
     red, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[0], 1)
-    nir, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[1], 1)
+    nir, xsize, ysize, projection, transform = OpenRaster(ListFilesBands[1], 1)   
+    # calcule le ndvi a enregister
     ndviTemp = ((nir-red)/(nir+red))
-    ndviTemp2 = np.where(((ndviTemp<=-1) | (ndviTemp>1) | (np.isnan(ndviTemp))), -999, ndviTemp)
-    
-    # Supprime valeurs aberrantes du NDVI causee par la mer
-    # mais aussi pour se concentrer uniquement sur la vegetation
+    # centre le ndvi entre -1 et 1 a cause de valeurs aberrantes
+    ndviTemp2 = np.where(((ndviTemp<=-1) | (ndviTemp>1) | (np.isnan(ndviTemp))), -999, ndviTemp)   
+    # calcule le ndvi a utiliser pour calculer EF
     ndvi = np.where(((ndviTemp<=0) | (ndviTemp>1)), 0, ndviTemp)       
-    
+    # enregistre en compresse le NDVI
     outRaster = SaveRaster(out+"/"+filenameBand+"_Ndvi.tif", xsize,\
                         ysize, transform, ndviTemp2, projection, gdal.GDT_Float32)
-
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/NDVI_%s.tif"\
                % (outRaster, out, date)
     os.system(command)
+    
     os.remove(outRaster)
     return ndvi, xsize, ysize, transform, projection
     
     
 def CalcFVC(ndvi, xsize, ysize, transform, projection, out):
     """
-    Calcule le Fractional Vegetation Cover.
+    Calcule le Fractional Vegetation Cover (FVC).
+    
+    in : 
+        ndvi : array
+               variable contenant le ndvi
+        xsize, ysize, transform, projection : information pour enregistrer le FVC
+        out : string
+              dossier ou enregistrer le fvc
     """
+    # calcule le FVC en forçant le minimum a 0
     fvc = ((ndvi - 0)/(np.nanmax(ndvi)-0))**2
+    # enregistre le fvc
     outRaster = SaveRaster(out+"_uncompressed.tif", xsize, ysize, transform, fvc, projection, gdal.GDT_Float32)
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s"\
                % (outRaster, out+".tif")
+               
     os.system(command)
     os.remove(outRaster)
     return fvc
@@ -275,38 +341,43 @@ def CalcTjTn(ListFilesTemp, out, date):
     Calcule Tj - Tn et, pour les pixels n'ayant aucune donnée sur une des
     images, supprime les même pixels sur l'autre. Cela évite d'avoir des
     temperatures aberrantes suite a la soustraction.
+    
+    in :
+        ListFilesTemp : list
+                        liste contenant les rasters temperatures
+        out : string
+              dossier ou enregistrer le raster
+        date : string
+               date
     """
     # Ouvre les raster de temperature de jour et de nuit
     Tj, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj = \
         OpenRaster(ListFilesTemp[0], 1)
     Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn = \
         OpenRaster(ListFilesTemp[1], 1) 
-    # Identifie les cellules en nodata et supprime leur equivalent dans les deux images
+    # Identifie les cellules en nodata et supprime leur equivalent 
+    # dans les deux images
     Tj[np.where(Tn==0)]=np.nan
     Tn[np.where(Tj==0)]=np.nan 
-    # Applique Tj_Tn
+    # Calcule Tj_Tn
     TjTn = Tj - Tn  
-    # Enregistre l'image
+    # Enregistre l'image et la compresse
     outRaster = SaveRaster(out+"/TjTn/TjTn_uncompressed.tif", Xsize_Tj, Ysize_Tj, Transform_Tj, TjTn, \
                         Projection_Tj, gdal.GDT_Float32)
-
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s"\
                % (outRaster, out+"/TjTn/TjTn_"+date+".tif")
     os.system(command)  
-    
     #modifie les valeurs nan en valeur aberrante pour nodata
     Tj[np.isnan(Tj)] = -999
     Tn[np.isnan(Tn)] = -999
-    
+    #supprime les temperatures non compressee
     os.remove(ListFilesTemp[0])
     os.remove(ListFilesTemp[1])
-    
     #enregistre les images avec ces nouvelles valeurs
     outTj = SaveRaster("%s/Day.tif" % (out+"/Day"), Xsize_Tj,\
                         Ysize_Tj, Transform_Tj, Tj, Projection_Tj, gdal.GDT_Float32)
     outTn = SaveRaster("%s/Night.tif" % (out+"/Night"), Xsize_Tj,\
                         Ysize_Tj, Transform_Tj, Tn, Projection_Tj, gdal.GDT_Float32)
-    
     #compresse les images                        
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/Day_%s.tif"\
                         % (outTj, out+"/Day", date)
@@ -330,22 +401,20 @@ def courbes_phi(indice, temp, nb_interval=25, pourcentage=1):
     La fonction renvoie, pour les bords humide et sec, les points ainsi que
     leur moyenne pour chaque intervalle.
 
-    Arguments
-    ---------
-    indice : numpy.array
-             indice de végétation choisi en abscisse
-    temp : numpy.array
-           température choisie en ordonnée
-    nb_interval : int
-                  nombre d'intervalle de découpage des données (10 par défaut)
-    pourcentage : float
-                  pourcentage de points utilisés dans la méthode exprimé en % (5 par défaut)
-    Returns
-    -------
-    tuple : (numpy.array, numpy.array), (numpy.array, numpy.array)
-            Renvoie un tuple de 2 tuples :
-                - tous les points composants les bords humides (pts_inf) et sec (pts_sup)
-                - les points moyens composants les bords humides (pts_inf_mean) et sec (pts_sup_mean)
+    in :
+        indice : numpy.array
+                 indice de végétation choisi en abscisse
+        temp : numpy.array
+               température choisie en ordonnée
+        nb_interval : int
+                      nombre d'intervalle de découpage des données (10 par défaut)
+        pourcentage : float
+                      pourcentage de points utilisés dans la méthode exprimé en % (5 par défaut)
+    out :
+        tuple : (numpy.array, numpy.array), (numpy.array, numpy.array)
+                Renvoie un tuple de 2 tuples :
+                    - tous les points composants les bords humides (pts_inf) et sec (pts_sup)
+                    - les points moyens composants les bords humides (pts_inf_mean) et sec (pts_sup_mean)
     """
     # On retire les valeurs NaN dans chaque tableau et leur équivalent dans l'autre tableau
     ind_nan = np.logical_not(np.logical_or(np.isnan(temp), np.isnan(indice)))
@@ -393,10 +462,10 @@ def courbes_phi(indice, temp, nb_interval=25, pourcentage=1):
             mean_sup = np.array([x_mid, np.nanmean(y_sup), i])
 
             if i == 0:
-		pts_inf = arr_inf
-		pts_sup = arr_sup
-		pts_inf_mean = mean_inf
-		pts_sup_mean = mean_sup
+            		pts_inf = arr_inf
+            		pts_sup = arr_sup
+            		pts_inf_mean = mean_inf
+            		pts_sup_mean = mean_sup
             else:
                 pts_inf = np.vstack((pts_inf, arr_inf))
                 pts_sup = np.vstack((pts_sup, arr_sup))
@@ -409,7 +478,23 @@ def courbes_phi(indice, temp, nb_interval=25, pourcentage=1):
 def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup, out):
     """
     Genere un graphique permettant d'identifier des intervalles de temperatures
-    mini et maxi avec des droites de regressions.
+    mini et maxi avec des droites de regressions pour calculer les bords
+    humides et sec.
+    
+    in :
+        nbInterval : string
+                     nombre d'intervalles de valeurs a prendre en compte
+        pourcentage : string
+                      pourcentage de points a prendre aux extremes
+        pts_inf_mean :  array
+                        points moyens inferieurs
+        pts_sup_mean :  array
+                        points moyens superieurs
+        pts_inf :  array
+                   points inferieurs 
+        pts_inf :  array
+                   points superieurs 
+
     """
     # Liste de couleurs pour l'affichage des points des intervalles
     color_list = plt.cm.Set1(np.linspace(0, 1, nbInterval))
@@ -488,6 +573,29 @@ def Graph(nbInterval, pourcentage, pts_inf_mean, pts_sup_mean, pts_inf, pts_sup,
 def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj):
     """
+    Calcul l'evaporative fraction
+        
+    in : 
+        FVC : array
+              array du FVC
+        SlopeSec : string
+                   valeur de la pente du bord sec
+        InterceptSec : string
+                       valeur du bord sec
+        TjTn : array
+               temperature tj-tn
+        Tj : array
+             temperature de jour
+        Tn : array
+             temperature de nuit
+        TminHumide : string
+                     temperature minimale du bord humide
+        out : string
+              dossier ou enregistrer ef
+        Date : string
+               date
+        Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj : information pour
+            produire le raster
     """
     Tmax = SlopeSec * FVC + InterceptSec
     Phi = ((Tmax - TjTn)/(Tmax - TminHumide)*1.26)
@@ -498,11 +606,9 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
     delta = (ESatTa / tmoy) * ((6790.4985 / tmoy) - 5.02808)
     EF = (delta/(delta+66))*Phi
     EF[np.isnan(EF)] = -999
-    
     # Enregistre l'image
     outRaster = SaveRaster(out+"/Temporaire.tif", Xsize_Tj, Ysize_Tj, \
                         Transform_Tj, EF, Projection_Tj, gdal.GDT_Float32)
-    
     command = "gdal_translate -co 'TILED=YES' -co COMPRESS=DEFLATE %s %s/EF_%s.tif"\
                % (outRaster, out, Date)
     os.system(command)
@@ -513,13 +619,12 @@ def CalcEF(FVC, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out, \
 def Main(datas, out, clipShp, maskShp):
     """
     Fonction consistant a lister tous les fichiers MODIS se trouvant dans un
-    dossier. Puis, trie par ordre chronologique ces fichiers, puis utilise
-    ceux-ci pour :
-    1/ effectuer un decoupage selon la zone d'etude et un reechantillonnage
-    pour avoir la meme resolution spatiale entre les images.
+    dossier. Puis, trie par ordre chronologique ces fichiers pour :
+    1/ effectuer des pretraitements
     2/ calculer le NDVI
     3/ calculer Tj-Tn
-    4/ calculer l'Evaporative Fractionf
+    4/ calculer le FVC
+    5/ calculer l'Evaporative Fraction
     """
     # Liste les fichiers reflectance et temperature
     ListFilesBands = glob.glob(datas+"/*%s*.hdf" % ("MOD09Q1"))
@@ -533,7 +638,7 @@ def Main(datas, out, clipShp, maskShp):
         # Teste si la date a deja ete traitee
         filename = os.path.basename(FilesBands)[:-4]
         
-        ## Extrait la date au format anneejour pour faire une date ymd
+        # Extrait la date au format anneejour pour faire une date ymd
         YDate = datetime.datetime.strptime(filename[9:16], "%Y%j")
         Date = datetime.datetime.strftime(YDate, "%Y%m%d")
         

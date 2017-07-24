@@ -310,47 +310,56 @@ Le NDVI est un indice de végétation permettant de déterminer l'occupation du 
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.4]{img/NDVI_interpretation1.pdf}
+\includegraphics[scale=0.33]{img/NDVI_interpretation1.pdf}
 \caption{NDVI au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers, la ville de Rennes et l'embouchure de la Loire.}
 \label{NDVI1}
 \end{figure}
 
 \subsection{Interprétation de l'Evaporative Fraction}
 
-L'Evaporative Fraction est un indice renseignant sur la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+EF est un indice renseignant sur la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel Régional (PNR) de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
-\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
+\includegraphics[scale=0.33]{img/EF_interpretation1.pdf}
+\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le PNR de Brière et d'estimer le stress hydrique.}
 \label{EF1}
 \end{figure}
 
 \subsection{Température de jour}
 
-L'Evaporative Fraction est un indice renseignant sur la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+La température de jour correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF. Compte-tenu des éléments discernables (zones humides, forêts, zones urbaines) à partir de cette température (figure \ref{TJ1}), il a été décidé de mettre à disposition cette information. \smallbreak
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
-\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
-\label{EF1}
+\includegraphics[scale=0.33]{img/TJ_interpretation1.pdf}
+\caption{Température de jour au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers, le PNR de Brière et Rennes.}
+\label{TJ1}
 \end{figure}
 
 \subsection{Température de nuit}
 
-L'Evaporative Fraction est un indice renseignant sur la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+La température de nuit correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF, et compte-tenu des éléments discernables (principalement les îlots de chaleur urbains tel que Rennes) à partir de cette température (figure \ref{TN1}), il a été décidé de mettre à disposition cette information. \smallbreak \newpage
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.4]{img/EF_interpretation1.pdf}
-\caption{Evaporative Fraction au 18 Juin 2017 (à gauche) permettant de distinguer les espaces forestiers et le Parc Naturel de Brière et d'estimer le stress hydrique de la végétation.}
-\label{EF1}
+\includegraphics[scale=0.33]{img/TN_interpretation1.pdf}
+\caption{Température de nuit au 18 Juin 2017 (à gauche) permettant de distinguer la ville de Rennes (îlot de chaleur urbain) et le PNR de Brière.}
+\label{TN1}
 \end{figure}
 
+\section{Autres}
+
+Ce chapitre a pour objectif de référencer quelques éléments intéressant pour intéragir avec le visualiseur et les produits.
+
+\begin{itemize}
+\item pour télécharger une image, il faut produire ce type de requête : \newline
+\verb!http://geowww.agrocampus-ouest.fr/geoserver/wcs?!\newline\verb!request=GetCoverage&service=WCS&version=2.0.1&!\newline\verb!coverageId=psn__ndvi_modis_bretagne&!
+\newline\verb!Format=image/geotiff&!
+\newline\verb!SUBSET=time("2017-06-10T00:00:00.000Z")! \smallbreak 
+Les variables à modifier sont coverageId en remplaçant ndvi par ef, tempjour ou tempnuit et le time en remplaçant l'année, le mois et le jour par la date souhaitée.
+\end{itemize}
 \section{Perspectives}
 
 Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limites :

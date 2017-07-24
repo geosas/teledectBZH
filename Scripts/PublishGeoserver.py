@@ -6,9 +6,9 @@ Script pour publier des images sur un geoserver.
 import os
 import sys
 import argparse
-import requests
+#import requests
 import csv
-import xml.etree.ElementTree as ET
+#import xml.etree.ElementTree as ET
 import commands
     
 #def CoverageXML(store):
@@ -120,7 +120,17 @@ import commands
   
 def UpdateStore(login, password, raster, urlStore):
     """
+    Publie un nouveau raster sur un store.
     
+    in :
+        login : string
+                login
+        password : string
+                   mot de passe
+        raster : string
+                 chemin du raster a publier et qui est sur le geoserver
+        urlStore : string
+                   url du store ou publier le raster
     """
     command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' -d 'file://%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
@@ -130,8 +140,22 @@ def UpdateStore(login, password, raster, urlStore):
       
 def GeoPublish(url, workspace, store, login, password, datadir):
     '''
-    Cree un workspace, puis un entrepot de donnees temporelle 's'ils
-    n'existent pas) et publie une image dedans.
+    Recupere toutes les dates des images sur un store pour ensuite publier
+    les images qui ne l'ont pas encore ete
+    
+    in :
+        url : string 
+              url du geoserver
+        workspace : string
+                    workspace sur lequel publier les images
+        store : string
+                store sur lequel publier les images
+        login : string
+                login pour publier
+        password : string
+                   mot de passe pour publier
+        datadir : string
+                  dossier dans lequel se situent les images a publier
 
     '''
     

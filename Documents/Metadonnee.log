@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  21 JUL 2017 17:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  24 JUL 2017 16:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -650,77 +650,78 @@ File: img/NDVI_interpretation1.pdf Graphic file (type pdf)
 
 <use img/NDVI_interpretation1.pdf>
 Package pdftex.def Info: img/NDVI_interpretation1.pdf used on input line 313.
-(pdftex.def)             Requested size: 338.057pt x 238.88826pt.
+(pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: Reference `EF1' on page 12 undefined on input line 321.
-
-<img/EF_interpretation1.pdf, id=74, 845.1575pt x 597.23125pt>
+[12 <./img/orgPublication.pdf>]
+<img/EF_interpretation1.pdf, id=80, 845.1575pt x 597.23125pt>
 File: img/EF_interpretation1.pdf Graphic file (type pdf)
 
 <use img/EF_interpretation1.pdf>
 Package pdftex.def Info: img/EF_interpretation1.pdf used on input line 325.
-(pdftex.def)             Requested size: 338.057pt x 238.88826pt.
- [12 <./img/orgPublication.pdf>]
+(pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
+ [13 <./img/NDVI_interpretation1.pdf> <./img/EF_interpretation1.pdf>]
+<img/TJ_interpretation1.pdf, id=143, 845.1575pt x 597.23125pt>
+File: img/TJ_interpretation1.pdf Graphic file (type pdf)
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+<use img/TJ_interpretation1.pdf>
+Package pdftex.def Info: img/TJ_interpretation1.pdf used on input line 336.
+(pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
+ [14 <./img/TJ_interpretation1.pdf>]
+<img/TN_interpretation1.pdf, id=176, 845.1575pt x 597.23125pt>
+File: img/TN_interpretation1.pdf Graphic file (type pdf)
 
-
-Overfull \hbox (3.14334pt too wide) in paragraph at lines 342--343
+<use img/TN_interpretation1.pdf>
+Package pdftex.def Info: img/TN_interpretation1.pdf used on input line 347.
+(pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
+ [15 <./img/TN_interpretation1.pdf>]
+Overfull \hbox (3.14334pt too wide) in paragraph at lines 375--376
 \T1/cmr/m/n/10 Ama-zon", Pro-ceed-ings of the Na-tional Academy of Sci-ences, 1
 03(39):14637. 
  []
 
-[13 <./img/NDVI_interpretation1.pdf>]
-Overfull \hbox (1.10681pt too wide) in paragraph at lines 343--344
+
+Overfull \hbox (1.10681pt too wide) in paragraph at lines 376--377
 \T1/cmr/m/n/10 stress sta-tus in semi-arid range-land ecosys-tems". Re-mote sen
 s., 6, pp.6300-
  []
 
 
-Overfull \hbox (19.30606pt too wide) in paragraph at lines 347--348
+Overfull \hbox (19.30606pt too wide) in paragraph at lines 380--381
 \T1/cmr/m/n/10 mon-i-tor-ing veg-e-ta-tion", Re-mote Sens-ing of the En-vi-ron-
 ment, no.8, pp.127^^U150. 
  []
 
-[14 <./img/EF_interpretation1.pdf>] [15] (./Metadonnee.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+[16] (./Metadonnee.aux) ) 
 Here is how much of TeX's memory you used:
- 3035 strings out of 494910
- 38310 string characters out of 6179837
- 94126 words of memory out of 5000000
- 6250 multiletter control sequences out of 15000+600000
+ 3047 strings out of 494910
+ 38610 string characters out of 6179837
+ 94156 words of memory out of 5000000
+ 6260 multiletter control sequences out of 15000+600000
  17483 words of font info for 51 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,6n,24p,815b,279s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1000.600pk> </hom
-e/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600pk> </home/donati
-en/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk> </home/donatien/.texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/donatien/.texmf-var/fo
-nts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/donatien/.texmf-var/fonts/pk/l
-jfour/jknappen/ec/ecrm0900.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jk
-nappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/e
-c/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm17
-28.600pk></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on Metadonnee.pdf (15 pages, 11262081 bytes).
+ </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/e
+c/ectt1000.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
+00.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk
+> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home
+/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/donatie
+n/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/donatien/.texmf
+-var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/fon
+ts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/lj
+four/jknappen/ec/ecrm1728.600pk></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
+Output written on Metadonnee.pdf (16 pages, 17256483 bytes).
 PDF statistics:
- 540 PDF objects out of 1000 (max. 8388607)
- 138 compressed objects within 2 object streams
+ 624 PDF objects out of 1000 (max. 8388607)
+ 175 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 56 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 66 words of extra memory for PDF output out of 10000 (max. 10000000)
 
