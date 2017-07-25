@@ -134,6 +134,7 @@ def UpdateStore(login, password, raster, urlStore):
     """
     command = "curl -v -u %s:%s -XPOST -H 'Content-type: text/plain' -d 'file://%s' '%s/external.imagemosaic'" % \
     (login, password, raster, urlStore)
+    print command
     os.system(command)  
     print "L'entrepot a ete mis a jour"
 
