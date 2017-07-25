@@ -1,20 +1,71 @@
 #!/bin/sh
+
+###########################################
+#################Variables#################
+###########################################
+
+# Determine la date J-1 a partir de laquelle recherche les dates disponibles (si la publication s'est faite vers minuit)
 yesterday=$(date --date="yesterday" +%Y-%m-%d)
+# Determine la date J pour rechercher les dates disponibles
 today=$(date +%Y-%m-%d)
+# login et mot de passe du geoserver pour publier les images avec sshpass pour s'identifier
+# necessite cette syntaxe : login:password
 login="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $1}')"
 mdp="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $2}')"
 
-python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate ${yesterday} -ldate ${today}
+# Localisation des scripts, celui de publication doit etre sur le geoserver car il y a une recherche de fichier locaux
+scriptDownload="/home/dallery/teledectBZH/Scripts/DownloadMODIS.py"
+scriptTreatment="/home/dallery/teledectBZH/Scripts/TreatmentEF.py"
+scriptExport="/home/dallery/teledectBZH/Scripts/IndicesExport.py"
+scriptPublish="/home/dallery/PublishGeoserver.py"
 
-python '/home/dallery/teledectBZH/Scripts/TreatmentEF.py' -d '/home/dallery/teledectBZH/Datas/usgs/' -out '/home/dallery/teledectBZH/Datas/Output' -clipshp '/home/dallery/teledectBZH/GeoserverFiles/clip.shp' -maskshp '/home/dallery/teledectBZH/GeoserverFiles/mask.shp'
+# fichier contenant les identifiants pour se connecter sur le site de l'usgs
+netrc='/home/dallery/teledectBZH/.netrc'
+# repertoire dans lequel on souhaite creer le dossier usgs qui va contenir les produits MODIS
+datadir='/home/dallery/teledectBZH/Datas'
+# Shapefile pour decouper les images a l'echelle de la Bretagne
+clipShp='/home/dallery/teledectBZH/GeoserverFiles/clip.shp'
+# Shapefile pour masquer les pixels se situant dans la mer
+maskShp='/home/dallery/teledectBZH/GeoserverFiles/mask.shp'
 
-python '/home/dallery/teledectBZH/Scripts/IndicesExport.py' -inurl 'psncalc.agrocampus-ouest.fr' -indst '/home/dallery/teledectBZH/Datas/Output' -outurl 'geowww.agrocampus-ouest.fr' -outdst '/home/geoserver/owsserver_data_dir/data/psn' -coCopie '/home/dallery/teledectBZH/.logPassCopie'
+# url du serveur de calcul
+urlServerCalc='psncalc.agrocampus-ouest.fr'
+# url du geoserver ou placer les images
+urlGeoserver='geowww.agrocampus-ouest.fr'
+# repertoire local du workspace
+dirWorkspace='/home/geoserver/owsserver_data_dir/data/psn'
+# fichier contenant les identifiants pour se connecter sur le geoserver
+# necessite cette syntaxe : login:password
+logpassCopie='/home/dallery/teledectBZH/.logPassCopie'
 
-sshpass -p"${mdp}" ssh ${login}@geowww.agrocampus-ouest.fr nohup python '/home/dallery/PublishGeoserver.py' -url 'http://geowww.agrocampus-ouest.fr/geoserver/rest/workspaces/' -wspace 'psn' -store 'ef_modis_bretagne' -datadir '/home/geoserver/owsserver_data_dir/data/psn/ef_modis_bretagne' -co '/home/dallery/.logPassPublie'
+# url pour acceder aux workspaces
+urlWorkspaces='http://geowww.agrocampus-ouest.fr/geoserver/rest/workspaces/'
+# nom du workspace
+workspace='psn'
+# nom des stores actuels
+storeEF='ef_modis_bretagne'
+storeNDVI='ndvi_modis_bretagne'
+storeTj='tempjour_modis_bretagne'
+storeTn='tempnuit_modis_bretagne'
+# fichier contenant les identifiants pour se connecter sur le geoserver
+# necessite cette syntaxe : login:password
+logpassPublie='/home/dallery/.logPassPublie'
 
-sshpass -p"${mdp}" ssh ${login}@geowww.agrocampus-ouest.fr nohup  python '/home/dallery/PublishGeoserver.py' -url 'http://geowww.agrocampus-ouest.fr/geoserver/rest/workspaces/' -wspace 'psn' -store 'ndvi_modis_bretagne' -datadir '/home/geoserver/owsserver_data_dir/data/psn/ndvi_modis_bretagne' -co '/home/dallery/.logPassPublie'
+###########################################
+#################Commandes#################
+###########################################
 
-sshpass -p"${mdp}" ssh ${login}@geowww.agrocampus-ouest.fr nohup  python '/home/dallery/PublishGeoserver.py' -url 'http://geowww.agrocampus-ouest.fr/geoserver/rest/workspaces/' -wspace 'psn' -store 'tempjour_modis_bretagne' -datadir '/home/geoserver/owsserver_data_dir/data/psn/tempjour_modis_bretagne' -co '/home/dallery/.logPassPublie'
+python ${scriptDownload} -path ${datadir} -netrc ${netrc} -fdate ${yesterday} -ldate ${today}
 
-sshpass -p"${mdp}" ssh ${login}@geowww.agrocampus-ouest.fr nohup  python '/home/dallery/PublishGeoserver.py' -url 'http://geowww.agrocampus-ouest.fr/geoserver/rest/workspaces/' -wspace 'psn' -store 'tempnuit_modis_bretagne' -datadir '/home/geoserver/owsserver_data_dir/data/psn/tempnuit_modis_bretagne' -co '/home/dallery/.logPassPublie'
+python ${scriptTreatment} -d ${datadir}'/usgs/' -out ${datadir}'/Output/' -clipshp ${clipShp} -maskshp ${maskShp}
+
+python ${scriptExport} -inurl ${urlServerCalc} -indst ${datadir}'/Output/' -outurl ${urlGeoserver} -outdst ${dirWorkspace} -coCopie ${logpassCopie}
+
+sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeEF} -datadir ${dirWorkspace}${storeEF} -co ${logpassPublie}
+
+sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeNDVI} -datadir ${dirWorkspace}${storeNDVI} -co ${logpassPublie}
+
+sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTj} -datadir ${dirWorkspace}${storeTj} -co ${logpassPublie}
+
+sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTn} -datadir ${dirWorkspace}${storeTn} -co ${logpassPublie}
 
