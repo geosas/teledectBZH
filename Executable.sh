@@ -1,9 +1,10 @@
 #!/bin/sh
+yesterday=$(date --date="yesterday" +%Y-%m-%d)
 today=$(date +%Y-%m-%d)
 login="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $1}')"
 mdp="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $2}')"
 
-python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate 2017-07-12
+python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate ${yesterday} -ldate ${today}
 
 python '/home/dallery/teledectBZH/Scripts/TreatmentEF.py' -d '/home/dallery/teledectBZH/Datas/usgs/' -out '/home/dallery/teledectBZH/Datas/Output' -clipshp '/home/dallery/teledectBZH/GeoserverFiles/clip.shp' -maskshp '/home/dallery/teledectBZH/GeoserverFiles/mask.shp'
 
