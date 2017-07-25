@@ -17,34 +17,32 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
     # repertoires a exporter
     indices = {"Day":"tempjour_modis_bretagne", "Night":"tempnuit_modis_bretagne",\
             "NDVI":"ndvi_modis_bretagne", "EF":"ef_modis_bretagne"}
-    
+
     #liste tous les dossiers/fichiers
     for path, dossiers, rasters in os.walk(inServer):
         #pour chaque fichier
         for raster in rasters :
-	    print raster
             #s'il fait parti des fichiers a exporter
-            if (indice in raster for indice in indices.keys()) :	
-                indice = raster[:-13]
-                # existe t'il dans le dossier de destination ?
-                resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
-                '%s@%s' % (login, outUrl), 'test', '-e',\
-                '%s/%s/%s' %(outServer, indices[indice], raster)])
-                #si non, exporte le fichier
-                if resp == 1:
-                    print ("Export")
-                    command = 'sshpass -p "%s" scp %s/%s/%s %s@%s:%s/%s/%s'\
-                    % (password, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
-		    print command
-                    os.system(command)
-                #si oui, ne fait rien
-                elif resp == 0 :
-                    print "Fichier %s deja exporte" % (raster)
-                #sinon, code erreur et arret
-                else :
-                    print "Code erreur ssh, arret"
-                    print resp
-                    sys.exit()
+            for indice in indices.keys() :
+		if indice == raster[:-13] :	
+		    # existe t'il dans le dossier de destination ?
+		    resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
+		    '%s@%s' % (login, outUrl), 'test', '-e',\
+		    '%s/%s/%s' %(outServer, indices[indice], raster)])
+		    #si non, exporte le fichier
+		    if resp == 1:
+			print ("Export")
+			command = 'sshpass -p "%s" scp %s/%s/%s %s@%s:%s/%s/%s'\
+			% (password, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
+			os.system(command)
+		    #si oui, ne fait rien
+		    elif resp == 0 :
+			print "Fichier %s deja exporte" % (raster)
+		    #sinon, code erreur et arret
+		    else :
+			print "Code erreur ssh, arret"
+			print resp
+			sys.exit()
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
@@ -70,14 +68,14 @@ if __name__ == "__main__":
         parser.add_argument("-outdst", dest="outServer", action="store",
                             help="Datas directory out server")
 
-        parser.add_argument("-co", dest="login", action="store",
+        parser.add_argument("-coCopie", dest="loginCop", action="store",
                             help="Connexion file with login and password \
                             like login:password", default="user")
                             
         args = parser.parse_args()
         
         # Recupere le login et password dans un fichier    
-        with open(args.login, "r") as coFile:
+        with open(args.loginCop, "r") as coFile:
             reader = csv.reader(coFile)
             for row in reader:
                 login = row[0].split(":")[0]
