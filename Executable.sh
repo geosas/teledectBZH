@@ -1,7 +1,7 @@
 #!/bin/sh
 today=$(date +%Y-%m-%d)
-login="$(cat .logPassCopie | awk -F ":" '{print $1}')"
-mdp="$(cat .logPassCopie | awk -F ":" '{print $2}')"
+login="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $1}')"
+mdp="$(cat /home/dallery/teledectBZH/.logPassCopie | awk -F ":" '{print $2}')"
 
 python '/home/dallery/teledectBZH/Scripts/DownloadMODIS.py' -path '/home/dallery/teledectBZH/Datas/' -netrc '/home/dallery/teledectBZH/.netrc' -fdate 2017-07-12
 
