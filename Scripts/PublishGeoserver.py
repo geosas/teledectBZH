@@ -173,7 +173,7 @@ def GeoPublish(url, workspace, store, login, password, datadir):
     for path, dossiers, rasters in os.walk(datadir):
         for raster in rasters :
             if ".tif" in raster :
-                date = raster[3:-8]+"-"+raster[7:-6]+"-"+raster[9:-4]
+                date = raster[-12:-8]+"-"+raster[-8:-6]+"-"+raster[-6:-4]
                 # si le raster n'est pas deja publie (d'apres sa date)
                 if indexStore.find(date) == -1:
                     # publie le raster
