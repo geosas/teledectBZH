@@ -35,13 +35,13 @@ Il se distingue en 2 parties :
 
 ## Scripts utilisées :
 
-[__DownloadModis.py__](Script/DownloadModis.py) permet de répertorier les dates disponibles pour les produits MOD09Q1 et MOD11A2 pour, selon les dates en entrée (J-1 à J), télécharger les images qui ne l'ont pas encore été. Pour télécharger les images, il est impératif d'avoir un compte USGS et de renseigner ses identifiants dans un fichier .netrc.
+[__DownloadModis.py__](Scripts/DownloadModis.py) permet de répertorier les dates disponibles pour les produits MOD09Q1 et MOD11A2 pour, selon les dates en entrée (J-1 à J), télécharger les images qui ne l'ont pas encore été. Pour télécharger les images, il est impératif d'avoir un compte USGS et de renseigner ses identifiants dans un fichier .netrc.
 
-[__TreatmentEF.py__](Script/TreatmentEF.py) permet de produire le NDVI, l'Evaporative Fraction, la température de jour et de nuit. Pour cela, des prétraitements (découpage, suppression des nuages, conversion) sont effectués pour calculer ensuite ces indices qui sont à publier.
+[__TreatmentEF.py__](Scripts/TreatmentEF.py) permet de produire le NDVI, l'Evaporative Fraction, la température de jour et de nuit. Pour cela, des prétraitements (découpage, suppression des nuages, conversion) sont effectués pour calculer ensuite ces indices qui sont à publier.
 
-[__IndicesExport.py__](Script/IndicesExport.py) permet d'exporter les indices calculés sur le serveur de calcul vers le serveur où se trouve le Geoserver. L'exportation s'effectue avec une commande scp.
+[__IndicesExport.py__](Scripts/IndicesExport.py) permet d'exporter les indices calculés sur le serveur de calcul vers le serveur où se trouve le Geoserver. L'exportation s'effectue avec une commande scp.
 
-[__PublishGeoserver.py__](Script/PublishGeoserver.py) permet de mettre à jour un entrepôt avec de nouvelles images. Ce script suppose que le workspace et l'entrepôt ont déjà été créé. La mise à jour s'effectue avec une commande curl.
+[__PublishGeoserver.py__](Scripts/PublishGeoserver.py) permet de mettre à jour un entrepôt avec de nouvelles images. Ce script suppose que le workspace et l'entrepôt ont déjà été créé. La mise à jour s'effectue avec une commande curl.
 
 __TODO :__
 - Calculer les données manquantes entre les dates (pas de temps de 8 jours). A vérifier la pertinence vis à vis des températures pauvant être très différentes en 16 jours.
