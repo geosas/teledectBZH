@@ -41,7 +41,7 @@ Il se distingue en 2 parties :
 
 [__IndicesExport.py__](Script/IndicesExport.py) permet d'exporter les indices calculés sur le serveur de calcul vers le serveur où se trouve le Geoserver. L'exportation s'effectue avec une commande scp.
 
-[__PublishGeoserver.py__](Script/PublishGeoserver.py) permet de mettre à jour un entrepôt avec de nouvelles images. Ce script suppose que le workspace et l'entrepôt ont déjà été créé. La mise à jour s'effectue avec une commande curl.
+[__PublishGeoserver.py__](Script/PublishGeoserver.py) permet de mettre à jour un entrepôt avec de nouvelles images. Ce script suppose que le workspace et l'entrepôt ont déjà été créé. La mise à jour s'effectue avec une commande curl. Ce script est à placer sur le Geoserver et non sur le serveur de calcul.
 
 __TODO :__
 - Calculer les données manquantes entre les dates (pas de temps de 8 jours). A vérifier la pertinence vis à vis des températures pauvant être très différentes en 16 jours.

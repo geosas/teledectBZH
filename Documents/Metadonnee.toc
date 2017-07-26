@@ -1,0 +1,25 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {subsection}{\numberline {1.1}Capteur MODIS}{3}
+\contentsline {subsection}{\numberline {1.2}Produits disponibles sur G\IeC {\'e}oBretagne}{5}
+\contentsline {subsubsection}{\numberline {1.2.1}Indice de v\IeC {\'e}g\IeC {\'e}tation : NDVI}{5}
+\contentsline {subsubsection}{\numberline {1.2.2}Evaporative Fraction}{6}
+\contentsline {subsubsection}{\numberline {1.2.3}Temp\IeC {\'e}rature de jour et de nuit}{6}
+\contentsline {section}{\numberline {2}M\IeC {\'e}thodologie}{7}
+\contentsline {subsection}{\numberline {2.1}T\IeC {\'e}l\IeC {\'e}chargement des donn\IeC {\'e}es MODIS}{7}
+\contentsline {subsection}{\numberline {2.2}G\IeC {\'e}n\IeC {\'e}ration des produits}{8}
+\contentsline {subsubsection}{\numberline {2.2.1}Pr\IeC {\'e}traitements}{10}
+\contentsline {subsubsection}{\numberline {2.2.2}NDVI}{10}
+\contentsline {subsubsection}{\numberline {2.2.3}Mod\IeC {\`e}le S-SEBI et coefficient Priestley-Taylor}{10}
+\contentsline {subsubsection}{\numberline {2.2.4}Evaporative Fraction}{12}
+\contentsline {subsection}{\numberline {2.3}Publication des produits sur un GeoServer}{12}
+\contentsline {subsubsection}{\numberline {2.3.1}Initialisation du workspace, du store et du r\IeC {\'e}pertoire de donn\IeC {\'e}es pour des donn\IeC {\'e}es temporelles}{12}
+\contentsline {subsubsection}{\numberline {2.3.2}Mise \IeC {\`a} jour d'un store temporel existant}{13}
+\contentsline {section}{\numberline {3}Exemples d'interpr\IeC {\'e}tation des produits}{14}
+\contentsline {subsection}{\numberline {3.1}Interpr\IeC {\'e}tation du NDVI}{14}
+\contentsline {subsection}{\numberline {3.2}Interpr\IeC {\'e}tation de l'Evaporative Fraction}{15}
+\contentsline {subsection}{\numberline {3.3}Interpr\IeC {\'e}tation des temp\IeC {\'e}ratures de jour}{16}
+\contentsline {subsection}{\numberline {3.4}Interpr\IeC {\'e}tation des temp\IeC {\'e}ratures de nuit}{16}
+\contentsline {section}{\numberline {4}Perspectives}{17}
+\contentsline {section}{\numberline {5}Bibliographie}{17}
+\contentsline {section}{\numberline {6}Cr\IeC {\'e}dits}{18}
+\contentsline {section}{\numberline {7}Annexes}{18}

@@ -10,7 +10,14 @@
 
 \title{La télédétection et GéoBretagne : méthodes, produits et analyses}
 \begin{document}
+
 \maketitle
+
+\begin{figure}[t!]
+\centering
+\includegraphics[scale=1]{img/logos.jpg}
+\label{logos}
+\end{figure}
 
 \begin{abstract}
 GéoBretagne a intégré des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
@@ -23,6 +30,9 @@ GéoBretagne a intégré des données de télédétection à son catalogue. Dans
 Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ceux-ci de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
 \end{abstract}
 
+\newpage
+\tableofcontents
+\newpage
 \section{Introduction}
 
 La définition officielle de la télédétection est « l’ensemble des connaissances et techniques utilisées pour déterminer des caractéristiques physiques et biologiques d’objets par des mesures effectuées à distance, sans contact matériel avec ceux-ci » (COMITAAS, 1988).\smallbreak
@@ -80,7 +90,7 @@ Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien q
 
 Les premiers produits diffusés ont tous une dimension temporelle avec un pas de temps de 8 jours.
 
-\subsubsection{NDVI}
+\subsubsection{Indice de végétation : NDVI}
 
 Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation standard dans l'étude de la végétation (Gao, 1996). Cet indice se calcule avec les bandes électromagnétiques du rouge (R) et du proche infrarouge (Pir). Le résultat est normalisé entre -1 (autre que végétation tel l'eau) et 1 (végétation dynamique).\smallbreak
 
@@ -132,7 +142,7 @@ Le téléchargement des images repose sur différents critères, c'est à dire l
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.5]{img/orgDownload.pdf}
+\includegraphics[scale=0.6]{img/orgDownload.pdf}
 \caption{Organigramme des étapes nécessaires pour le téléchargement des produits MODIS.}
 \label{orgDL}
 \end{figure}
@@ -327,7 +337,7 @@ surface à évaporer, qu’elle soit composée de végétation ou non. D'après 
 \label{EF1}
 \end{figure}
 
-\subsection{Température de jour}
+\subsection{Interprétation des températures de jour}
 
 La température de jour correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF. Compte-tenu des éléments discernables (zones humides, forêts, zones urbaines) à partir de cette température (figure \ref{TJ1}), il a été décidé de mettre à disposition cette information. \smallbreak
 
@@ -338,7 +348,7 @@ La température de jour correspond à la température moyenne sur 8 jours par te
 \label{TJ1}
 \end{figure}
 
-\subsection{Température de nuit}
+\subsection{Interprétation des températures de nuit}
 
 La température de nuit correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF, et compte-tenu des éléments discernables (principalement les îlots de chaleur urbains tel que Rennes) à partir de cette température (figure \ref{TN1}), il a été décidé de mettre à disposition cette information. \smallbreak \newpage
 
@@ -349,17 +359,6 @@ La température de nuit correspond à la température moyenne sur 8 jours par te
 \label{TN1}
 \end{figure}
 
-\section{Autres}
-
-Ce chapitre a pour objectif de référencer quelques éléments intéressant pour intéragir avec le visualiseur et les produits.
-
-\begin{itemize}
-\item pour télécharger une image, il faut produire ce type de requête : \newline
-\verb!http://geowww.agrocampus-ouest.fr/geoserver/wcs?!\newline\verb!request=GetCoverage&service=WCS&version=2.0.1&!\newline\verb!coverageId=psn__ndvi_modis_bretagne&!
-\newline\verb!Format=image/geotiff&!
-\newline\verb!SUBSET=time("2017-06-10T00:00:00.000Z")! \smallbreak 
-Les variables à modifier sont coverageId en remplaçant ndvi par ef, tempjour ou tempnuit et le time en remplaçant l'année, le mois et le jour par la date souhaitée.
-\end{itemize}
 \section{Perspectives}
 
 Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limites :
@@ -379,6 +378,25 @@ Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limite
 \item Rouse and Haas, (1973). "Monitoring vegetation systems in the great plain with ERTS", Third ERTS Symposium, Washington DC: NASA, no.1, pp.309-317.
 \item Tucker, (1979). "Red and photographic infrared linear combinations for monitoring vegetation", Remote Sensing of the Environment, no.8, pp.127–150. 
 \item Wardlow, B.D., Kastens, J.H. et Egbert, S.L. (2006). "Using USDA crop progress data for the evaluation of greenup onset date calculated from MODIS 250meter data", Photogrammetric Engineering and Remote Sensing 72(11), 1225-1234. 
+\end{itemize}
+
+\section{Crédits}
+\begin{itemize}
+\item The MOD09Q1 and MOD11A2 datas products were retrieved from the online Data Pool, courtesy of the NASA EOSDIS Land Processes Distributed Active Archive Center (LP DAAC), USGS/Earth Resources Observation and Science (EROS) Center, Sioux Falls, South Dakota, https://e4ftl01.cr.usgs.gov/MOLT/. 
+\item Limitation d'utilisation
+Usage libre sous réserve des mentions obligatoires sur tout document de diffusion : "Source : UMR 1069 SAS INRA - Agrocampus Ouest / US 1106 InfoSol INRA" 
+\end{itemize}
+
+\section{Annexes}
+
+Ce chapitre a pour objectif de référencer quelques éléments intéressant pour intéragir avec le visualiseur et les produits.
+
+\begin{itemize}
+\item pour télécharger une image, il faut produire ce type de requête : \newline
+\verb!http://geowww.agrocampus-ouest.fr/geoserver/wcs?!\newline\verb!request=GetCoverage&service=WCS&version=2.0.1&!\newline\verb!coverageId=psn__ndvi_modis_bretagne&!
+\newline\verb!Format=image/geotiff&!
+\newline\verb!SUBSET=time("2017-06-10T00:00:00.000Z")! \smallbreak 
+Les variables à modifier sont coverageId en remplaçant ndvi par ef, tempjour ou tempnuit et le time en remplaçant l'année, le mois et le jour par la date souhaitée.
 \end{itemize}
 
 \end{document}

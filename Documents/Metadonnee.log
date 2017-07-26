@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  24 JUL 2017 16:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  26 JUL 2017 10:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -523,12 +523,12 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+msa on input line 13.
+LaTeX Font Info:    Try loading font information for U+msa on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 13.
+LaTeX Font Info:    Try loading font information for U+msb on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -536,178 +536,204 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Warning: No \author given.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 18.
+<img/logos.jpg, id=1, 301.32915pt x 47.7717pt>
+File: img/logos.jpg Graphic file (type jpg)
+ <use img/logos.jpg>
+Package pdftex.def Info: img/logos.jpg used on input line 18.
+(pdftex.def)             Requested size: 301.3284pt x 47.77156pt.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 25.
+
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 18.
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 35.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 25.
+ [1
 
-<img/spectre-electromagnetique.png, id=1, 602.25pt x 365.365pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./img/logos.jpg>] (./Metad
+onnee.toc)
+\tf@toc=\write3
+\openout3 = `Metadonnee.toc'.
+
+ [2]
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 45.
+
+<img/spectre-electromagnetique.png, id=18, 602.25pt x 365.365pt>
 File: img/spectre-electromagnetique.png Graphic file (type png)
 
 <use img/spectre-electromagnetique.png>
-Package pdftex.def Info: img/spectre-electromagnetique.png used on input line 4
+Package pdftex.def Info: img/spectre-electromagnetique.png used on input line 5
 5.
 (pdftex.def)             Requested size: 361.35278pt x 219.22069pt.
 
-Overfull \hbox (16.35278pt too wide) in paragraph at lines 45--46
+Overfull \hbox (16.35278pt too wide) in paragraph at lines 55--56
  [][] 
  []
+
+<img/modis.png, id=19, 433.62pt x 547.04375pt>
+File: img/modis.png Graphic file (type png)
+ <use img/modis.png>
+Package pdftex.def Info: img/modis.png used on input line 68.
+(pdftex.def)             Requested size: 173.44492pt x 218.81361pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[1
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-<img/modis.png, id=16, 433.62pt x 547.04375pt>
-File: img/modis.png Graphic file (type png)
- <use img/modis.png>
-Package pdftex.def Info: img/modis.png used on input line 58.
-(pdftex.def)             Requested size: 173.44492pt x 218.81361pt.
- [2 <./img/spectre-electromagnetique.png> <./img/modis.png>]
-<img/modisGrid.png, id=23, 501.875pt x 280.04625pt>
+[3 <./img/spectre-electromagnetique.png>]
+<img/modisGrid.png, id=26, 501.875pt x 280.04625pt>
 File: img/modisGrid.png Graphic file (type png)
  <use img/modisGrid.png>
-Package pdftex.def Info: img/modisGrid.png used on input line 67.
+Package pdftex.def Info: img/modisGrid.png used on input line 77.
 (pdftex.def)             Requested size: 351.31009pt x 196.03102pt.
 
-Overfull \hbox (6.31009pt too wide) in paragraph at lines 67--68
+Overfull \hbox (6.31009pt too wide) in paragraph at lines 77--78
  [][] 
  []
 
-[3 <./img/modisGrid.png>]
-<img/spectral_signatures.jpg, id=31, 800.0289pt x 402.5439pt>
+[4 <./img/modis.png> <./img/modisGrid.png>]
+<img/spectral_signatures.jpg, id=33, 800.0289pt x 402.5439pt>
 File: img/spectral_signatures.jpg Graphic file (type jpg)
 
 <use img/spectral_signatures.jpg>
-Package pdftex.def Info: img/spectral_signatures.jpg used on input line 97.
+Package pdftex.def Info: img/spectral_signatures.jpg used on input line 107.
 (pdftex.def)             Requested size: 320.00589pt x 161.0147pt.
- [4 <./img/spectral_signatures.jpg>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 129.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5] [6 <./img/spectral_signatures.jpg>]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 139.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-) [5]
-<img/orgDownload.pdf, id=39, 638.385pt x 554.07pt>
+) [7]
+<img/orgDownload.pdf, id=47, 638.385pt x 554.07pt>
 File: img/orgDownload.pdf Graphic file (type pdf)
  <use img/orgDownload.pdf>
-Package pdftex.def Info: img/orgDownload.pdf used on input line 135.
-(pdftex.def)             Requested size: 319.19171pt x 277.03432pt.
+Package pdftex.def Info: img/orgDownload.pdf used on input line 145.
+(pdftex.def)             Requested size: 383.03394pt x 332.44456pt.
 
-[6 <./img/orgDownload.pdf>]
-<img/orgIndices.pdf, id=46, 656.4525pt x 1103.12125pt>
+Overfull \hbox (38.03394pt too wide) in paragraph at lines 145--146
+ [][] 
+ []
+
+[8 <./img/orgDownload.pdf>]
+<img/orgIndices.pdf, id=54, 656.4525pt x 1103.12125pt>
 File: img/orgIndices.pdf Graphic file (type pdf)
 
 <use img/orgIndices.pdf>
-Package pdftex.def Info: img/orgIndices.pdf used on input line 154.
+Package pdftex.def Info: img/orgIndices.pdf used on input line 164.
 (pdftex.def)             Requested size: 315.09361pt x 529.49219pt.
- [7 <./img/orgIndices.pdf>]
-<img/graph_fvc_temp.png, id=54, 570.63188pt x 458.46281pt>
+ [9 <./img/orgIndices.pdf>]
+<img/graph_fvc_temp.png, id=61, 570.63188pt x 458.46281pt>
 File: img/graph_fvc_temp.png Graphic file (type png)
 
 <use img/graph_fvc_temp.png>
-Package pdftex.def Info: img/graph_fvc_temp.png used on input line 192.
+Package pdftex.def Info: img/graph_fvc_temp.png used on input line 202.
 (pdftex.def)             Requested size: 199.72415pt x 160.46439pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[8] <img/graph_priestley.png, id=59, 1011.78pt x 722.7pt>
+[10] <img/graph_priestley.png, id=66, 1011.78pt x 722.7pt>
 File: img/graph_priestley.png Graphic file (type png)
 
 <use img/graph_priestley.png>
-Package pdftex.def Info: img/graph_priestley.png used on input line 212.
+Package pdftex.def Info: img/graph_priestley.png used on input line 222.
 (pdftex.def)             Requested size: 354.1283pt x 252.94878pt.
 
-Overfull \hbox (9.1283pt too wide) in paragraph at lines 212--213
+Overfull \hbox (9.1283pt too wide) in paragraph at lines 222--223
  [][] 
  []
 
-[9 <./img/graph_fvc_temp.png> <./img/graph_priestley.png>] [10]
-Overfull \hbox (18.64493pt too wide) in paragraph at lines 271--272
+[11 <./img/graph_fvc_temp.png> <./img/graph_priestley.png>] [12]
+Overfull \hbox (18.64493pt too wide) in paragraph at lines 281--282
 \T1/cmr/m/n/10 (time cor-re-spon-dant au nom de l'attribut in-diqué dans in-dex
 er.properties)
  []
 
-[11] <img/orgPublication.pdf, id=72, 695.59875pt x 558.085pt>
+[13] <img/orgPublication.pdf, id=80, 695.59875pt x 558.085pt>
 File: img/orgPublication.pdf Graphic file (type pdf)
 
 <use img/orgPublication.pdf>
-Package pdftex.def Info: img/orgPublication.pdf used on input line 294.
+Package pdftex.def Info: img/orgPublication.pdf used on input line 304.
 (pdftex.def)             Requested size: 347.79852pt x 279.04182pt.
 
-Overfull \hbox (2.79852pt too wide) in paragraph at lines 294--295
+Overfull \hbox (2.79852pt too wide) in paragraph at lines 304--305
  [][] 
  []
 
-<img/NDVI_interpretation1.pdf, id=73, 845.1575pt x 597.23125pt>
+<img/NDVI_interpretation1.pdf, id=81, 845.1575pt x 597.23125pt>
 File: img/NDVI_interpretation1.pdf Graphic file (type pdf)
 
 <use img/NDVI_interpretation1.pdf>
-Package pdftex.def Info: img/NDVI_interpretation1.pdf used on input line 313.
+Package pdftex.def Info: img/NDVI_interpretation1.pdf used on input line 323.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[12 <./img/orgPublication.pdf>]
-<img/EF_interpretation1.pdf, id=80, 845.1575pt x 597.23125pt>
+[14 <./img/orgPublication.pdf>]
+<img/EF_interpretation1.pdf, id=88, 845.1575pt x 597.23125pt>
 File: img/EF_interpretation1.pdf Graphic file (type pdf)
 
 <use img/EF_interpretation1.pdf>
-Package pdftex.def Info: img/EF_interpretation1.pdf used on input line 325.
+Package pdftex.def Info: img/EF_interpretation1.pdf used on input line 335.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
- [13 <./img/NDVI_interpretation1.pdf> <./img/EF_interpretation1.pdf>]
-<img/TJ_interpretation1.pdf, id=143, 845.1575pt x 597.23125pt>
+ [15 <./img/NDVI_interpretation1.pdf> <./img/EF_interpretation1.pdf>]
+<img/TJ_interpretation1.pdf, id=150, 845.1575pt x 597.23125pt>
 File: img/TJ_interpretation1.pdf Graphic file (type pdf)
 
 <use img/TJ_interpretation1.pdf>
-Package pdftex.def Info: img/TJ_interpretation1.pdf used on input line 336.
+Package pdftex.def Info: img/TJ_interpretation1.pdf used on input line 346.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
- [14 <./img/TJ_interpretation1.pdf>]
-<img/TN_interpretation1.pdf, id=176, 845.1575pt x 597.23125pt>
+ [16 <./img/TJ_interpretation1.pdf>]
+<img/TN_interpretation1.pdf, id=183, 845.1575pt x 597.23125pt>
 File: img/TN_interpretation1.pdf Graphic file (type pdf)
 
 <use img/TN_interpretation1.pdf>
-Package pdftex.def Info: img/TN_interpretation1.pdf used on input line 347.
+Package pdftex.def Info: img/TN_interpretation1.pdf used on input line 357.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
- [15 <./img/TN_interpretation1.pdf>]
-Overfull \hbox (3.14334pt too wide) in paragraph at lines 375--376
+
+Overfull \hbox (3.14334pt too wide) in paragraph at lines 374--375
 \T1/cmr/m/n/10 Ama-zon", Pro-ceed-ings of the Na-tional Academy of Sci-ences, 1
 03(39):14637. 
  []
 
 
-Overfull \hbox (1.10681pt too wide) in paragraph at lines 376--377
+Overfull \hbox (1.10681pt too wide) in paragraph at lines 375--376
 \T1/cmr/m/n/10 stress sta-tus in semi-arid range-land ecosys-tems". Re-mote sen
 s., 6, pp.6300-
  []
 
-
-Overfull \hbox (19.30606pt too wide) in paragraph at lines 380--381
+[17 <./img/TN_interpretation1.pdf>]
+Overfull \hbox (19.30606pt too wide) in paragraph at lines 379--380
 \T1/cmr/m/n/10 mon-i-tor-ing veg-e-ta-tion", Re-mote Sens-ing of the En-vi-ron-
 ment, no.8, pp.127^^U150. 
  []
 
-[16] (./Metadonnee.aux) ) 
+
+Overfull \hbox (77.0964pt too wide) in paragraph at lines 385--386
+\T1/cmr/m/n/10 and Sci-ence (EROS) Cen-ter, Sioux Falls, South Dakota, https://
+e4ftl01.cr.usgs.gov/MOLT/. 
+ []
+
+[18] (./Metadonnee.aux) ) 
 Here is how much of TeX's memory you used:
- 3047 strings out of 494910
- 38610 string characters out of 6179837
- 94156 words of memory out of 5000000
- 6260 multiletter control sequences out of 15000+600000
+ 3056 strings out of 494910
+ 38731 string characters out of 6179837
+ 94165 words of memory out of 5000000
+ 6265 multiletter control sequences out of 15000+600000
  17483 words of font info for 51 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  37i,6n,24p,815b,279s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/e
 c/ectt1000.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx12
 00.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.600pk
-> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home
-/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home/donatie
+> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600pk> </home
+/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600pk> </home/donatie
 n/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0900.600pk> </home/donatien/.texmf
 -var/fonts/pk/ljfour/jknappen/ec/ecbx0900.600pk> </home/donatien/.texmf-var/fon
 ts/pk/ljfour/jknappen/ec/ecrm1200.600pk> </home/donatien/.texmf-var/fonts/pk/lj
@@ -718,10 +744,10 @@ m/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sha
 re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on Metadonnee.pdf (16 pages, 17256483 bytes).
+Output written on Metadonnee.pdf (18 pages, 17319187 bytes).
 PDF statistics:
- 624 PDF objects out of 1000 (max. 8388607)
- 175 compressed objects within 2 object streams
+ 643 PDF objects out of 1000 (max. 8388607)
+ 179 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 66 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 
