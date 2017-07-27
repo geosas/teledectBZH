@@ -33,7 +33,7 @@ urlServerCalc='psncalc.agrocampus-ouest.fr'
 # url du geoserver ou placer les images
 urlGeoserver='geowww.agrocampus-ouest.fr'
 # repertoire local du workspace
-dirWorkspace='/home/geoserver/owsserver_data_dir/data/psn'
+dirWorkspace='/home/geoserver/owsserver_data_dir/data/psn/'
 # fichier contenant les identifiants pour se connecter sur le geoserver
 # necessite cette syntaxe : login:password
 logpassCopie='/home/dallery/teledectBZH/.logPassCopie'
@@ -61,11 +61,11 @@ python ${scriptTreatment} -d ${datadir}'/usgs/' -out ${datadir}'/Output/' -clips
 
 python ${scriptExport} -inurl ${urlServerCalc} -indst ${datadir}'/Output/' -outurl ${urlGeoserver} -outdst ${dirWorkspace} -coCopie ${logpassCopie}
 
-sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeEF} -datadir ${dirWorkspace}${storeEF} -co ${logpassPublie}
+sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeEF} -datadir ${dirWorkspace}${storeEF} -co ${logpassPublie}
 
-sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeNDVI} -datadir ${dirWorkspace}${storeNDVI} -co ${logpassPublie}
+sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeNDVI} -datadir ${dirWorkspace}${storeNDVI} -co ${logpassPublie}
 
-sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTj} -datadir ${dirWorkspace}${storeTj} -co ${logpassPublie}
+sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTj} -datadir ${dirWorkspace}${storeTj} -co ${logpassPublie}
 
-sshpass -p"${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTn} -datadir ${dirWorkspace}${storeTn} -co ${logpassPublie}
+sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTn} -datadir ${dirWorkspace}${storeTn} -co ${logpassPublie}
 
