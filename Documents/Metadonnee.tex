@@ -20,11 +20,11 @@
 \end{figure}
 
 \begin{abstract}
-GéoBretagne a intégré des données de télédétection à son catalogue. Dans un premier temps, 4 produits sont disponibles : 
+GéoBretagne a intégré des données de télédétection dans son catalogue. Dans un premier temps, 4 produits sont disponibles : 
 \begin{itemize}
-\item le Normalized Difference Vegetation Index (NDVI) qui est un indice de végétation mettant en valeur le dynamisme de la végétation, par sa teneur en chlorophylle et la structure du couvert végétal
-\item l'Evaporative Fraction (EF), un indice indiquant la capacité d'une surface à évaporer qu’elle soit composée de végétation, ou non. Par exemple, il représente un indicateur pour identifier des situations de stress hydrique
-\item la température moyenne sur 8 jours de jour et de nuit par temps clair
+\item le Normalized Difference Vegetation Index (NDVI) qui est un indice de végétation mettant en valeur le dynamisme de la végétation, par sa teneur en chlorophylle et la structure du couvert végétal;
+\item l'Evaporative Fraction (EF), un indice indiquant la capacité d'une surface à évaporer qu’elle soit composée de végétation, ou non. Par exemple, il représente un indicateur pour identifier des situations de stress hydrique;
+\item la température moyenne sur 8 jours de jour et de nuit par temps clair;
 \end{itemize}
 
 Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ceux-ci de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
@@ -33,6 +33,7 @@ Chacun de ces produits possède une dimension temporelle afin de suivre l'évolu
 \newpage
 \tableofcontents
 \newpage
+
 \section{Introduction}
 
 La définition officielle de la télédétection est « l’ensemble des connaissances et techniques utilisées pour déterminer des caractéristiques physiques et biologiques d’objets par des mesures effectuées à distance, sans contact matériel avec ceux-ci » (COMITAAS, 1988).\smallbreak
@@ -61,7 +62,7 @@ Dans le cadre de cette introduction à la télédétection, les données dans le
 
 \subsection{Capteur MODIS}
 
-Le capteur MODIS est un spectroradiomètre imageur (un appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées gratuitement par l'United States Geological Survey (USGS) .
+Le capteur MODIS est un spectroradiomètre imageur (un appareil photo) se trouvant sur deux satellites (Terra et Aqua) (figure \ref{modis}) mis en service par la NASA dont les données sont diffusées gratuitement.
 
 \begin{figure}[!h]
 \centering
@@ -79,11 +80,11 @@ Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomè
 \label{modisGrid}
 \end{figure}
 
-Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien que généralement, les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne :
+Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien que généralement les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne. Celles-ci sont :
 \begin{itemize}
-\item une résolution temporelle journalière et des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours)
-\item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer EF), particulièrement de jour et de nuit
-\item des archives importantes (il est possible d'avoir des données à partir de l'an 2000) pour l'aspect temporel mis en avant sur GéoBretagne
+\item des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours) disponibles afin de limiter l'impact des nuages;
+\item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer un indice)
+\item des archives importantes permettant d'avoir des données depuis l'an 2000;
 \end{itemize}
 
 \subsection{Produits disponibles sur GéoBretagne}
@@ -98,9 +99,9 @@ Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation stand
 \textrm{NDVI}=$ \frac{Pir-R}{Pir+R} $
 \end{center}\smallbreak
 
-Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est majoritairement absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi principalement par l'eau contenu dans la végétation (parenchyme lacuneux). De même, plus la végétation sera dynamique, plus il y aura d'absorption dans la bande du rouge et de réflectance pour celle du proche infrarouge.\smallbreak
+Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est majoritairement absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi principalement par l'eau contenu dans la végétation (parenchyme lacuneux). Ainsi, plus la végétation sera dynamique, plus il y aura d'absorption dans le rouge et de réflectance dans le proche infrarouge.\smallbreak
 
-La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcule la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
+La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées numérotées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcule la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
 
 \begin{figure}[!h]
 \centering
@@ -109,18 +110,18 @@ La figure \ref{signSpectr} permet de distinguer la réflectance type de la vég�
 \label{signSpectr}
 \end{figure}
 
-Cet indice permet d'effectuer une classification de l'occupation du sol. De part l'aspect temporel mis en avant sur GéoBretagne, cet indice permet également de suivre la phénologie de la végétation. De cette manière, il est possible de déterminer l'usage des sols (Patakamuri et al., 2014).
+Cet indice permet par exemple d'effectuer une classification de l'occupation du sol. De part l'aspect temporel mis en avant sur GéoBretagne, cet indice permet également de suivre la phénologie de la végétation. Il est ainsi possible de déterminer l'usage des sols (Patakamuri et al., 2014).
 
 \subsubsection{Evaporative Fraction}
 
-L'Evaporative Fraction est un indice mettant en valeur la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. Il représente ainsi un indicateur pour, par exemple, identifier des situations de stress hydrique (Bastiaanssen et al., 2003; Nutini et al., 2014). Elle est aussi une donnée servant à alimenter des modèles qui permettront l’estimation de l'évapotranspiration réelle des surfaces continentales. Cet indice se calcule avec le NDVI et des mesures de températures de jour et de nuit que ce soit par télédétection (infrarouge thermique) ou non (thermomètre). Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
+L'Evaporative Fraction est un indice permettant d'estimer la capacité d'une
+surface à évaporer, qu’elle soit composée de végétation ou non. Il représente ainsi un indicateur pour, par exemple, identifier des situations de stress hydrique (Bastiaanssen et al., 2003; Nutini et al., 2014). Elle est aussi une donnée servant à alimenter des modèles qui permettront l’estimation de l'évapotranspiration réelle des surfaces continentales. Cet indice se calcule avec un indice renseignant sur la couverture de la végétation (Fraction of Vegetation Cover) calculé à partir du NDVI et des mesures de températures de jour et de nuit. Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
 
 De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne), mais aussi en combinant d'autres informations. En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse.
 
 \subsubsection{Température de jour et de nuit}
 
-Ces deux données sont mis à disposition par l'USGS-LP DAAC sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours de jour et de nuit. Cette donnée est utilisée pour calculer EF. Ces températures sont également disponibles sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbains avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour ou de nuit étant donné leur amplitude thermique plus faible que le sol et la végétation.
+Ces deux données sont téléchargeables sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours de jour et de nuit. Elles sont utilisées pour calculer EF. Ces températures sont diffusées sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbains avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour et de nuit étant donné leur amplitude thermique plus faible que le sol et la végétation.
 
 \section{Méthodologie}
 
@@ -129,35 +130,47 @@ La chaîne de traitement développée pour générer et rendre accessible ces pr
 \begin{enumerate}
 \item Téléchargement des images MODIS
 \item Génération des produits
-\item Publication sur un GeoServer
+\item Publication des produits sur un GeoServer
 \end{enumerate}
 
-Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif de respecter cette nomenclature : Nom\_YYYYMMDD.tif. Dans le cas contraire, le GeoServer (dans la configuration actuelle) ne sera pas capable de gérer l'aspect temporel de l'image.
+Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif de respecter cette nomenclature : Nom\_YYYYMMDD.tif. Dans le cas contraire, le GeoServer (d'après un fichier de configuration) ne sera pas capable de gérer l'aspect temporel de l'image.
 
 \subsection{Téléchargement des données MODIS}
 
-Les produits MODIS nécessaires pour les traitements sont MOD09Q1 (bandes du rouge et du proche infrarouge) à 250m de résolution spatiale et MOD11A2 (température de jour et de nuit) à 1km. La tuile à télécharger est la h17v04. Ces produits sont disponibles sur la plateforme de téléchargement LP DAAC de l'USGS \verb!https://lpdaac.usgs.gov/data_access/data_pool.! Les archives pour ces produits débutent au 18 Février 2000 et une nouvelle image est ajoutée tous les 8 jours (approximativement).\smallbreak
+Les produits MODIS nécessaires pour les traitements sont MOD09Q1 (bandes du rouge, du proche infrarouge et masque des nuages) à 250m de résolution spatiale et MOD11A2 (température de jour et de nuit) à 1km. La tuile à télécharger est la h17v04. Les archives pour ces produits débutent au 18 Février 2000 et une nouvelle image est ajoutée tous les 8 jours. Ces produits sont disponibles sur à cette adresse \verb!https://lpdaac.usgs.gov/data_access/data_pool.! Un compte à cette adresse \verb!https://urs.earthdata.nasa.gov/! est nécessaire pour effectuer des téléchargements. \smallbreak
 
-Le téléchargement des images repose sur différents critères, c'est à dire le site de téléchargement (fixe), le produit (fixe), la tuile (fixe) et la date du produit (variable) dont voici le fonctionnement (figure \ref{orgDL}) :\newpage
+Le téléchargement des images repose sur différents critères, c'est à dire le site de téléchargement, le produit, la tuile et la date dont voici le fonctionnement du script (figure \ref{orgDL}) :
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{img/orgDownload.pdf}
+\includegraphics[scale=0.53]{img/orgDownload.pdf}
 \caption{Organigramme des étapes nécessaires pour le téléchargement des produits MODIS.}
 \label{orgDL}
 \end{figure}
 
+Le téléchargement s'effectue avec la requête suivante :\newline
+\verb!"curl --netrc-file (1) -L -c (2).cookies -b (2).cookies (3)! \newline \verb!--output (4)"!
+\begin{itemize}
+\item (1) fichier contenant les identifiants pour télécharger les images
+\item (2) répertoire où produire et lire un cookies concernant la session en cours (suite à une redirection)
+\item (3) url du fichier à télécharger
+\item (4) chemin et nom du fichier téléchargé
+\end{itemize}
+
+Les images sont téléchargées dans un répertoire nommé "usgs". Dans celui-ci se trouve les images (au format HDF) pour chacun des produits et chacune des dates, ainsi que leurs métadonnées.
+
 \subsection{Génération des produits}
 
-La production des produits diffusés s'opère en 3 étapes :
+La production des produits s'opère en 4 étapes :
 
 \begin{enumerate}
-\item Contrôle des dates déjà traitées
 \item Prétraitement des images
-\item Génération des produits
+\item Calcul du NDVI
+\item Application de modèles
+\item Calcul de l'EF
 \end{enumerate}
 
-Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretagne est le suivant (figure \ref{orgIndex}) :\newpage
+Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretagne est présenté sur la figure \ref{orgIndex}.\newpage
 
 \begin{figure}[!h]
 \centering
@@ -166,28 +179,20 @@ Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretag
 \label{orgIndex}
 \end{figure}
 
-Les paramètres en entrée du script sont :
-
-\begin{itemize}
-\item le dossier contenant les images téléchargées précédemment
-\item le dossier où enregistrer les produits générés
-\item un shapefile pour découper les images (échelle de la Bretagne)
-\item un shapefile pour masquer les pixels de la mer
-\end{itemize}
+Tout d'abord, le script va lister tous les fichiers téléchargés. Puis, pour chaque n'ayant pas encore été traitée (test sur l'existence du fichier EF), effectue les étapes suivantes.
 
 \subsubsection{Prétraitements}
 
 Les images téléchargées nécessitent des prétraitements avant de générer les produits. Ils consistent à :
 
 \begin{itemize}
-\item découper les images à l'échelle de la Bretagne et supprimer les pixels de la mer
-\item changer le format de fichier des images (hdf vers tif)
-\item rééchantillonner les images des températures (1km vers 250m)
-\item recalculer les valeurs selon un facteur indiqué sur le site de l'USGS
-\item éliminer les nuages des images
+\item Extraction des images : les images téléchargées sont au format HDF faisant que toutes les images d'un produit sont dans un seul fichier. Il est donc nécessaire d'extraire celles-ci. Pour cela, l'outil "\verb!gdal_translate!" est employé. 
+\item Reprojection : les images sont reprojetées en Lambert 93 (epsg:2154) en respect envers la directive INSPIRE avec l'outil "\verb!gdalwarp!".
+\item Découpage et masquage : les images couvrent un territoire bien plus vaste que la Bretagne et la mer ne possède pas d'informations pertinente vis à vis des indices diffusés. Il est donc nécessaire de découper les images et de supprimer les pixels de mer. Le découpage s'effectue avec un "\verb!gdalwarp! et la suppression des pixels de mer s'effectue en 3 étapes. Le première consiste à créer un raster vide de même dimension que la zone découpée, la seconde à superposer ce raster avec le fichier shape servant de masque pour faire un masque binaire avec "\verb!gdal_rasterize!". La troisième, on applique ce masque binaire pour modifier les valeurs du fichier .TIF.
+\item Rééchantillonnage : les deux produits téléchargés ont une résolution spatiale différente, il n'est donc pas possible de les superposer. Un rééchantillonnage est donc nécessaire. Les températures avec 1km de résolution sont donc rééchantillonnées à 250m.
+\item Recalcul des valeurs : pour une raison de stockage, les images téléchargées ont des valeurs entières. Un facteur d’échelle à appliquer à tous les produis est accessible sur le site de la LP DAAC pour obtenir les réflectances.
+\item Suppression des nuages : malgré le fait que ce sont des synthèses de 8 jours qui sont utilisées pour générer les produits diffusés sur GéoBretagne, des nuages peuvent subsister. Dans un soucis de compréhension simplifié, il a été décidé qu'il était préférable de diffuser des zones sans données. Ainsi, d'après l'image qualité disponible dans le produit MOD09Q1, toutes les valeurs en dessous de 220 sont conservées.
 \end{itemize}
-
-Les températures sont directement publiables, aucun traitement supplémentaire ne sera effectué.
 
 \subsubsection{NDVI}
 
@@ -260,8 +265,8 @@ Nous obtenons une image renseignant sur la capacité d'un sol à évaporer. L'é
 Ci-dessous la démarche à adopter pour générer un store temporel avec des données formalisés pour celui-ci.
 
 \begin{enumerate}
-\item création du workspace en nommant celui-ci.
-\item copier les images sur le GeoServer si elles n'ont pas été produites sur celui-ci. De plus, ajouter dans ce dossier deux fichiers de configurations pour exploiter la dimension temporelle des images :
+\item Création du workspace en nommant celui-ci.
+\item Copier les images sur le GeoServer si elles n'ont pas été produites sur celui-ci. De plus, ajouter dans ce dossier deux fichiers de configurations pour exploiter la dimension temporelle des images :
 \begin{itemize}
 \item indexer.properties avec :
 \begin{itemize}
@@ -275,14 +280,16 @@ Ci-dessous la démarche à adopter pour générer un store temporel avec des don
 \item regex=[0-9]{8} (pour indiquer que la date est au format YYYYMMDD)
 \end{itemize}
 \end{itemize}
-\item création du store avec l'extension ImageMosaic et en indiquant le répertoire contenant les images et les deux fichiers de configuration
-\item création du layer en renseignant :
+\item Création du store avec l'extension ImageMosaic et en indiquant le répertoire contenant les images et les deux fichiers de configuration.
+\item Création du layer en renseignant :
 \begin{itemize}
 \item onglet Data : dans la cellule sorting "time D" pour trier les dates (time correspondant au nom de l'attribut indiqué dans indexer.properties) par ordre décroissant (D)
 \item onglet Dimensions : activer le time et choisir une présentation "List"
 \end{itemize}
-\item le store temporel est configuré, la mise à jour passera par un script
+\item Le store temporel est configuré, la mise à jour passera par un script.
 \end{enumerate}
+
+Ces étapes sont à effectuer manuellement.
 
 \subsubsection{Mise à jour d'un store temporel existant}
 
@@ -296,8 +303,7 @@ Un script effectue cette étape et possède 5 paramètres en entrée :
 \item le répertoire sur le serveur contenant le produit à publier
 \end{itemize}
 
-Ce script publie un seul produit à la fois, il est donc à exécuter autant de fois que nécessaire.\smallbreak
-Remarque : si les produits ne sont pas accessible par le GeoServer, il est impératif de les déplacer sur le serveur de celui-ci. De plus, ce script effectue uniquement une mise à jour, le workspace et le store sont à générer manuellement. \newpage
+Ce script publie un seul produit à la fois, il est donc à exécuter autant de fois que nécessaire.\newpage
 
 \begin{figure}[!h]
 \centering
