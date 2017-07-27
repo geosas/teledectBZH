@@ -355,10 +355,22 @@ def CalcTjTn(ListFilesTemp, out, date):
         OpenRaster(ListFilesTemp[0], 1)
     Tn, Xsize_Tn, Ysize_Tn, Projection_Tn, Transform_Tn = \
         OpenRaster(ListFilesTemp[1], 1) 
+
     # Identifie les cellules en nodata et supprime leur equivalent 
     # dans les deux images
     Tj[np.where(Tn==0)]=np.nan
-    Tn[np.where(Tj==0)]=np.nan 
+    Tn[np.where(Tj==0)]=np.nan
+	
+    #converti tous les 0 en nodata
+    Tj[np.where(Tj==0)]=np.nan
+    Tn[np.where(Tn==0)]=np.nan
+
+    if np.all(np.isnan(Tj)) or np.all(np.isnan(Tn)):
+	print "Temperature sans donnees, EF incalculable"
+	os.remove(ListFilesTemp[0])
+	os.remove(ListFilesTemp[1])
+	return False, False, False, False, False, False, False
+
     # Calcule Tj_Tn
     TjTn = Tj - Tn  
     # Enregistre l'image et la compresse
@@ -677,6 +689,12 @@ def Main(datas, out, clipShp, maskShp):
             TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
                 = CalcTjTn(ListFilesTemp, out, Date)
             
+	    # si une date ne contient aucune donnee de temperature, ne calcule pas EF
+	    try:
+	        if TjTn == False:
+		    print "Aucune temperature disponible a la date du %s" %(Date)
+	            continue
+	    except:ValueError
             # Supprime les valeurs de FVC ou la temperature n'est pas disponible
             fvc[np.where(TjTn==0)]=np.nan
     
