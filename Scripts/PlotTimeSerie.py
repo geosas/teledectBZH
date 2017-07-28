@@ -13,6 +13,7 @@ import osr
 import gdal
 import datetime
 import matplotlib
+import operator as op
 #matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
@@ -150,10 +151,34 @@ def main(datas, out, roi, nan):
     datas[np.where(datas==-999)]=np.nan
     
     # Calcule la valeur moyenne pour chaque date
-    y = [np.nanmean(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
-    #for i in range(len(lRasters)):
-        #np.nanmean(datas[yoff:yoff+ycount, xoff: xoff+xcount,i])
-    plt.plot(lDates, y, marker='o')
+    yList = [np.nanmean(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
+    yArray = np.asarray(yList)
+    yMobile = yArray[0]
+    for i in range(len(yList)-2):
+        yMobile = np.append(yMobile, np.mean(yArray[0+i:3+i]))   
+    yMobile = np.append(yMobile, yArray[-1])
+    yMobileList = yMobile.tolist()
+
+    # Calcule la valeur minimale pour chaque date
+    #yMin = [np.nanmin(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
+    
+    # Calcule la valeur maximale pour chaque date
+    #yMax = [np.nanmax(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
+    
+    # Calcule l'ecart type pour chaque date
+    yStd = [np.nanstd(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
+    yMinStd = [op.sub(i,j) for i, j in zip(yList, yStd)]
+    yMaxStd = [sum(i) for i in zip(yList, yStd)]
+    
+    fig, ax = plt.subplots(1, 1, sharex=True)
+    
+    plt.plot(lDates, yList, color="black")
+    plt.plot(lDates, yMinStd, color="red")
+    plt.plot(lDates, yMaxStd, color="green")
+    plt.plot(lDates, yMobileList, color="yellow")
+    
+    ax.fill_between(lDates, yMinStd, yMaxStd, alpha=0.5)
+    
     plt.gcf().autofmt_xdate()
     plt.show()
     
