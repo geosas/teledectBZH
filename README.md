@@ -43,6 +43,19 @@ Il se distingue en 2 parties :
 
 [__PublishGeoserver.py__](Scripts/PublishGeoserver.py) permet de mettre à jour un entrepôt avec de nouvelles images. Ce script suppose que le workspace et l'entrepôt ont déjà été créé. La mise à jour s'effectue avec une commande curl. Ce script est à placer sur le Geoserver et non sur le serveur de calcul.
 
+## Outil supplémentaire :
+
+[__PlotTimeSerie.py__](Scripts/PlotTimeSerie.py) permet, à partir d'une série d'images et d'un shapefile contenant une entité, de générer un graphique présentant l'évolution des valeurs de la série d'images vis à vis de cette entité.
+Les paramètres de cet outil sont :
+- -d : répertoire contenant la série d'images (format XXX_YYYYMMDD.xxx)
+- -title : titre du graphique
+- -ylabel : titre de la série temporelle
+- -o : répertoire où enregistrer le graphique
+- -roi : shapefile contenant la zone où collecter les valeurs
+- -ndata : valeur du nodata (-999 si images de GéoBretagne)
+- -a : si présent, génère une courbe représentant la moyenne des valeurs par date
+- -b : si présent, génère une courbe représentant la moyenne mobile des valeurs selon T-1, T, T+1
+
 __TODO :__
 - Calculer les données manquantes entre les dates (pas de temps de 8 jours). A vérifier la pertinence vis à vis des températures pauvant être très différentes en 16 jours.
 ***
