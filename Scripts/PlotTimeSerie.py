@@ -129,7 +129,7 @@ def extractArea(shape, nodata, xsize, ysize, projection, transform):
     return yoff, ycount, xoff, xcount
 
     
-def main(datas, out, roi, nan):
+def main(datas, out, roi, nan, mean, mMean, title, ylabel):
     """
     """
     # Liste tous les fichiers rasters et teste s'ils ont tous une information
@@ -152,12 +152,14 @@ def main(datas, out, roi, nan):
     
     # Calcule la valeur moyenne pour chaque date
     yList = [np.nanmean(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
-    yArray = np.asarray(yList)
-    yMobile = yArray[0]
-    for i in range(len(yList)-2):
-        yMobile = np.append(yMobile, np.mean(yArray[0+i:3+i]))   
-    yMobile = np.append(yMobile, yArray[-1])
-    yMobileList = yMobile.tolist()
+    
+    if mMean==True:    
+        yArray = np.asarray(yList)
+        yMobile = yArray[0]
+        for i in range(len(yList)-2):
+            yMobile = np.append(yMobile, np.mean(yArray[0+i:3+i]))   
+        yMobile = np.append(yMobile, yArray[-1])
+        yMobileList = yMobile.tolist()
 
     # Calcule la valeur minimale pour chaque date
     #yMin = [np.nanmin(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
@@ -170,16 +172,22 @@ def main(datas, out, roi, nan):
     yMinStd = [op.sub(i,j) for i, j in zip(yList, yStd)]
     yMaxStd = [sum(i) for i in zip(yList, yStd)]
     
-    fig, ax = plt.subplots(1, 1, sharex=True)
+    fig, ax = plt.subplots(figsize=(20, 10),sharex=True)
     
-    plt.plot(lDates, yList, color="black")
-    plt.plot(lDates, yMinStd, color="red")
+    if mean==True:
+        plt.plot(lDates, yList, color="black", label="moyenne")
+    plt.plot(lDates, yMinStd, color="green")
     plt.plot(lDates, yMaxStd, color="green")
-    plt.plot(lDates, yMobileList, color="yellow")
+    if mMean==True:
+        plt.plot(lDates, yMobileList, color="red", label="moyenne glissante")
     
-    ax.fill_between(lDates, yMinStd, yMaxStd, alpha=0.5)
-    
+    ax.fill_between(lDates, yMinStd, yMaxStd, alpha=0.4, label="intervalle de confiance", color="green")
+    plt.title(title)
+    plt.ylabel(ylabel)
+    plt.xlabel("Date")
+    plt.legend()
     plt.gcf().autofmt_xdate()
+    plt.savefig(out+"/output.png", dpi=300)
     plt.show()
     
     
@@ -197,16 +205,28 @@ if __name__ == "__main__":
         d'images raster.")
         
         parser.add_argument("-d", dest="datas", action="store",
-                            help="Datas directory")
-
+                            help="Datas directory", required="True")
+                            
+        parser.add_argument("-title", dest="title", action="store",
+                            help="Title of graphic", required="True")
+                            
+        parser.add_argument("-ylabel", dest="ylabel", action="store",
+                            help="Title of y axis", required="True") 
+                            
         parser.add_argument("-o", dest="out", action="store",
-                            help="Out directory")
+                            help="Out directory", required="True")
         
         parser.add_argument("-roi", dest="roi", action="store", 
-                            help="Shapefile de la zone d'interet")
+                            help="Shapefile de la zone d'interet", required="True")
                             
         parser.add_argument("-ndata", dest="nan", action="store", 
-                            help="Valeur du nodata")
+                            help="Valeur du nodata", required="True")
+        
+        parser.add_argument("-a", dest="mean", action="store_true", 
+                            help="Plot mean ?", default="False") 
+                            
+        parser.add_argument("-b", dest="mMean", action="store_true", 
+                            help="Plot mobile mean ?", default="False")                    
                             
         args = parser.parse_args()
         
@@ -214,6 +234,6 @@ if __name__ == "__main__":
     if not os.path.exists(args.out):
         os.mkdir(args.out)
         
-    main(args.datas, args.out, args.roi, args.nan)
+    main(args.datas, args.out, args.roi, args.nan, args.mean, args.mMean, args.title, args.ylabel)
     
     print "\nGraphique genere"
