@@ -113,8 +113,8 @@ def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
                             for date2 in listDates if date2 in date1]
     
     if listDatesDl1 == [] and listDatesDl2 == [] :
-        print "\nAucune image disponible pour et a partir du %s. ARRET"\
-                % (dateStart)
+        print "\nAucune image disponible à partir du %s jusqu'au %s. ARRET"\
+                % (dateStart, dateEnd)
         sys.exit()
         
     # genere une liste des urls des images a telecharger
