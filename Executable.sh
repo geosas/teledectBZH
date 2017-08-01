@@ -5,7 +5,7 @@
 ###########################################
 
 # Determine la date J-1 a partir de laquelle recherche les dates disponibles (si la publication s'est faite vers minuit)
-yesterday=$(date --date="yesterday" +%Y-%m-%d)
+yesterday=$(date --date="15 day ago" +%Y-%m-%d)
 # Determine la date J pour rechercher les dates disponibles
 today=$(date +%Y-%m-%d)
 # login et mot de passe du geoserver pour publier les images avec sshpass pour s'identifier
