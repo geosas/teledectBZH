@@ -333,13 +333,20 @@ Le NDVI est un indice de végétation permettant de déterminer l'occupation du 
 
 \subsection{Interprétation de l'évolution temporelle du NDVI}
 
-L'intérêt d'une série temporelle est de pouvoir suivre l'évolution d'un phénomène. Dans le cadre de cet exemple, nous allons observer l'évolution du NDVI sur le marais du Parc Naturel Régional de Brière. Tout d'abord, à cause des nuages, certaines dates ne disposent pas d'informations sur le PNR. Ce manque de données s'identifie par des ruptures dans la courbe de la figure \ref{TS_NDVI}.\smallbreak
+L'intérêt d'une série temporelle est de pouvoir suivre l'évolution d'un phénomène. Dans le cadre de cet exemple, nous allons observer l'évolution du NDVI sur le marais du Parc Naturel Régional de Brière. Avant tout, à cause des nuages, certaines dates ne disposent pas d'informations sur le PNR. Ce manque de données s'identifie par des ruptures dans la courbe de la figure \ref{TS_NDVI}.\smallbreak
 Cette courbe présente globalement une forme sinusoïdale correspondant aux saisons de végétations (croissance, stagnation, diminution). Ces différentes étapes peuvent être décalée dans le temps selon les objets observés. Par exemple, une culture de blé aura une phase de croissance à partir de novembre-décembre (tallage) au contraire d'une prairie où la croissance s'effectuera à partir de mars.\smallbreak
-La série temporelle accessible sur GéoBretagne présente l'avantage de couvrir différents aléas comme la canicule de 2003.
+La série temporelle accessible sur GéoBretagne présente l'avantage de couvrir différents aléas comme la canicule de 2003. Pour cet exemple, 2 années ont été sélectionnées avant et après celui-ci (figure \ref{TS_NDVI}).\smallbreak
+Sur le marais du PNR de Brière, cet aléa ne se distingue pas vis à vis des autres années, probablement pour deux raisons :
+\begin{itemize}
+\item le marais, ayant une réserve en eau importante, a su conserver un niveau correct durant la canicule induisant aucun impact sur la végétation;
+\item l'arrêt du traitement chimique visant à éliminer la Jussie, en plus de la canicule, a considérablement accéléré le développement de la Jussie (Leplat M., 2005), raison pour laquelle nous n'observons aucune diminution du NDVI ;
+\end{itemize}
+Cependant, d'autres éléments peuvent expliquer l'absence de l'impact de la canicule, par exemple, la définition même de la canicule. En France, une canicule à Brest se situe à 28 degrés, alors qu'une canicule à Toulouse se situe à 36 degrés.\smallbreak
+Dans tous les cas, pour effectuer un suivi temporelle sur des objets, il est important de prendre en compte l'occupation et l'usage des sols qui en est fait chaque année. Par exemple, dans le cas de parcelles agricoles, il est primordial de prendre en compte la rotation des cultures pour effectuer une analyse pertinente.
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.33]{img/plot_ts_ndvi.pdf}
+\includegraphics[scale=0.29]{img/NDVI_Briere.png}
 \caption{Représentation de l'évolution du NDVI entre 2000 et 2017 sur le Parc Naturel Régional de Brière.}
 \label{TS_NDVI}
 \end{figure}
@@ -390,6 +397,7 @@ Les produits diffusés actuellement sur GéoBretagne possèdent plusieurs limite
 \begin{itemize}
 \item Bastiaanssen W.G.M., Ali, S. (2003). "A new crop yield forecasting model based on satellite measurements applied across the Indus Basin, Pakistan". Agric. Ecosyst. Environ. 94, pp.321–340.
 \item Gao B.-C. (1996). "NDWI : A  Normalized  Difference  Water  Index  for  remote  sensing  of vegetation liquid water from space", Proceeding of SPIE.Vol.58, no.3, pp.257-266.
+\item Leplat Mélody.(2005). "Les proliférations de Jussies sous l'angle économique". Mémoire. Université de Bretagne occidentale - Agrocampus Rennes
 \item Morton, D. C., DeFries, R. S., Shimabukuro, Y. E., Anderson, L. O., Arai, E., del Bon Espirito-Santo, F.,  Freitas,  R.  et  Morisette,  J.,  (2006). "Cropland expansion changes deforestation dynamics in the southern Brazilian Amazon", Proceedings of the National Academy of Sciences, 103(39):14637. 
 \item Nutini F., Boschetti M., Candiani G., Bocchi S., Brivio P.A., (2014). "Evaporative Fraction as an indicator of moisture condition and water stress status in semi-arid rangeland ecosystems". Remote sens., 6, pp.6300-6323.
 \item Patakamuri S.K., Agrawal S., Krishnaveni M. (2014). "Time-series analysis of MODIS NDVI data along with ancillary data for land use/land cover mapping of Uttarakhand". The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences. XL-8, ISPRS Technical Commission VIII Symposium, pp.1491–1500

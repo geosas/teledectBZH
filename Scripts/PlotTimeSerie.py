@@ -138,17 +138,17 @@ def main(datas, out, roi, nan, mean, mMean, title, ylabel):
     
     # Initialise la combinaison de tous les rasters dans un seul array
     datas, xsize, ysize, projection, transform = OpenRaster(lRasters[0],1)
-    
+    datas[np.where(datas==-999)]=np.nan
+
     # Ajoute les donnees de chacune des images dans la matrice en 3D
     for raster in lRasters[1:]:
         data, xsize, ysize, projection, transform = OpenRaster(raster, 1)
+	# Change les valeurs des nodata en nan
+    	data[np.where(data==-999)]=np.nan
         datas = np.dstack((datas, data))
         
     # Calcule l'emprise de l'entite par rapport au raster
     yoff, ycount, xoff, xcount = extractArea(roi, nan, xsize, ysize, projection, transform)
-    
-    # Change les valeurs des nodata en nan
-    datas[np.where(datas==-999)]=np.nan
     
     # Calcule la valeur moyenne pour chaque date
     yList = [np.nanmean(datas[yoff:yoff+ycount, xoff: xoff+xcount,i]) for i in range(len(lRasters))]
@@ -182,9 +182,9 @@ def main(datas, out, roi, nan, mean, mMean, title, ylabel):
         plt.plot(lDates, yMobileList, color="red", label="moyenne glissante")
     
     ax.fill_between(lDates, yMinStd, yMaxStd, alpha=0.4, label="intervalle de confiance", color="green")
-    plt.title(title)
-    plt.ylabel(ylabel)
-    plt.xlabel("Date")
+    plt.title(title, fontsize="24")
+    plt.ylabel(ylabel, fontsize="20")
+    plt.xlabel("Date", fontsize="20")
     plt.legend()
     plt.gcf().autofmt_xdate()
     plt.savefig(out+"/output.png", dpi=300)
