@@ -20,8 +20,7 @@
 \contentsline {subsection}{\numberline {3.3}Interpr\IeC {\'e}tation de l'Evaporative Fraction}{16}
 \contentsline {subsection}{\numberline {3.4}Interpr\IeC {\'e}tation des temp\IeC {\'e}ratures de jour}{17}
 \contentsline {subsection}{\numberline {3.5}Interpr\IeC {\'e}tation des temp\IeC {\'e}ratures de nuit}{18}
-\contentsline {section}{\numberline {4}Conclusion}{18}
-\contentsline {section}{\numberline {5}Perspectives}{18}
-\contentsline {section}{\numberline {6}Bibliographie}{19}
-\contentsline {section}{\numberline {7}Cr\IeC {\'e}dits}{20}
-\contentsline {section}{\numberline {8}Annexes}{20}
+\contentsline {section}{\numberline {4}Conclusion et perspectives}{18}
+\contentsline {section}{\numberline {5}Bibliographie}{19}
+\contentsline {section}{\numberline {6}Cr\IeC {\'e}dits}{19}
+\contentsline {section}{\numberline {7}Annexes}{20}
