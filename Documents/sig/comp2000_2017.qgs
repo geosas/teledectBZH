@@ -1,0 +1,570 @@
+<!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
+<qgis projectname="" version="2.14.11-Essen">
+  <title></title>
+  <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+    <customproperties/>
+    <layer-tree-layer expanded="0" checked="Qt::Checked" id="NDVI_2017061820170807100417890" name="NDVI_20170618">
+      <customproperties/>
+    </layer-tree-layer>
+    <layer-tree-layer expanded="0" checked="Qt::Checked" id="NDVI_2000061720170807100409177" name="NDVI_20000617">
+      <customproperties/>
+    </layer-tree-layer>
+  </layer-tree-group>
+  <relations/>
+  <mapcanvas>
+    <units>meters</units>
+    <extent>
+      <xmin>282817.60242288513109088</xmin>
+      <ymin>6692870.47797964513301849</ymin>
+      <xmax>386401.98930070316419005</xmax>
+      <ymax>6784745.86418765783309937</ymax>
+    </extent>
+    <rotation>0</rotation>
+    <projections>0</projections>
+    <destinationsrs>
+      <spatialrefsys>
+        <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+        <srsid>145</srsid>
+        <srid>2154</srid>
+        <authid>EPSG:2154</authid>
+        <description>RGF93 / Lambert-93</description>
+        <projectionacronym>lcc</projectionacronym>
+        <ellipsoidacronym>GRS80</ellipsoidacronym>
+        <geographicflag>false</geographicflag>
+      </spatialrefsys>
+    </destinationsrs>
+    <rendermaptile>0</rendermaptile>
+    <layer_coordinate_transform_info/>
+  </mapcanvas>
+  <layer-tree-canvas>
+    <custom-order enabled="0">
+      <item>NDVI_2000061720170807100409177</item>
+      <item>NDVI_2017061820170807100417890</item>
+    </custom-order>
+  </layer-tree-canvas>
+  <legend updateDrawingOrder="true">
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="NDVI_20170618" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="NDVI_2017061820170807100417890" visible="1"/>
+      </filegroup>
+    </legendlayer>
+    <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="NDVI_20000617" showFeatureCount="0">
+      <filegroup open="false" hidden="false">
+        <legendlayerfile isInOverview="0" layerid="NDVI_2000061720170807100409177" visible="1"/>
+      </filegroup>
+    </legendlayer>
+  </legend>
+  <Composer title="evolution" visible="0">
+    <Composition resizeToContentsMarginLeft="0" snapping="0" showPages="1" guidesVisible="1" resizeToContentsMarginTop="0" alignmentSnap="1" printResolution="300" paperWidth="297" gridVisible="0" snapGridOffsetX="0" smartGuides="1" snapGridOffsetY="0" resizeToContentsMarginRight="0" snapTolerancePixels="5" printAsRaster="0" generateWorldFile="0" paperHeight="210" numPages="1" snapGridResolution="10" resizeToContentsMarginBottom="0">
+      <symbol alpha="1" clip_to_extent="1" type="fill" name="">
+        <layer pass="0" class="SimpleFill" locked="0">
+          <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="color" v="255,255,255,255"/>
+          <prop k="joinstyle" v="miter"/>
+          <prop k="offset" v="0,0"/>
+          <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+          <prop k="offset_unit" v="MM"/>
+          <prop k="outline_color" v="0,0,0,255"/>
+          <prop k="outline_style" v="no"/>
+          <prop k="outline_width" v="0.26"/>
+          <prop k="outline_width_unit" v="MM"/>
+          <prop k="style" v="solid"/>
+        </layer>
+      </symbol>
+      <ComposerShape shapeType="0" cornerRadius="0">
+        <symbol alpha="1" clip_to_extent="1" type="fill" name="">
+          <layer pass="0" class="SimpleFill" locked="0">
+            <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="color" v="255,255,255,0"/>
+            <prop k="joinstyle" v="miter"/>
+            <prop k="offset" v="0,0"/>
+            <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="offset_unit" v="MM"/>
+            <prop k="outline_color" v="0,0,0,255"/>
+            <prop k="outline_style" v="solid"/>
+            <prop k="outline_width" v="0.3"/>
+            <prop k="outline_width_unit" v="MM"/>
+            <prop k="style" v="solid"/>
+          </layer>
+        </symbol>
+        <ComposerItem pagey="43.3819" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="113.78" y="43.3819" visibility="1" zValue="18" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="20.0548" outlineWidth="0.3" excludeFromExports="0" uuid="{3f6a9f49-2ca3-4f38-b3bb-c958b343eef6}" height="19.2363" itemRotation="0" frame="false" pagex="113.78">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerShape>
+      <ComposerLabel valign="128" marginX="1" marginY="1" labelText="17-06-2000" htmlState="0" halign="4">
+        <LabelFont description="Ubuntu,18,-1,5,63,1,0,0,0,0" style=""/>
+        <FontColor red="0" blue="0" green="0"/>
+        <ComposerItem pagey="90.8798" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="255.072" y="90.8798" visibility="1" zValue="14" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="40.9282" outlineWidth="0.3" excludeFromExports="0" uuid="{cd982601-492e-4061-b1a8-45c356c10b98}" height="14.1202" itemRotation="0" frame="false" pagex="255.072">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerLabel>
+      <ComposerShape shapeType="0" cornerRadius="0">
+        <symbol alpha="1" clip_to_extent="1" type="fill" name="">
+          <layer pass="0" class="SimpleFill" locked="0">
+            <prop k="border_width_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="color" v="255,255,255,0"/>
+            <prop k="joinstyle" v="miter"/>
+            <prop k="offset" v="0,0"/>
+            <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="offset_unit" v="MM"/>
+            <prop k="outline_color" v="0,0,0,255"/>
+            <prop k="outline_style" v="solid"/>
+            <prop k="outline_width" v="0.3"/>
+            <prop k="outline_width_unit" v="MM"/>
+            <prop k="style" v="solid"/>
+          </layer>
+        </symbol>
+        <ComposerItem pagey="148.979" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="113.78" y="148.979" visibility="1" zValue="9" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="20.0548" outlineWidth="0.3" excludeFromExports="0" uuid="{35659782-26cd-421f-a7b9-62d5c0bba373}" height="19.2363" itemRotation="0" frame="false" pagex="113.78">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerShape>
+      <ComposerLabel valign="128" marginX="1" marginY="1" labelText="18-06-2017" htmlState="0" halign="4">
+        <LabelFont description="Ubuntu,18,-1,5,63,1,0,0,0,0" style="Medium Italic"/>
+        <FontColor red="0" blue="0" green="0"/>
+        <ComposerItem pagey="194.88" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="255.072" y="194.88" visibility="1" zValue="7" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="40.9282" outlineWidth="0.3" excludeFromExports="0" uuid="{88481120-b582-4a8c-a6af-7ccaddd0fb54}" height="14.1202" itemRotation="0" frame="false" pagex="255.072">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerLabel>
+      <ComposerScaleBar lineCapStyle="square" style="Single Box" numMapUnitsPerScaleBarUnit="1000" segmentSizeMode="0" alignment="0" numSegments="2" segmentMillimeters="28.2992" lineJoinStyle="miter" minBarWidth="50" numUnitsPerSegment="25000" units="1" labelBarSpace="3" outlineWidth="0.3" numSegmentsLeft="0" maxBarWidth="150" height="3" boxContentSpace="1" mapId="1" unitLabel=" km">
+        <scaleBarFont description="Ubuntu,12,-1,5,50,0,0,0,0,0" style=""/>
+        <fillColor alpha="255" red="0" blue="0" green="0"/>
+        <fillColor2 alpha="255" red="255" blue="255" green="255"/>
+        <strokeColor alpha="255" red="0" blue="0" green="0"/>
+        <textColor alpha="255" red="0" blue="0" green="0"/>
+        <ComposerItem pagey="197.59" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="20.025" y="197.59" visibility="1" zValue="6" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="70.4968" outlineWidth="0.3" excludeFromExports="0" uuid="{ef1c685e-e5b5-4ed5-a0bd-ea7e177108d5}" height="12.4095" itemRotation="0" frame="false" pagex="20.025">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerScaleBar>
+      <ComposerLabel valign="128" marginX="1" marginY="1" labelText="N" htmlState="0" halign="4">
+        <LabelFont description="Ubuntu,16,-1,5,63,1,0,0,0,0" style="Medium Italic"/>
+        <FontColor red="0" blue="0" green="0"/>
+        <ComposerItem pagey="16.897" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="282.494" y="16.897" visibility="1" zValue="5" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="13.5063" outlineWidth="0.3" excludeFromExports="0" uuid="{b6b9c8a2-ee71-4b6c-8485-280cea0ee5fe}" height="10.6413" itemRotation="0" frame="false" pagex="282.494">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerLabel>
+      <ComposerArrow arrowHeadFillColor="0,0,0,255" arrowHeadOutlineColor="0,0,0,255" startMarkerFile="" boundsBehaviourVersion="24" arrowHeadWidth="4" endMarkerFile="" outlineWidth="1" markerMode="0">
+        <lineStyle>
+          <symbol alpha="1" clip_to_extent="1" type="line" name="">
+            <layer pass="0" class="SimpleLine" locked="0">
+              <prop k="capstyle" v="square"/>
+              <prop k="customdash" v="5;2"/>
+              <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="customdash_unit" v="MM"/>
+              <prop k="draw_inside_polygon" v="0"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="line_color" v="0,0,0,255"/>
+              <prop k="line_style" v="solid"/>
+              <prop k="line_width" v="1"/>
+              <prop k="line_width_unit" v="MM"/>
+              <prop k="offset" v="0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="use_custom_dash" v="0"/>
+              <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+            </layer>
+          </symbol>
+        </lineStyle>
+        <StartPoint x="289.772" y="17.1899"/>
+        <StopPoint x="289.772" y="6.13923"/>
+        <ComposerItem pagey="3.43213" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="287.065" y="3.43213" visibility="1" zValue="4" background="false" transparency="0" frameJoinStyle="miter" blendMode="0" width="5.41421" outlineWidth="0.3" excludeFromExports="0" uuid="{6a1a0e14-7405-4c3b-860c-87b6ccae3286}" height="16.4648" itemRotation="0" frame="false" pagex="287.065">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerArrow>
+      <ComposerLegend symbolWidth="7" title="" rasterBorderWidth="0" titleAlignment="1" map="1" wmsLegendWidth="50" rasterBorderColor="0,0,0,255" wrapChar="" fontColor="#000000" columnCount="1" wmsLegendHeight="25" columnSpace="2" symbolHeight="4" equalColumnWidth="0" resizeToContents="1" splitLayer="0" boxSpace="2" rasterBorder="1">
+        <styles>
+          <style marginBottom="2" name="title">
+            <styleFont description="Ubuntu,16,-1,5,50,0,0,0,0,0" style=""/>
+          </style>
+          <style marginTop="2" name="group">
+            <styleFont description="Ubuntu,14,-1,5,50,0,0,0,0,0" style=""/>
+          </style>
+          <style marginTop="2" name="subgroup">
+            <styleFont description="Ubuntu,12,-1,5,50,0,0,0,0,0" style=""/>
+          </style>
+          <style marginTop="2" name="symbol">
+            <styleFont description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
+          </style>
+          <style marginTop="2" marginLeft="2" name="symbolLabel">
+            <styleFont description="Ubuntu,12,-1,5,50,0,0,0,0,0" style=""/>
+          </style>
+        </styles>
+        <layer-tree-group expanded="1" checked="Qt::Checked" name="">
+          <customproperties/>
+          <layer-tree-layer expanded="1" checked="Qt::Checked" id="NDVI_2000061720170807100409177" name="NDVI_20000617">
+            <customproperties>
+              <property key="legend/label-0" value="-1"/>
+              <property key="legend/label-1" value="-0.8"/>
+              <property key="legend/label-10" value="1"/>
+              <property key="legend/label-2" value="-0.6"/>
+              <property key="legend/label-3" value="-0.4"/>
+              <property key="legend/label-4" value="-0.2"/>
+              <property key="legend/label-5" value="0"/>
+              <property key="legend/label-6" value="0.2"/>
+              <property key="legend/label-7" value="0.4"/>
+              <property key="legend/label-8" value="0.6"/>
+              <property key="legend/label-9" value="0.8"/>
+              <property key="legend/title-label" value="NDVI"/>
+            </customproperties>
+          </layer-tree-layer>
+        </layer-tree-group>
+        <ComposerItem pagey="132.6" page="1" id="" lastValidViewScaleFactor="-1" positionMode="0" positionLock="false" x="0" y="132.6" visibility="1" zValue="3" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="20.025" outlineWidth="0.3" excludeFromExports="0" uuid="{27611a56-8709-41fb-aaa3-7ad56103c8f4}" height="77.4" itemRotation="0" frame="false" pagex="0">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerLegend>
+      <ComposerMap mapRotation="0" keepLayerSet="true" id="1" previewMode="Cache" drawCanvasItems="true">
+        <Extent ymin="6692870.47797964513301849" xmin="204305.76253793056821451" ymax="6784745.86418765783309937" xmax="464913.82918565772706643"/>
+        <LayerSet>
+          <Layer>NDVI_2017061820170807100417890</Layer>
+          <Layer>NDVI_2000061720170807100409177</Layer>
+        </LayerSet>
+        <LayerStyles>
+          <LayerStyle layerid="NDVI_2000061720170807100409177">
+            <qgis version="2.14.11-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" hasScaleBasedVisibilityFlag="0">
+              <pipe>
+                <rasterrenderer opacity="1" alphaBand="0" classificationMax="1" classificationMinMaxOrigin="User" band="1" classificationMin="-1" type="singlebandpseudocolor">
+                  <rasterTransparency/>
+                  <rastershader>
+                    <colorrampshader colorRampType="INTERPOLATED" clip="0">
+                      <item alpha="255" value="-1" label="-1.000000" color="#d7191c"/>
+                      <item alpha="255" value="-0.8" label="-0.800000" color="#e65437"/>
+                      <item alpha="255" value="-0.6" label="-0.600000" color="#f59053"/>
+                      <item alpha="255" value="-0.4" label="-0.400000" color="#fdbe74"/>
+                      <item alpha="255" value="-0.2" label="-0.200000" color="#fede9a"/>
+                      <item alpha="255" value="0" label="-0.000000" color="#ffffc0"/>
+                      <item alpha="255" value="0.2" label="0.200000" color="#dbef9d"/>
+                      <item alpha="255" value="0.4" label="0.400000" color="#b7e07b"/>
+                      <item alpha="255" value="0.6" label="0.600000" color="#89cb61"/>
+                      <item alpha="255" value="0.8" label="0.800000" color="#51b051"/>
+                      <item alpha="255" value="1" label="1.000000" color="#1a9641"/>
+                    </colorrampshader>
+                  </rastershader>
+                </rasterrenderer>
+                <brightnesscontrast brightness="0" contrast="0"/>
+                <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+                <rasterresampler maxOversampling="2"/>
+              </pipe>
+              <blendMode>0</blendMode>
+            </qgis>
+          </LayerStyle>
+          <LayerStyle layerid="NDVI_2017061820170807100417890">
+            <qgis version="2.14.11-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" hasScaleBasedVisibilityFlag="0">
+              <pipe>
+                <rasterrenderer opacity="1" alphaBand="0" classificationMax="1" classificationMinMaxOrigin="User" band="1" classificationMin="-1" type="singlebandpseudocolor">
+                  <rasterTransparency/>
+                  <rastershader>
+                    <colorrampshader colorRampType="INTERPOLATED" clip="0">
+                      <item alpha="255" value="-1" label="-1.000000" color="#d7191c"/>
+                      <item alpha="255" value="-0.8" label="-0.800000" color="#e65437"/>
+                      <item alpha="255" value="-0.6" label="-0.600000" color="#f59053"/>
+                      <item alpha="255" value="-0.4" label="-0.400000" color="#fdbe74"/>
+                      <item alpha="255" value="-0.2" label="-0.200000" color="#fede9a"/>
+                      <item alpha="255" value="0" label="-0.000000" color="#ffffc0"/>
+                      <item alpha="255" value="0.2" label="0.200000" color="#dbef9d"/>
+                      <item alpha="255" value="0.4" label="0.400000" color="#b7e07b"/>
+                      <item alpha="255" value="0.6" label="0.600000" color="#89cb61"/>
+                      <item alpha="255" value="0.8" label="0.800000" color="#51b051"/>
+                      <item alpha="255" value="1" label="1.000000" color="#1a9641"/>
+                    </colorrampshader>
+                  </rastershader>
+                </rasterrenderer>
+                <brightnesscontrast brightness="0" contrast="0"/>
+                <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+                <rasterresampler maxOversampling="2"/>
+              </pipe>
+              <blendMode>0</blendMode>
+            </qgis>
+          </LayerStyle>
+        </LayerStyles>
+        <Grid/>
+        <ComposerMapGrid rightAnnotationDirection="0" gridFramePenColor="0,0,0,255" show="0" bottomAnnotationPosition="1" annotationPrecision="3" showAnnotation="0" topFrameDivisions="0" uuid="{07034997-bd16-40de-83c7-a31e1c75c220}" leftAnnotationDirection="0" topAnnotationPosition="1" rightAnnotationDisplay="0" offsetX="0" offsetY="0" rightFrameDivisions="0" gridStyle="0" annotationFontColor="0,0,0,255" intervalX="0" gridFrameSideFlags="15" intervalY="0" bottomAnnotationDirection="0" leftAnnotationDisplay="0" leftFrameDivisions="0" frameFillColor1="255,255,255,255" annotationExpression="" frameFillColor2="0,0,0,255" crossLength="3" gridFramePenThickness="0.5" bottomAnnotationDisplay="0" unit="0" topAnnotationDisplay="0" leftAnnotationPosition="1" blendMode="0" gridFrameStyle="0" rightAnnotationPosition="1" gridFrameWidth="2" name="Grille 1" annotationFormat="0" bottomFrameDivisions="0" topAnnotationDirection="0" frameAnnotationDistance="1">
+          <lineStyle>
+            <symbol alpha="1" clip_to_extent="1" type="line" name="">
+              <layer pass="0" class="SimpleLine" locked="0">
+                <prop k="capstyle" v="square"/>
+                <prop k="customdash" v="5;2"/>
+                <prop k="customdash_map_unit_scale" v="0,0,0,0,0,0"/>
+                <prop k="customdash_unit" v="MM"/>
+                <prop k="draw_inside_polygon" v="0"/>
+                <prop k="joinstyle" v="bevel"/>
+                <prop k="line_color" v="0,0,0,255"/>
+                <prop k="line_style" v="solid"/>
+                <prop k="line_width" v="0"/>
+                <prop k="line_width_unit" v="MM"/>
+                <prop k="offset" v="0"/>
+                <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                <prop k="offset_unit" v="MM"/>
+                <prop k="use_custom_dash" v="0"/>
+                <prop k="width_map_unit_scale" v="0,0,0,0,0,0"/>
+              </layer>
+            </symbol>
+          </lineStyle>
+          <markerStyle>
+            <symbol alpha="1" clip_to_extent="1" type="marker" name="">
+              <layer pass="0" class="SimpleMarker" locked="0">
+                <prop k="angle" v="0"/>
+                <prop k="color" v="0,0,0,255"/>
+                <prop k="horizontal_anchor_point" v="1"/>
+                <prop k="name" v="circle"/>
+                <prop k="offset" v="0,0"/>
+                <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+                <prop k="offset_unit" v="MM"/>
+                <prop k="outline_color" v="0,0,0,255"/>
+                <prop k="outline_style" v="solid"/>
+                <prop k="outline_width" v="0"/>
+                <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+                <prop k="outline_width_unit" v="MM"/>
+                <prop k="scale_method" v="diameter"/>
+                <prop k="size" v="2"/>
+                <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+                <prop k="size_unit" v="MM"/>
+                <prop k="vertical_anchor_point" v="1"/>
+              </layer>
+            </symbol>
+          </markerStyle>
+          <annotationFontProperties description="Ubuntu,11,-1,5,50,0,0,0,0,0" style=""/>
+        </ComposerMapGrid>
+        <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
+        <ComposerItem pagey="105" page="1" id="" lastValidViewScaleFactor="2.4433" positionMode="0" positionLock="false" x="1" y="105" visibility="1" zValue="2" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="295" outlineWidth="0.3" excludeFromExports="0" uuid="{3ed15ad4-1c60-4d34-8a0f-9edce5b6d4c3}" height="104" itemRotation="0" frame="false" pagex="1">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerMap>
+      <ComposerMap mapRotation="0" keepLayerSet="true" id="0" previewMode="Cache" drawCanvasItems="true">
+        <Extent ymin="6692870.47797964513301849" xmin="204305.76253793056821451" ymax="6784745.86418765783309937" xmax="464913.82918565772706643"/>
+        <LayerSet>
+          <Layer>NDVI_2000061720170807100409177</Layer>
+        </LayerSet>
+        <LayerStyles>
+          <LayerStyle layerid="NDVI_2000061720170807100409177">
+            <qgis version="2.14.11-Essen" minimumScale="-4.65661e-10" maximumScale="1e+08" hasScaleBasedVisibilityFlag="0">
+              <pipe>
+                <rasterrenderer opacity="1" alphaBand="0" classificationMax="1" classificationMinMaxOrigin="User" band="1" classificationMin="-1" type="singlebandpseudocolor">
+                  <rasterTransparency/>
+                  <rastershader>
+                    <colorrampshader colorRampType="INTERPOLATED" clip="0">
+                      <item alpha="255" value="-1" label="-1.000000" color="#d7191c"/>
+                      <item alpha="255" value="-0.8" label="-0.800000" color="#e65437"/>
+                      <item alpha="255" value="-0.6" label="-0.600000" color="#f59053"/>
+                      <item alpha="255" value="-0.4" label="-0.400000" color="#fdbe74"/>
+                      <item alpha="255" value="-0.2" label="-0.200000" color="#fede9a"/>
+                      <item alpha="255" value="0" label="-0.000000" color="#ffffc0"/>
+                      <item alpha="255" value="0.2" label="0.200000" color="#dbef9d"/>
+                      <item alpha="255" value="0.4" label="0.400000" color="#b7e07b"/>
+                      <item alpha="255" value="0.6" label="0.600000" color="#89cb61"/>
+                      <item alpha="255" value="0.8" label="0.800000" color="#51b051"/>
+                      <item alpha="255" value="1" label="1.000000" color="#1a9641"/>
+                    </colorrampshader>
+                  </rastershader>
+                </rasterrenderer>
+                <brightnesscontrast brightness="0" contrast="0"/>
+                <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+                <rasterresampler maxOversampling="2"/>
+              </pipe>
+              <blendMode>0</blendMode>
+            </qgis>
+          </LayerStyle>
+        </LayerStyles>
+        <Grid/>
+        <AtlasMap scalingMode="2" atlasDriven="0" margin="0.10000000000000001"/>
+        <ComposerItem pagey="1" page="1" id="" lastValidViewScaleFactor="2.4433" positionMode="0" positionLock="false" x="1" y="1" visibility="1" zValue="1" background="true" transparency="0" frameJoinStyle="miter" blendMode="0" width="295" outlineWidth="0.3" excludeFromExports="0" uuid="{cdecbe75-47b7-42e5-a927-30186723e5e6}" height="104" itemRotation="0" frame="false" pagex="1">
+          <FrameColor alpha="255" red="0" blue="0" green="0"/>
+          <BackgroundColor alpha="255" red="255" blue="255" green="255"/>
+          <customproperties/>
+        </ComposerItem>
+      </ComposerMap>
+      <customproperties/>
+    </Composition>
+  </Composer>
+  <projectlayers>
+    <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>85386.51240499049890786</xmin>
+        <ymin>6645107.05604713596403599</ymin>
+        <xmax>479993.70051096368115395</xmax>
+        <ymax>6995108.5273157712072134</ymax>
+      </extent>
+      <id>NDVI_2000061720170807100409177</id>
+      <datasource>../../../Images/Nouveau dossier/NDVI_20000617.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>NDVI_20000617</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>145</srsid>
+          <srid>2154</srid>
+          <authid>EPSG:2154</authid>
+          <description>RGF93 / Lambert-93</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="0" classificationMax="1" classificationMinMaxOrigin="User" band="1" classificationMin="-1" type="singlebandpseudocolor">
+          <rasterTransparency/>
+          <rastershader>
+            <colorrampshader colorRampType="INTERPOLATED" clip="0">
+              <item alpha="255" value="-1" label="-1.000000" color="#d7191c"/>
+              <item alpha="255" value="-0.8" label="-0.800000" color="#e65437"/>
+              <item alpha="255" value="-0.6" label="-0.600000" color="#f59053"/>
+              <item alpha="255" value="-0.4" label="-0.400000" color="#fdbe74"/>
+              <item alpha="255" value="-0.2" label="-0.200000" color="#fede9a"/>
+              <item alpha="255" value="0" label="-0.000000" color="#ffffc0"/>
+              <item alpha="255" value="0.2" label="0.200000" color="#dbef9d"/>
+              <item alpha="255" value="0.4" label="0.400000" color="#b7e07b"/>
+              <item alpha="255" value="0.6" label="0.600000" color="#89cb61"/>
+              <item alpha="255" value="0.8" label="0.800000" color="#51b051"/>
+              <item alpha="255" value="1" label="1.000000" color="#1a9641"/>
+            </colorrampshader>
+          </rastershader>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+    <maplayer minimumScale="-4.65661e-10" maximumScale="1e+08" type="raster" hasScaleBasedVisibilityFlag="0">
+      <extent>
+        <xmin>85386.51240499049890786</xmin>
+        <ymin>6645107.05604713596403599</ymin>
+        <xmax>479993.70051096368115395</xmax>
+        <ymax>6995108.5273157712072134</ymax>
+      </extent>
+      <id>NDVI_2017061820170807100417890</id>
+      <datasource>../../../Images/Nouveau dossier/NDVI_20170618.tif</datasource>
+      <keywordList>
+        <value></value>
+      </keywordList>
+      <layername>NDVI_20170618</layername>
+      <srs>
+        <spatialrefsys>
+          <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
+          <srsid>145</srsid>
+          <srid>2154</srid>
+          <authid>EPSG:2154</authid>
+          <description>RGF93 / Lambert-93</description>
+          <projectionacronym>lcc</projectionacronym>
+          <ellipsoidacronym>GRS80</ellipsoidacronym>
+          <geographicflag>false</geographicflag>
+        </spatialrefsys>
+      </srs>
+      <customproperties>
+        <property key="identify/format" value="Value"/>
+      </customproperties>
+      <provider>gdal</provider>
+      <noData>
+        <noDataList bandNo="1" useSrcNoData="0"/>
+      </noData>
+      <map-layer-style-manager current="">
+        <map-layer-style name=""/>
+      </map-layer-style-manager>
+      <pipe>
+        <rasterrenderer opacity="1" alphaBand="0" classificationMax="1" classificationMinMaxOrigin="User" band="1" classificationMin="-1" type="singlebandpseudocolor">
+          <rasterTransparency/>
+          <rastershader>
+            <colorrampshader colorRampType="INTERPOLATED" clip="0">
+              <item alpha="255" value="-1" label="-1.000000" color="#d7191c"/>
+              <item alpha="255" value="-0.8" label="-0.800000" color="#e65437"/>
+              <item alpha="255" value="-0.6" label="-0.600000" color="#f59053"/>
+              <item alpha="255" value="-0.4" label="-0.400000" color="#fdbe74"/>
+              <item alpha="255" value="-0.2" label="-0.200000" color="#fede9a"/>
+              <item alpha="255" value="0" label="-0.000000" color="#ffffc0"/>
+              <item alpha="255" value="0.2" label="0.200000" color="#dbef9d"/>
+              <item alpha="255" value="0.4" label="0.400000" color="#b7e07b"/>
+              <item alpha="255" value="0.6" label="0.600000" color="#89cb61"/>
+              <item alpha="255" value="0.8" label="0.800000" color="#51b051"/>
+              <item alpha="255" value="1" label="1.000000" color="#1a9641"/>
+            </colorrampshader>
+          </rastershader>
+        </rasterrenderer>
+        <brightnesscontrast brightness="0" contrast="0"/>
+        <huesaturation colorizeGreen="128" colorizeOn="0" colorizeRed="255" colorizeBlue="128" grayscaleMode="0" saturation="0" colorizeStrength="100"/>
+        <rasterresampler maxOversampling="2"/>
+      </pipe>
+      <blendMode>0</blendMode>
+    </maplayer>
+  </projectlayers>
+  <properties>
+    <Measurement>
+      <DistanceUnits type="QString">meters</DistanceUnits>
+      <AreaUnits type="QString">m2</AreaUnits>
+    </Measurement>
+    <SemiAutomaticClassificationPlugin>
+      <bandSetPresent type="QString">No</bandSetPresent>
+      <bndSetWvLn type="QString">[]</bndSetWvLn>
+      <bndSetMultF type="QString">[]</bndSetMultF>
+      <bndSetUnit type="QString">band number</bndSetUnit>
+      <bandSet type="QString">[]</bandSet>
+      <rasterName type="QString"></rasterName>
+      <previewSize type="QString">200</previewSize>
+      <bndSetAddF type="QString">[]</bndSetAddF>
+    </SemiAutomaticClassificationPlugin>
+    <SpatialRefSys>
+      <ProjectCRSProj4String type="QString">+proj=longlat +datum=WGS84 +no_defs</ProjectCRSProj4String>
+      <ProjectCrs type="QString">EPSG:4326</ProjectCrs>
+      <ProjectCRSID type="int">3452</ProjectCRSID>
+    </SpatialRefSys>
+    <Paths>
+      <Absolute type="bool">false</Absolute>
+    </Paths>
+    <Gui>
+      <SelectionColorBluePart type="int">0</SelectionColorBluePart>
+      <CanvasColorGreenPart type="int">255</CanvasColorGreenPart>
+      <CanvasColorRedPart type="int">255</CanvasColorRedPart>
+      <SelectionColorRedPart type="int">255</SelectionColorRedPart>
+      <SelectionColorAlphaPart type="int">255</SelectionColorAlphaPart>
+      <SelectionColorGreenPart type="int">255</SelectionColorGreenPart>
+      <CanvasColorBluePart type="int">255</CanvasColorBluePart>
+    </Gui>
+    <Digitizing>
+      <DefaultSnapToleranceUnit type="int">2</DefaultSnapToleranceUnit>
+      <LayerSnappingList type="QStringList"/>
+      <LayerSnappingEnabledList type="QStringList"/>
+      <SnappingMode type="QString">current_layer</SnappingMode>
+      <AvoidIntersectionsList type="QStringList"/>
+      <LayerSnappingToleranceUnitList type="QStringList"/>
+      <LayerSnapToList type="QStringList"/>
+      <DefaultSnapType type="QString">off</DefaultSnapType>
+      <DefaultSnapTolerance type="double">0</DefaultSnapTolerance>
+      <LayerSnappingToleranceList type="QStringList"/>
+    </Digitizing>
+    <PositionPrecision>
+      <DecimalPlaces type="int">2</DecimalPlaces>
+      <Automatic type="bool">true</Automatic>
+    </PositionPrecision>
+    <Legend>
+      <filterByMap type="bool">false</filterByMap>
+    </Legend>
+  </properties>
+  <visibility-presets/>
+</qgis>
