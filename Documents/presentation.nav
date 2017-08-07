@@ -29,7 +29,7 @@
 \headcommand {\beamer@subsectionentry {0}{2}{3}{9}{Capteurs lasers}}\headcommand {\beamer@subsectionpages {8}{8}}
 \headcommand {\slideentry {2}{3}{1}{9/9}{Capteurs lasers}{0}}
 \headcommand {\beamer@framepages {9}{9}}
-\headcommand {\sectionentry {3}{Au del\IeC {\`a} du spectre brut}{10}{Au del\IeC {\`a} du spectre brut}{0}}
+\headcommand {\sectionentry {3}{Au del\IeC {\`a} du spectre}{10}{Au del\IeC {\`a} du spectre}{0}}
 \headcommand {\beamer@sectionpages {6}{9}}
 \headcommand {\beamer@subsectionpages {9}{9}}
 \headcommand {\beamer@subsectionentry {0}{3}{1}{10}{N\IeC {\'e}o-canaux}}\headcommand {\beamer@subsectionpages {10}{9}}
@@ -41,8 +41,17 @@
 \headcommand {\beamer@subsectionentry {0}{3}{3}{12}{Classification}}\headcommand {\beamer@subsectionpages {11}{11}}
 \headcommand {\slideentry {3}{3}{1}{12/12}{Classification}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\beamer@partpages {1}{12}}
-\headcommand {\beamer@subsectionpages {12}{12}}
-\headcommand {\beamer@sectionpages {10}{12}}
-\headcommand {\beamer@documentpages {12}}
-\headcommand {\def \inserttotalframenumber {12}}
+\headcommand {\slideentry {3}{3}{2}{13/13}{Classification}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\sectionentry {4}{Conclusion}{14}{Conclusion}{0}}
+\headcommand {\beamer@sectionpages {10}{13}}
+\headcommand {\beamer@subsectionpages {12}{13}}
+\headcommand {\slideentry {4}{0}{1}{14/14}{}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {4}{0}{2}{15/15}{}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\beamer@partpages {1}{15}}
+\headcommand {\beamer@subsectionpages {14}{15}}
+\headcommand {\beamer@sectionpages {14}{15}}
+\headcommand {\beamer@documentpages {15}}
+\headcommand {\def \inserttotalframenumber {15}}

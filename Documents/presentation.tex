@@ -2,6 +2,7 @@
 \usetheme{Dresden}
 \usepackage[utf8]{inputenc}
 %\usepackage[french]{babel}
+\usepackage{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -10,7 +11,7 @@
 \title{La télédétection : fonctionnement et applications}
 %\setbeamercovered{transparent} 
 \setbeamertemplate{navigation symbols}{} 
-\logo{\includegraphics[height=0.8cm]{img/logos.jpg}\vspace{220pt}} 
+\logo{} 
 %\institute{} 
 %\date{} 
 %\subject{} 
@@ -18,6 +19,8 @@
 
 \begin{frame}
 \titlepage
+\centering
+\includegraphics[scale=1]{img/logos.jpg}
 \end{frame}
 
 \begin{frame}
@@ -53,23 +56,20 @@
 \subsection{Types de capteurs}
 \begin{frame}{}
 \begin{itemize}
-\item Optique : 
+\item Optique
 \begin{itemize}
 \item enregistre le rayonnement électromagnétique (appareil photo)
-\item nombreux domaines d'applications : écologie, urbanisme, météorologie, etc...
 \end{itemize} 
-\item Radar :
+\item Radar
 \begin{itemize}
 \item envoie un signal dans les micro-ondes et enregistre le retour (mesure)
-\item domaines d'applications : courants océaniques, météorologie, environnement, etc...
 \item capable de traverser les nuages, couverts forestiers, sols sous certaines conditions
 \end{itemize} 
 \item Laser
 \begin{itemize}
 \item envoie un laser et enregistre le retour (mesure)
-\item domaines d'applications : altimétrie, modélisation, archéologie
 \end{itemize} 
-\item nombreux satellites avec différents instruments, résolutions, coûts, objectifs, etc...
+\item nombreux satellites avec différents instruments, résolutions, coûts, objectifs, applications, etc...
 \end{itemize}
 \end{frame}
 
@@ -123,7 +123,7 @@
 \end{figure}
 \end{frame}
 
-\section{Au delà du spectre brut}
+\section{Au delà du spectre}
 \subsection{Néo-canaux}
 \begin{frame}{}
 \begin{itemize}
@@ -141,7 +141,7 @@
 \item Phénologie : suivi et distinction de l'usage ou d’événements
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.17]{img/NDVI_Briere.png}
+\includegraphics[scale=0.22]{img/NDVI_Briere.png}
 \end{figure}
 \item Urbanisation : emprise urbaine, effet d'un barrage hydraulique
 \item Aléa : image pré et post-événement (tempête, inondation, réchauffement climatique)
@@ -154,9 +154,35 @@
 \item simplifier l'analyse d'une image
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.25]{img/classif_exemple.pdf}
+\includegraphics[scale=0.29]{img/classif_exemple.pdf}
 \end{figure}
-\item permettre l'utilisation d'outils (métrique paysagères)
 \end{itemize}
 \end{frame}
+
+\begin{frame}{}
+\begin{itemize}
+\item permettre l'utilisation d'outils (métriques paysagères)
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.22]{img/metrique_paysage.png}
+\end{figure}
+\end{itemize}
+\end{frame}
+
+\section{Conclusion}
+\begin{frame}{}
+La télédétection :
+\begin{itemize}
+\item est un domaine permettant d'acquérir de nombreuses informations
+\item permet d'acquérir des informations de manière continue et à moindre coût (enquête terrain)
+\item s’intègre dans de nombreuses thématiques (urbanisme, défense, écologie, océanographie, etc...)
+\item fonctionne parfaitement avec les standards OGC/INSPIRE \url{http://geowww.agrocampus-ouest.fr/sviewer/?wmc=e876c9ade943853da0cbca26ea6823f5}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\centering Fin
+\includegraphics[scale=1]{img/logos.jpg}
+\end{frame}
+
 \end{document}

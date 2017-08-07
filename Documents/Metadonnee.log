@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  2 AUG 2017 16:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  7 AUG 2017 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -564,17 +564,13 @@ File: img/spectre-electromagnetique.png Graphic file (type png)
 
 <use img/spectre-electromagnetique.png>
 Package pdftex.def Info: img/spectre-electromagnetique.png used on input line 5
-6.
-(pdftex.def)             Requested size: 361.35278pt x 219.22069pt.
-
-Overfull \hbox (16.35278pt too wide) in paragraph at lines 56--57
- [][] 
- []
+7.
+(pdftex.def)             Requested size: 331.23851pt x 200.95137pt.
 
 <img/modis.png, id=19, 433.62pt x 547.04375pt>
 File: img/modis.png Graphic file (type png)
  <use img/modis.png>
-Package pdftex.def Info: img/modis.png used on input line 69.
+Package pdftex.def Info: img/modis.png used on input line 70.
 (pdftex.def)             Requested size: 173.44492pt x 218.81361pt.
 
 
@@ -584,26 +580,27 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 <img/modisGrid.png, id=26, 501.875pt x 280.04625pt>
 File: img/modisGrid.png Graphic file (type png)
  <use img/modisGrid.png>
-Package pdftex.def Info: img/modisGrid.png used on input line 78.
+Package pdftex.def Info: img/modisGrid.png used on input line 79.
 (pdftex.def)             Requested size: 351.31009pt x 196.03102pt.
 
-Overfull \hbox (6.31009pt too wide) in paragraph at lines 78--79
+Overfull \hbox (6.31009pt too wide) in paragraph at lines 79--80
  [][] 
  []
 
 [4 <./img/modis.png> <./img/modisGrid.png>]
+Overfull \hbox (10.07437pt too wide) in paragraph at lines 103--103
+[]\T1/cmr/m/n/10 Ces ban-des sont em-ployées d'après leur in-ter-ac-tion avec l
+a végé-ta-tion. L'énergie
+ []
+
 <img/spectral_signatures.jpg, id=33, 800.0289pt x 402.5439pt>
 File: img/spectral_signatures.jpg Graphic file (type jpg)
 
 <use img/spectral_signatures.jpg>
-Package pdftex.def Info: img/spectral_signatures.jpg used on input line 108.
+Package pdftex.def Info: img/spectral_signatures.jpg used on input line 107.
 (pdftex.def)             Requested size: 320.00589pt x 161.0147pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[5] [6 <./img/spectral_signatures.jpg>]
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 140.
+ [5 <./img/spectral_signatures.jpg>] [6]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 142.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
@@ -612,22 +609,27 @@ File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 <img/orgDownload.pdf, id=42, 638.385pt x 554.07pt>
 File: img/orgDownload.pdf Graphic file (type pdf)
  <use img/orgDownload.pdf>
-Package pdftex.def Info: img/orgDownload.pdf used on input line 146.
+Package pdftex.def Info: img/orgDownload.pdf used on input line 148.
 (pdftex.def)             Requested size: 338.34242pt x 293.6557pt.
 
-[7 <./img/orgDownload.pdf>] [8]
-<img/orgIndices.pdf, id=54, 656.4525pt x 1103.12125pt>
+[7 <./img/orgDownload.pdf>]
+Overfull \hbox (11.97452pt too wide) in paragraph at lines 157--158
+[]\T1/cmr/m/n/10 (2) réper-toire où pro-duire et lire un cookie con-cer-nant la
+ ses-sion de télécharge-
+ []
+
+[8] <img/orgIndices.pdf, id=54, 656.4525pt x 1103.12125pt>
 File: img/orgIndices.pdf Graphic file (type pdf)
 
 <use img/orgIndices.pdf>
-Package pdftex.def Info: img/orgIndices.pdf used on input line 177.
+Package pdftex.def Info: img/orgIndices.pdf used on input line 179.
 (pdftex.def)             Requested size: 315.09361pt x 529.49219pt.
  [9 <./img/orgIndices.pdf>]
 <img/graph_fvc_temp.png, id=61, 570.63188pt x 458.46281pt>
 File: img/graph_fvc_temp.png Graphic file (type png)
 
 <use img/graph_fvc_temp.png>
-Package pdftex.def Info: img/graph_fvc_temp.png used on input line 207.
+Package pdftex.def Info: img/graph_fvc_temp.png used on input line 214.
 (pdftex.def)             Requested size: 199.72415pt x 160.46439pt.
 
 
@@ -637,10 +639,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: img/graph_priestley.png Graphic file (type png)
 
 <use img/graph_priestley.png>
-Package pdftex.def Info: img/graph_priestley.png used on input line 227.
+Package pdftex.def Info: img/graph_priestley.png used on input line 234.
 (pdftex.def)             Requested size: 354.1283pt x 252.94878pt.
 
-Overfull \hbox (9.1283pt too wide) in paragraph at lines 227--228
+Overfull \hbox (9.1283pt too wide) in paragraph at lines 234--235
  [][] 
  []
 
@@ -648,7 +650,7 @@ Overfull \hbox (9.1283pt too wide) in paragraph at lines 227--228
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [11 <./img/graph_fvc_temp.png>] [12 <./img/graph_priestley.png>]
-Overfull \hbox (18.64493pt too wide) in paragraph at lines 286--287
+Overfull \hbox (18.64493pt too wide) in paragraph at lines 293--294
 \T1/cmr/m/n/10 (time cor-re-spon-dant au nom de l'attribut in-diqué dans in-dex
 er.properties)
  []
@@ -657,10 +659,10 @@ er.properties)
 File: img/orgPublication.pdf Graphic file (type pdf)
 
 <use img/orgPublication.pdf>
-Package pdftex.def Info: img/orgPublication.pdf used on input line 310.
+Package pdftex.def Info: img/orgPublication.pdf used on input line 317.
 (pdftex.def)             Requested size: 347.79852pt x 279.04182pt.
 
-Overfull \hbox (2.79852pt too wide) in paragraph at lines 310--311
+Overfull \hbox (2.79852pt too wide) in paragraph at lines 317--318
  [][] 
  []
 
@@ -668,14 +670,14 @@ Overfull \hbox (2.79852pt too wide) in paragraph at lines 310--311
 File: img/NDVI_interpretation1.pdf Graphic file (type pdf)
 
 <use img/NDVI_interpretation1.pdf>
-Package pdftex.def Info: img/NDVI_interpretation1.pdf used on input line 329.
+Package pdftex.def Info: img/NDVI_interpretation1.pdf used on input line 336.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Overfull \hbox (2.02637pt too wide) in paragraph at lines 336--336
+Overfull \hbox (2.02637pt too wide) in paragraph at lines 343--343
 \T1/cmr/m/n/10 L'intérêt d'une série tem-porelle est de pou-voir suivre l'évolu
 tion d'un phénomène.
  []
@@ -685,10 +687,10 @@ tion d'un phénomène.
 File: img/NDVI_Briere.png Graphic file (type png)
 
 <use img/NDVI_Briere.png>
-Package pdftex.def Info: img/NDVI_Briere.png used on input line 349.
+Package pdftex.def Info: img/NDVI_Briere.png used on input line 361.
 (pdftex.def)             Requested size: 353.55746pt x 173.73985pt.
 
-Overfull \hbox (8.55746pt too wide) in paragraph at lines 349--350
+Overfull \hbox (8.55746pt too wide) in paragraph at lines 361--362
  [][] 
  []
 
@@ -696,7 +698,7 @@ Overfull \hbox (8.55746pt too wide) in paragraph at lines 349--350
 File: img/EF_interpretation1.pdf Graphic file (type pdf)
 
 <use img/EF_interpretation1.pdf>
-Package pdftex.def Info: img/EF_interpretation1.pdf used on input line 361.
+Package pdftex.def Info: img/EF_interpretation1.pdf used on input line 372.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
 
 
@@ -707,47 +709,41 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 File: img/TJ_interpretation1.pdf Graphic file (type pdf)
 
 <use img/TJ_interpretation1.pdf>
-Package pdftex.def Info: img/TJ_interpretation1.pdf used on input line 374.
+Package pdftex.def Info: img/TJ_interpretation1.pdf used on input line 385.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
  [17 <./img/EF_interpretation1.pdf> <./img/TJ_interpretation1.pdf>]
 <img/TN_interpretation1.pdf, id=188, 845.1575pt x 597.23125pt>
 File: img/TN_interpretation1.pdf Graphic file (type pdf)
 
 <use img/TN_interpretation1.pdf>
-Package pdftex.def Info: img/TN_interpretation1.pdf used on input line 385.
+Package pdftex.def Info: img/TN_interpretation1.pdf used on input line 396.
 (pdftex.def)             Requested size: 278.90283pt x 197.08691pt.
-
-Overfull \hbox (0.37863pt too wide) in paragraph at lines 394--395
-\T1/cmr/m/n/10 bosquets, pe-tites par-celles et les haies, en-tre autres. Il es
-t donc en-vis-agé d'utiliser
- []
-
-[18 <./img/TN_interpretation1.pdf>]
-Overfull \hbox (14.85345pt too wide) in paragraph at lines 402--403
+ [18 <./img/TN_interpretation1.pdf>]
+Overfull \hbox (14.85345pt too wide) in paragraph at lines 413--414
 []\T1/cmr/m/n/10 Leplat Mélody.(2005). "Les pro-liféra-tions de Jussies sous l'
 angle économique".
  []
 
 
-Overfull \hbox (3.14334pt too wide) in paragraph at lines 403--404
+Overfull \hbox (3.14334pt too wide) in paragraph at lines 414--415
 \T1/cmr/m/n/10 Ama-zon", Pro-ceed-ings of the Na-tional Academy of Sci-ences, 1
 03(39):14637. 
  []
 
 
-Overfull \hbox (1.10681pt too wide) in paragraph at lines 404--405
+Overfull \hbox (1.10681pt too wide) in paragraph at lines 415--416
 \T1/cmr/m/n/10 stress sta-tus in semi-arid range-land ecosys-tems". Re-mote sen
 s., 6, pp.6300-
  []
 
 
-Overfull \hbox (19.30606pt too wide) in paragraph at lines 408--409
+Overfull \hbox (19.30606pt too wide) in paragraph at lines 419--420
 \T1/cmr/m/n/10 mon-i-tor-ing veg-e-ta-tion", Re-mote Sens-ing of the En-vi-ron-
 ment, no.8, pp.127^^U150. 
  []
 
 
-Overfull \hbox (77.0964pt too wide) in paragraph at lines 414--415
+Overfull \hbox (77.0964pt too wide) in paragraph at lines 425--426
 \T1/cmr/m/n/10 and Sci-ence (EROS) Cen-ter, Sioux Falls, South Dakota, https://
 e4ftl01.cr.usgs.gov/MOLT/. 
  []
@@ -760,7 +756,7 @@ Here is how much of TeX's memory you used:
  6270 multiletter control sequences out of 15000+600000
  17483 words of font info for 51 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,6n,24p,828b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,6n,24p,744b,278s stack positions out of 5000i,500n,10000p,200000b,80000s
  </home/donatien/.texmf-var/fonts/pk/ljfour/jknap
 pen/ec/ectt1000.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/e
 cbx1200.600pk> </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1000.
@@ -776,9 +772,9 @@ nts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb>
-Output written on Metadonnee.pdf (20 pages, 17498925 bytes).
+Output written on Metadonnee.pdf (20 pages, 17497984 bytes).
 PDF statistics:
- 662 PDF objects out of 1000 (max. 8388607)
+ 660 PDF objects out of 1000 (max. 8388607)
  184 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  76 words of extra memory for PDF output out of 10000 (max. 10000000)

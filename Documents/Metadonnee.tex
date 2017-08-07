@@ -8,7 +8,7 @@
 \usepackage{verbatim}
 \usepackage{graphicx}
 
-\title{La télédétection et GéoBretagne : méthodes, produits et analyses}
+\title{La télédétection et GéoBretagne : méthodes, produits et exemples}
 \begin{document}
 
 \maketitle
@@ -22,9 +22,9 @@
 \begin{abstract}
 GéoBretagne a intégré des données de télédétection dans son catalogue. Dans un premier temps, 4 produits sont disponibles : 
 \begin{itemize}
-\item le Normalized Difference Vegetation Index (NDVI) qui est un indice de végétation mettant en valeur le dynamisme de la végétation, par sa teneur en chlorophylle et la structure du couvert végétal;
-\item l'Evaporative Fraction (EF), un indice indiquant la capacité d'une surface à évaporer qu’elle soit composée de végétation, ou non. Par exemple, il représente un indicateur pour identifier des situations de stress hydrique;
-\item la température moyenne sur 8 jours de jour et de nuit par temps clair;
+\item le Normalized Difference Vegetation Index (NDVI) qui est un indice de végétation mettant en valeur le dynamisme de la végétation, par sa teneur en chlorophylle et la structure du couvert végétal
+\item l'Evaporative Fraction (EF), un indice indiquant la capacité d'une surface à évaporer qu’elle soit composée de végétation, ou non. Par exemple, il représente un indicateur pour identifier des situations de stress hydrique
+\item la température moyenne sur 8 jours de jour et de nuit par temps clair
 \end{itemize}
 
 Chacun de ces produits possède une dimension temporelle afin de suivre l'évolution de ceux-ci de manière intra et inter-annuelle. Le capteur MODIS a été choisi pour effectuer cette introduction à la télédétection.
@@ -46,19 +46,20 @@ L'acquisition d'informations s'opère par la mesure du spectre électromagnétiq
 \item du visible pour l'oeil humain, comme un appareil photo
 \item de l'invisible pour l'oeil humain :
 \begin{itemize}
-\item l'infrarouge (télécommande, capteur thermique)
-\item les micro-ondes (téléphone, radar)
+\item l'infrarouge
+\item les micro-ondes
+\item laser
 \end{itemize}
 \end{itemize}
 
 \begin{figure}[!h]
 \centering
-\includegraphics[scale=0.6]{img/spectre-electromagnetique.png}
+\includegraphics[scale=0.55]{img/spectre-electromagnetique.png}
 \caption{Représentation du spectre électromagnétique (source : astronoo.com)}
 \label{spectreElectro}
 \end{figure}
 
-Dans le cadre de cette introduction à la télédétection, les données dans les micro-ondes (radar) ne sont pas abordées.
+Dans le cadre de cette introduction à la télédétection, les données dans les micro-ondes et les lasers ne sont pas abordées.
 
 \subsection{Capteur MODIS}
 
@@ -71,7 +72,7 @@ Le capteur MODIS est un spectroradiomètre imageur (un appareil photo) se trouva
 \label{modis}
 \end{figure}
 
-Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière. Une image (tuile) de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
+Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomètre avec une résolution temporelle journalière. Une image, ou tuile, de ce capteur couvre 2330 km$^2$ (figure \ref{modisGrid}).
 
 \begin{figure}[!h]
 \centering
@@ -80,11 +81,11 @@ Ce capteur dispose d'une résolution spatiale allant de 250 mètres à 1 kilomè
 \label{modisGrid}
 \end{figure}
 
-Ce capteur a été sélectionné pour plusieurs de ses caractéristiques, bien que généralement les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne. Celles-ci sont :
+Généralement les études utilisant des images MODIS sont effectuées sur des paysages ouverts et non fragmentés en petites parcelles (Morton et al., 2006; Wardlow et al., 2006) comme la Bretagne. Cependant, ce capteur a été employé pour plusieurs de ses caractéristiques :
 \begin{itemize}
-\item des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours) disponibles afin de limiter l'impact des nuages;
+\item des synthèses de 8 jours (valeur moyenne ou maximale, selon les produits, sur 8 jours) disponibles afin de limiter l'impact des nuages
 \item un capteur acquérant des informations dans l'infrarouge thermique (nécessaire pour calculer un indice)
-\item des archives importantes permettant d'avoir des données depuis l'an 2000;
+\item des archives importantes permettant d'avoir des données depuis l'an 2000
 \end{itemize}
 
 \subsection{Produits disponibles sur GéoBretagne}
@@ -99,9 +100,7 @@ Le NDVI (Rouse and Haas, 1973; Tucker, 1979) est un indice de végétation stand
 \textrm{NDVI}=$ \frac{Pir-R}{Pir+R} $
 \end{center}\smallbreak
 
-Ces bandes sont employées d'après l’interaction des bandes du rouge et du proche infrarouge avec la végétation. L'énergie de la bande du rouge est majoritairement absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi principalement par l'eau contenu dans la végétation (parenchyme lacuneux). Ainsi, plus la végétation sera dynamique, plus il y aura d'absorption dans le rouge et de réflectance dans le proche infrarouge.\smallbreak
-
-La figure \ref{signSpectr} permet de distinguer la réflectance type de la végétation (en vert), de l'eau (en bleu) et du sol (en rouge). Les bandes sont représentées par les zones grisées numérotées avec celle du rouge (3) et du proche infrarouge (4). Ainsi, le NDVI calcule la différence de réflectance entre les 2 bandes. Plus cette différence est importante (comme sur la figure \ref{signSpectr}), plus la végétation sera dynamique et le NDVI proche de 1. Concernant l'eau, sa réflectance est nulle dans le proche infrarouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
+Ces bandes sont employées d'après leur interaction avec la végétation. L'énergie de la bande du rouge est majoritairement absorbée par la végétation (chlorophylle), au contraire du proche infrarouge qui est réfléchi principalement par l'eau contenu dans la végétation (parenchyme lacuneux). Ainsi, plus la végétation sera dynamique, plus il y aura d'absorption dans le rouge et de réflectance dans le proche infrarouge. La figure \ref{signSpectr} permet d'observer la signature spectrale de référence concernant la végétation (courbe verte).\smallbreak
 
 \begin{figure}[!h]
 \centering
@@ -110,18 +109,21 @@ La figure \ref{signSpectr} permet de distinguer la réflectance type de la vég�
 \label{signSpectr}
 \end{figure}
 
-Cet indice permet par exemple d'effectuer une classification de l'occupation du sol. De part l'aspect temporel mis en avant sur GéoBretagne, cet indice permet également de suivre la phénologie de la végétation. Il est ainsi possible de déterminer l'usage des sols (Patakamuri et al., 2014).
+Ainsi, le NDVI calcule la différence de réflectance entre le rouge et le proche infrarouge. Plus cette différence est importante, plus la végétation sera dynamique et le NDVI proche de 1. Sur la figure \ref{signSpectr}, la signature spectrale de l'eau et du sol sont également observables. De part l'utilisation du rouge et du proche infrarouge pour calculer le NDVI, il est compréhensible que cet indice permet également de distinguer ces deux occupations du sol.\smallbreak
+
+Concernant l'eau, sa réflectance est nulle dans le proche infrarouge et légère dans le rouge, ayant pour effet d'avoir un NDVI inférieur à 0. Pour le sol, selon différents paramètres (couleur, composition, humidité, rugosité) les réflectances dans le rouge et le proche infrarouge sont équivalentes, induisant un NDVI proche de 0.\smallbreak
+
+Cet indice permet, par exemple, d'effectuer une classification de l'occupation du sol. De part l'aspect temporel mis en avant sur GéoBretagne, cet indice permet également de suivre la phénologie de la végétation. Il est ainsi possible de déterminer l'usage des sols (Patakamuri et al., 2014).
 
 \subsubsection{Evaporative Fraction}
 
 L'Evaporative Fraction est un indice permettant d'estimer la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. Il représente ainsi un indicateur pour, par exemple, identifier des situations de stress hydrique (Bastiaanssen et al., 2003; Nutini et al., 2014). Elle est aussi une donnée servant à alimenter des modèles qui permettront l’estimation de l'évapotranspiration réelle des surfaces continentales. Cet indice se calcule avec un indice renseignant sur la couverture de la végétation (Fraction of Vegetation Cover) calculé à partir du NDVI et des mesures de températures de jour et de nuit. Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
-
-De cette manière, il est possible de définir le stress hydrique de la végétation, particulièrement à partir d'une série temporelle (disponible sur GéoBretagne), mais aussi en combinant d'autres informations. En effet, si le sol évapore beaucoup, alors que les précipitations sont faibles, il est probable d'observer une sécheresse.
+surface à évaporer, qu’elle soit composée de végétation ou non. Il représente ainsi un indicateur pour, par exemple, identifier des situations de stress hydrique (Bastiaanssen et al., 2003; Nutini et al., 2014) particulièrement à partir d'une série temporelle (disponible sur GéoBretagne). L'utilisation de données auxiliaires, comme les précipitations, il est possible d'affiner cette information.\smallbreak
+Il est aussi employé pour estimer l'évapotranspiration réelle des surfaces continentales. Cet indice se calcule avec un autre indice renseignant sur la couverture de la végétation (Fraction of Vegetation Cover) calculé à partir du NDVI et des mesures de températures de jour et de nuit. Les valeurs de cet indice vont de 0 (surface non évaporante) à 1.26 (surface très évaporante). Le modèle S-SEBI (Roerink et al., 2000) et le coefficient de Priestley-Taylor sont employés pour calculer EF.\smallbreak
 
 \subsubsection{Température de jour et de nuit}
 
-Ces deux données sont téléchargeables sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours de jour et de nuit. Elles sont utilisées pour calculer EF. Ces températures sont diffusées sur GéoBretagne étant donné que plusieurs informations sont accessibles, tel les îlots de chaleur urbains avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour et de nuit étant donné leur amplitude thermique plus faible que le sol et la végétation.
+Ces deux mesures sont téléchargeables sous la dénomination du produit MODIS MOD11A2. Ces données correspondent à la température moyenne (en kelvin) par temps clair sur 8 jours de jour et de nuit. Elles sont utilisées pour calculer EF. Ces températures sont diffusées sur GéoBretagne puisque plusieurs informations sont accessibles à partir de celles-ci. Par exemple, les îlots de chaleur urbains avec les températures de nuit ou les milieux humides/aquatiques avec les températures de jour, et de nuit, étant donné leur amplitude thermique plus faible que le sol et la végétation.
 
 \section{Méthodologie}
 
@@ -137,14 +139,14 @@ Remarque : Pour tous les produits à publier sur le Geoserver, il est impératif
 
 \subsection{Téléchargement des données MODIS}
 
-Les produits MODIS nécessaires pour les traitements sont MOD09Q1 (bandes du rouge, du proche infrarouge et masque des nuages) à 250m de résolution spatiale et MOD11A2 (température de jour et de nuit) à 1km. La tuile à télécharger est la h17v04. Les archives pour ces produits débutent au 18 Février 2000 et une nouvelle image est ajoutée tous les 8 jours. Ces produits sont disponibles sur à cette adresse \verb!https://lpdaac.usgs.gov/data_access/data_pool.! Un compte à cette adresse \verb!https://urs.earthdata.nasa.gov/! est nécessaire pour effectuer des téléchargements. \smallbreak
+Les produits MODIS nécessaires pour les traitements sont MOD09Q1 (bandes du rouge, du proche infrarouge et masque des nuages) à 250m de résolution spatiale et MOD11A2 (température de jour et de nuit) à 1km. La tuile à télécharger est la h17v04. Les archives pour ces produits débutent au 18 Février 2000 et une nouvelle image est ajoutée tous les 8 jours. Ces produits sont disponibles sur à cette adresse \verb!https://lpdaac.usgs.gov/data_access/data_pool.! Un compte à cette adresse \verb!https://urs.earthdata.nasa.gov/! est nécessaire pour effectuer des téléchargements.\smallbreak
 
 Le téléchargement des images repose sur différents critères, c'est à dire le site de téléchargement, le produit, la tuile et la date dont voici le fonctionnement du script (figure \ref{orgDL}) :
 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.53]{img/orgDownload.pdf}
-\caption{Organigramme des étapes nécessaires pour le téléchargement des produits MODIS.}
+\caption{Organigramme du téléchargement des produits MODIS.}
 \label{orgDL}
 \end{figure}
 
@@ -152,7 +154,7 @@ Le téléchargement s'effectue avec la requête suivante :\newline
 \verb!"curl --netrc-file (1) -L -c (2).cookies -b (2).cookies (3)! \newline \verb!--output (4)"!
 \begin{itemize}
 \item (1) fichier contenant les identifiants pour télécharger les images
-\item (2) répertoire où produire et lire un cookies concernant la session en cours (suite à une redirection)
+\item (2) répertoire où produire et lire un cookie concernant la session de téléchargement en cours (suite à une redirection d'url)
 \item (3) url du fichier à télécharger
 \item (4) chemin et nom du fichier téléchargé
 \end{itemize}
@@ -167,7 +169,7 @@ La production des produits s'opère en 4 étapes :
 \item Prétraitement des images
 \item Calcul du NDVI
 \item Application de modèles
-\item Calcul de l'EF
+\item Calcul de EF
 \end{enumerate}
 
 Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretagne est présenté sur la figure \ref{orgIndex}.\newpage
@@ -175,11 +177,11 @@ Le fonctionnement du script pour réaliser les produits diffusés sur GéoBretag
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.48]{img/orgIndices.pdf}
-\caption{Organigramme des étapes pour la génération des indices diffusés sur GéoBretagne.}
+\caption{Organigramme de la génération des indices diffusés sur GéoBretagne.}
 \label{orgIndex}
 \end{figure}
 
-Tout d'abord, le script va lister tous les fichiers téléchargés. Puis, pour chaque n'ayant pas encore été traitée (test sur l'existence du fichier EF), effectue les étapes suivantes.
+Tout d'abord, le script va lister tous les fichiers téléchargés. Puis, pour chaque date n'ayant pas encore été traitée (test sur l'existence du fichier EF de la date en cours), exécute le script de génération des produits.
 
 \subsubsection{Prétraitements}
 
@@ -188,19 +190,24 @@ Les images téléchargées nécessitent des prétraitements avant de générer l
 \begin{itemize}
 \item Extraction des images : les images téléchargées sont au format HDF faisant que toutes les images d'un produit sont dans un seul fichier. Il est donc nécessaire d'extraire celles-ci. Pour cela, l'outil "\verb!gdal_translate!" est employé. 
 \item Reprojection : les images sont reprojetées en Lambert 93 (epsg:2154) en respect envers la directive INSPIRE avec l'outil "\verb!gdalwarp!".
-\item Découpage et masquage : les images couvrent un territoire bien plus vaste que la Bretagne et la mer ne possède pas d'informations pertinente vis à vis des indices diffusés. Il est donc nécessaire de découper les images et de supprimer les pixels de mer. Le découpage s'effectue avec un "\verb!gdalwarp! et la suppression des pixels de mer s'effectue en 3 étapes. Le première consiste à créer un raster vide de même dimension que la zone découpée, la seconde à superposer ce raster avec le fichier shape servant de masque pour faire un masque binaire avec "\verb!gdal_rasterize!". La troisième, on applique ce masque binaire pour modifier les valeurs du fichier .TIF.
-\item Rééchantillonnage : les deux produits téléchargés ont une résolution spatiale différente, il n'est donc pas possible de les superposer. Un rééchantillonnage est donc nécessaire. Les températures avec 1km de résolution sont donc rééchantillonnées à 250m.
+\item Découpage et masquage : les images couvrent un territoire plus vaste que la Bretagne et la mer ne possède pas d'informations pertinente vis à vis des indices diffusés. Il est donc nécessaire de découper les images et de supprimer les pixels de mer. Le découpage s'effectue avec "\verb!gdalwarp! et la suppression des pixels de mer s'effectue en 3 étapes :
+\begin{itemize}
+\item créer un raster vide de même dimension que la zone découpée
+\item superposer ce raster avec le fichier shape servant de masque pour faire un masque binaire avec "\verb!gdal_rasterize!"
+\item appliquer ce masque pour modifier les valeurs
+\end{itemize}
+\item Rééchantillonnage : les deux produits téléchargés ont une résolution spatiale différente, il n'est donc pas possible de les superposer (pour effectuer des traitements). Un rééchantillonnage est donc nécessaire. Les températures à 1km de résolution sont rééchantillonnées à 250m.
 \item Recalcul des valeurs : pour une raison de stockage, les images téléchargées ont des valeurs entières. Un facteur d’échelle à appliquer à tous les produis est accessible sur le site de la LP DAAC pour obtenir les réflectances.
-\item Suppression des nuages : malgré le fait que ce sont des synthèses de 8 jours qui sont utilisées pour générer les produits diffusés sur GéoBretagne, des nuages peuvent subsister. Dans un soucis de compréhension simplifié, il a été décidé qu'il était préférable de diffuser des zones sans données. Ainsi, d'après l'image qualité disponible dans le produit MOD09Q1, toutes les valeurs en dessous de 220 sont conservées.
+\item Suppression des nuages : malgré le fait que ce sont des synthèses de 8 jours qui sont utilisées pour générer les produits diffusés sur GéoBretagne, des nuages peuvent subsister. Dans un soucis de compréhension simplifié, il a été décidé qu'il était préférable de diffuser des zones sans données. Ainsi, d'après l'image "qualité" disponible dans le produit MOD09Q1, toutes les zones nuageuses ont été supprimées.
 \end{itemize}
 
-\subsubsection{NDVI}
+\subsubsection{Calcul du NDVI}
 
 L'étape suivante consiste à calculer le NDVI. Pour calculer EF, les valeurs inférieures à 0 et supérieures à 1 (quelques pixels de mer non masqués ayant des valeurs aberrantes) sont supprimés. Ce changement de valeurs n'est pas répercuté sur le produit NDVI diffusé sur GéoBretagne.
 
 \subsubsection{Modèle S-SEBI et coefficient Priestley-Taylor}
 
-Pour pouvoir appliquer le modèle S-SEBI et générer le coefficient de Priestley-Taylor, il est nécessaire de calculer le Fractional Vegetation Cover (FVC) et calculer la température de surface (figure \ref{graphFVCTemp}).
+Pour appliquer le modèle S-SEBI et générer le coefficient de Priestley-Taylor, il est nécessaire de calculer le Fractional Vegetation Cover (FVC) et calculer la température de surface (figure \ref{graphFVCTemp}).
 
 \begin{figure}[!h]
 \centering
@@ -217,10 +224,10 @@ Cet indice représente la couverture de la végétation sur le sol. Plus l'indic
 \end{center}\smallbreak
 
 \item[(b)]Température Tj - Tn \medbreak
-Pour calculer cette valeur, il est d'abord nécessaire de reporter les pixels sans données d'une image sur l'autre. Si cette étape n'est pas effectuée, des températures aberrantes vont être générées suite à la soustraction. Ces pixels sans données seront également à supprimer sur le FVC avant d'opérer le traitement suivant.
+Pour calculer cette valeur, il est nécessaire de reporter les pixels sans données d'une image sur l'autre. Si cette étape n'est pas effectuée, des températures aberrantes vont être générées suite à la soustraction. Ces pixels sans données seront également à supprimer sur le FVC avant d'opérer le traitement suivant. Rq : Il arrive que certaines dates ne disposent pas de mesures de températures (couverture nuageuse permanente sur 8 jours).
 \end{enumerate}
 
-Avec le FVC et l'image Tj - Tn, nous pouvons produire le nuage de point des valeurs (figure \ref{graphFVCTemp}) et récupérer uniquement les points composant les bords sec et humides pour calculer le coefficient de Priestley-Taylor. Ce coefficient ainsi que l'équation de droite associé sont obtenus après une double interpolation pour ces deux bords suivis d'une régression linaire entre eux (figure \ref{graphPriestley}).
+Avec le FVC et l'image Tj - Tn, nous pouvons produire un nuage de points représentant les pixels (figure \ref{graphFVCTemp}) et récupérer uniquement les points composant les bords sec et humides pour calculer le coefficient de Priestley-Taylor. Ce coefficient, ainsi que l'équation de droite associé, sont obtenus après une double interpolation pour ces deux bords suivis d'une régression linaire entre eux (figure \ref{graphPriestley}).
 
 \begin{figure}[!h]
 \centering
@@ -333,28 +340,32 @@ Le NDVI est un indice de végétation permettant de déterminer l'occupation du 
 
 \subsection{Interprétation de l'évolution temporelle du NDVI}
 
-L'intérêt d'une série temporelle est de pouvoir suivre l'évolution d'un phénomène. Dans le cadre de cet exemple, nous allons observer l'évolution du NDVI sur le marais du Parc Naturel Régional de Brière. Avant tout, à cause des nuages, certaines dates ne disposent pas d'informations sur le PNR. Ce manque de données s'identifie par des ruptures dans la courbe de la figure \ref{TS_NDVI}.\smallbreak
-Cette courbe présente globalement une forme sinusoïdale correspondant aux saisons de végétations (croissance, stagnation, diminution). Ces différentes étapes peuvent être décalée dans le temps selon les objets observés. Par exemple, une culture de blé aura une phase de croissance à partir de novembre-décembre (tallage) au contraire d'une prairie où la croissance s'effectuera à partir de mars.\smallbreak
+L'intérêt d'une série temporelle est de pouvoir suivre l'évolution d'un phénomène. Il est important de prendre en compte l'occupation et l'usage des sols qui en est fait chaque année. Par exemple, dans le cas de parcelles agricoles, il est primordial de prendre en compte la rotation des cultures pour effectuer une analyse pertinente.\smallbreak
+
+Dans le cadre de cet exemple, nous allons observer l'évolution du NDVI sur le marais du Parc Naturel Régional (PNR) de Brière. Avant tout, à cause des nuages, certaines dates ne disposent pas d'informations sur le PNR. Ce manque de données s'identifie par des ruptures dans la courbe de la figure \ref{TS_NDVI}.\smallbreak
+
+Cette courbe présente une forme sinusoïdale correspondant aux saisons de végétations (croissance, stagnation, diminution). Ces différentes étapes peuvent être décalées dans le temps selon les objets observés. Par exemple, une culture de blé aura une phase de croissance à partir de novembre-décembre (tallage) au contraire d'une prairie où la croissance s'effectuera à partir de mars.\smallbreak
+
 La série temporelle accessible sur GéoBretagne présente l'avantage de couvrir différents aléas comme la canicule de 2003. Pour cet exemple, 2 années ont été sélectionnées avant et après celui-ci (figure \ref{TS_NDVI}).\smallbreak
+
 Sur le marais du PNR de Brière, cet aléa ne se distingue pas vis à vis des autres années, probablement pour deux raisons :
 \begin{itemize}
 \item le marais, ayant une réserve en eau importante, a su conserver un niveau correct durant la canicule induisant aucun impact sur la végétation
 \item l'arrêt du traitement chimique visant à éliminer la Jussie, en plus de la canicule, a considérablement accéléré le développement de la Jussie (Leplat M., 2005), raison pour laquelle nous n'observons aucune diminution du NDVI
 \end{itemize}
-Cependant, d'autres éléments peuvent expliquer l'absence de l'impact de la canicule, par exemple, la définition même de la canicule. En France, une canicule à Brest se situe à 28 degrés, alors qu'une canicule à Toulouse se situe à 36 degrés.\smallbreak
-Dans tous les cas, pour effectuer un suivi temporelle sur des objets, il est important de prendre en compte l'occupation et l'usage des sols qui en est fait chaque année. Par exemple, dans le cas de parcelles agricoles, il est primordial de prendre en compte la rotation des cultures pour effectuer une analyse pertinente.
+
+De même, le NDVI ne diminue plus autant en hiver à partir de 2003, laisser supposer une colonisation important de la Jussie au détriment des surfaces en eau libre.\smallbreak
 
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.29]{img/NDVI_Briere.png}
-\caption{Représentation de l'évolution du NDVI entre 2000 et 2017 sur le Parc Naturel Régional de Brière.}
+\caption{Représentation de l'évolution du NDVI entre début 2001 et fin 2005 sur le Parc Naturel Régional de Brière.}
 \label{TS_NDVI}
 \end{figure}
 
 \subsection{Interprétation de l'Evaporative Fraction}
 
-EF est un indice renseignant sur la capacité d'une
-surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au Parc Naturel Régional (PNR) de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
+EF est un indice renseignant sur la capacité d'une surface à évaporer, qu’elle soit composée de végétation ou non. D'après la figure \ref{EF1}, la moitié sud de l'image évapore peu, sauf quelques endroits correspondants aux espaces forestiers et au PNR de Brière. Ainsi, ne pas observer cette différence d'évaporation signifierai un stress hydrique important mettant en péril ces espaces.
 
 \begin{figure}[!h]
 \centering
@@ -367,7 +378,7 @@ surface à évaporer, qu’elle soit composée de végétation ou non. D'après 
 
 \subsection{Interprétation des températures de jour}
 
-La température de jour correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF. Compte-tenu des éléments discernables (zones humides, forêts, zones urbaines) à partir de cette température (figure \ref{TJ1}), il a été décidé de mettre à disposition cette information. \smallbreak
+La température de jour correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusé par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF. Compte-tenu des éléments discernables (zones humides, forêts, zones urbaines) à partir de cette température (figure \ref{TJ1}), il a été décidé de mettre à disposition cette information.\smallbreak
 
 \begin{figure}[!h]
 \centering
@@ -378,7 +389,7 @@ La température de jour correspond à la température moyenne sur 8 jours par te
 
 \subsection{Interprétation des températures de nuit}
 
-La température de nuit correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusés par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF, et compte-tenu des éléments discernables (principalement les îlots de chaleur urbains tel que Rennes) à partir de cette température (figure \ref{TN1}), il a été décidé de mettre à disposition cette information. \smallbreak 
+La température de nuit correspond à la température moyenne sur 8 jours par temps clair. Cette mesure, en kelvin, est un produit diffusé par l'USGS sous le terme MOD11A2. Cette donnée est nécessaire pour calculer EF, et compte-tenu des éléments discernables (principalement les îlots de chaleur urbains tel que Rennes) à partir de cette température (figure \ref{TN1}), il a été décidé de mettre à disposition cette information. \smallbreak 
 
 \begin{figure}[!h]
 \centering
@@ -389,9 +400,9 @@ La température de nuit correspond à la température moyenne sur 8 jours par te
 
 \section{Conclusion et perspectives}
 
-La télédétection est un outil permettant d'acquérir des informations invisibles à l’œil nu sans avoir besoin d'aller sur le terrain pour les acquérir. Elle permet également d'optimiser ces enquêtes nécessitant du personnel et coûteuses en temps. Il est donc possible d'effectuer un suivi sur un paysage ou tout autre éléments composant la biosphère à moindre coût. En effet, certains phénomènes ne peuvent être décrit et compris sans cette dimension (déforestation, urbanisation, érosion).\smallbreak
+La télédétection est un outil permettant d'acquérir des informations invisibles à l’oeil sans avoir besoin d'aller sur le terrain pour les acquérir. Elle permet également d'optimiser des enquêtes nécessitant du personnel et coûteuses en temps. Il est donc possible d'effectuer un suivi sur un paysage ou tout autre éléments composant la biosphère à moindre coût et de manière plus constante. En effet, certains phénomènes ne peuvent être décrit et compris sans cette dimension (déforestation, urbanisation, érosion).\smallbreak
 GéoBretagne souhaite donc rendre accessible nombre de ces informations pour permettre d'optimiser les études effectués en Bretagne en fournissant des produits permettant de répondre aux problématiques actuelles et futures du territoire.\smallbreak
-Cependant, la résolution spatiale de MODIS n'est pas adaptée au paysage Breton particulièrement fragmenté. Il n'est donc pas possible d'observer les bosquets, petites parcelles et les haies, entre autres. Il est donc envisagé d'utiliser le capteur Landsat ayant une résolution spatiale de 30 mètres et une bande thermique.
+Cependant, la résolution spatiale de MODIS n'est pas adaptée pour observer les bosquets, petites parcelles et les haies, entre autres. Il est donc envisagé d'utiliser le capteur avec une meilleure résolution (Landsat, Sentinel) afin d'apporter toujours plus d'informations sur le territoire.
 
 
 \section{Bibliographie}
@@ -418,14 +429,16 @@ Usage libre sous réserve des mentions obligatoires sur tout document de diffusi
 
 \section{Annexes}
 
-Ce chapitre a pour objectif de référencer quelques éléments intéressant pour interagir avec le visualiseur et les produits.
-
 \begin{itemize}
-\item pour télécharger une image, il faut produire ce type de requête : \newline
+\item Pour télécharger une image, il faut produire ce type de requête : \newline
 \verb!http://geowww.agrocampus-ouest.fr/geoserver/wcs?!\newline\verb!request=GetCoverage&service=WCS&version=2.0.1&!\newline\verb!coverageId=psn__ndvi_modis_bretagne&!
 \newline\verb!Format=image/geotiff&!
 \newline\verb!SUBSET=time("2017-06-10T00:00:00.000Z")! \smallbreak 
-Les variables à modifier sont coverageId en remplaçant ndvi par ef, tempjour ou tempnuit et le time en remplaçant l'année, le mois et le jour par la date souhaitée.
+Les variables à modifier sont :
+\begin{itemize}
+\item coverageId en remplaçant ndvi par ef, tempjour ou tempnuit
+\item time en remplaçant l'année, le mois et le jour par la date souhaitée
+\end{itemize}
 \end{itemize}
 
 \end{document}

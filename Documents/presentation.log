@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  3 AUG 2017 17:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.6.6)  4 AUG 2017 14:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1032,20 +1032,20 @@ LaTeX Warning: Label `signSpectr' multiply defined.
 )
 \openout1 = `presentation.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 17.
-LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
+LaTeX Font Info:    ... okay on input line 18.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1111,7 +1111,7 @@ e
 ))
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box54
-Package hyperref Info: Link coloring OFF on input line 17.
+Package hyperref Info: Link coloring OFF on input line 18.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1121,56 +1121,56 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count159
 )
-LaTeX Info: Redefining \ref on input line 17.
-LaTeX Info: Redefining \pageref on input line 17.
-LaTeX Info: Redefining \nameref on input line 17.
+LaTeX Info: Redefining \ref on input line 18.
+LaTeX Info: Redefining \pageref on input line 18.
+LaTeX Info: Redefining \nameref on input line 18.
 
 (./presentation.out) (./presentation.out)
 \@outlinefile=\write5
 \openout5 = `presentation.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 17.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 18.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 17.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 18.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/cmr/m/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 17.
+(Font)                  OT1/cmss/m/n --> T1/cmr/m/n on input line 18.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 17.
+(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 17.
+(Font)                  OT1/cmr/bx/n --> T1/cmss/bx/n on input line 18.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> T1/cmss/m/n on input line 17.
+(Font)                  OT1/cmss/m/n --> T1/cmss/m/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/cmss/m/n on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 17.
+(Font)                  OT1/cmss/bx/n --> T1/cmss/m/n on input line 18.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> T1/cmss/m/it on input line 17.
+(Font)                  OT1/cmr/m/it --> T1/cmss/m/it on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> T1/cmss/m/it on input line 17.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 17.
+(Font)                  OT1/cmr/bx/it --> T1/cmss/m/it on input line 18.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 17.
+(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 17.
+(Font)                  OT1/cmtt/m/n --> T1/cmtt/m/n on input line 18.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 17.
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 18.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 17.
+(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> T1/cmr/bx/n on input line 17.
+(Font)                  OT1/cmss/bx/n --> T1/cmr/bx/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 17.
+(Font)                  T1/cmss/bx/n --> T1/cmss/bx/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 17.
+(Font)                  T1/cmss/m/n --> T1/cmss/bx/n on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 17.
+(Font)                  T1/cmss/m/it --> T1/cmss/bx/it on input line 18.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  T1/cmtt/m/n --> T1/cmtt/bx/n on input line 17.
+(Font)                  T1/cmtt/m/n --> T1/cmtt/bx/n on input line 18.
 
 (/usr/share/texlive/texmf-dist/tex/latex/beamer/translator/dicts/translator-bas
 ic-dictionary/translator-basic-dictionary-English.dict
@@ -1196,84 +1196,75 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 17.
+LaTeX Info: Redefining \includegraphics on input line 18.
  (./presentation.nav)
+Overfull \hbox (4.52866pt too wide) detected at line 18
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
-LaTeX Font Warning: Font shape `T1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 21.
-
-<img/logos.jpg, id=75, 301.32915pt x 47.7717pt>
+<img/logos.jpg, id=81, 301.32915pt x 47.7717pt>
 File: img/logos.jpg Graphic file (type jpg)
  <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 21.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
+Package pdftex.def Info: img/logos.jpg used on input line 24.
+(pdftex.def)             Requested size: 301.3284pt x 47.77156pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
 
+LaTeX Font Warning: Font shape `T1/cmss/m/n' in size <4> not available
+(Font)              size <5> substituted on input line 24.
+
+
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
  <./img/logos.jpg>]
 (./presentation.toc)
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 25.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
-
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [2
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 39.
+LaTeX Font Info:    Try loading font information for U+msa on input line 42.
  (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 39.
+LaTeX Font Info:    Try loading font information for U+msb on input line 42.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 39.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
-
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [3
 
-] <img/spectre-electromagnetique.png, id=162, 602.25pt x 365.365pt>
+] <img/spectre-electromagnetique.png, id=179, 602.25pt x 365.365pt>
 File: img/spectre-electromagnetique.png Graphic file (type png)
 
 <use img/spectre-electromagnetique.png>
 Package pdftex.def Info: img/spectre-electromagnetique.png used on input line 5
-1.
+4.
 (pdftex.def)             Requested size: 240.89572pt x 146.1434pt.
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 51.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [4
 
  <./img/spectre-electromagnetique.png>]
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 74.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
-
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [5
 
-] <img/spectral_signatures.jpg, id=203, 800.0289pt x 402.5439pt>
+] <img/spectral_signatures.jpg, id=223, 800.0289pt x 402.5439pt>
 File: img/spectral_signatures.jpg Graphic file (type jpg)
 
 <use img/spectral_signatures.jpg>
@@ -1283,18 +1274,15 @@ Package pdftex.def Info: img/spectral_signatures.jpg used on input line 85.
 Overfull \vbox (2.72008pt too high) detected at line 85
  []
 
-File: img/logos.jpg Graphic file (type jpg)
-<use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 85.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [6
 
  <./img/spectral_signatures.jpg>]
-<img/droite_sols.png, id=224, 674.52pt x 385.44pt>
+<img/droite_sols.png, id=246, 674.52pt x 385.44pt>
 File: img/droite_sols.png Graphic file (type png)
  <use img/droite_sols.png>
 Package pdftex.def Info: img/droite_sols.png used on input line 94.
@@ -1316,25 +1304,22 @@ l.94 \end{frame}
 Overfull \vbox (11.75363pt too high) detected at line 94
  []
 
-File: img/logos.jpg Graphic file (type jpg)
-<use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 94.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [7
 
  <./img/droite_sols.png>]
-<img/radar_band.jpg, id=246, 254.3904pt x 218.61674pt>
+<img/radar_band.jpg, id=270, 254.3904pt x 218.61674pt>
 File: img/radar_band.jpg Graphic file (type jpg)
 
 <use img/radar_band.jpg>
 Package pdftex.def Info: img/radar_band.jpg used on input line 109.
 (pdftex.def)             Requested size: 114.47461pt x 98.37662pt.
 
-<img/radar-pollution.jpg, id=247, 362.35374pt x 272.01625pt>
+<img/radar-pollution.jpg, id=271, 362.35374pt x 272.01625pt>
 File: img/radar-pollution.jpg Graphic file (type jpg)
 
 <use img/radar-pollution.jpg>
@@ -1345,18 +1330,15 @@ Overfull \hbox (3.58353pt too wide) in paragraph at lines 109--109
 [][] 
  []
 
-File: img/logos.jpg Graphic file (type jpg)
-<use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 109.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [8
 
  <./img/radar_band.jpg> <./img/radar-pollution.jpg>]
-<img/lidar_dem.jpg, id=267, 687.56876pt x 301.125pt>
+<img/lidar_dem.jpg, id=294, 687.56876pt x 301.125pt>
 File: img/lidar_dem.jpg Graphic file (type jpg)
  <use img/lidar_dem.jpg>
 Package pdftex.def Info: img/lidar_dem.jpg used on input line 124.
@@ -1366,67 +1348,93 @@ Overfull \hbox (9.9102pt too wide) in paragraph at lines 124--124
 [][] 
  []
 
-<img/lidar_modelisation.png, id=268, 1280.785pt x 1052.93375pt>
+<img/lidar_modelisation.png, id=295, 1280.785pt x 1052.93375pt>
 File: img/lidar_modelisation.png Graphic file (type png)
 
 <use img/lidar_modelisation.png>
 Package pdftex.def Info: img/lidar_modelisation.png used on input line 124.
 (pdftex.def)             Requested size: 140.88678pt x 115.82306pt.
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 124.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [9
 
  <./img/lidar_dem.jpg> <./img/lidar_modelisation.png>]
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 135.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
-
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [10
 
-] <img/NDVI_Briere.png, id=309, 1219.1949pt x 599.1183pt>
+] <img/NDVI_Briere.png, id=339, 1219.1949pt x 599.1183pt>
 File: img/NDVI_Briere.png Graphic file (type png)
 
 <use img/NDVI_Briere.png>
 Package pdftex.def Info: img/NDVI_Briere.png used on input line 149.
-(pdftex.def)             Requested size: 207.26039pt x 101.84875pt.
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 149.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
+(pdftex.def)             Requested size: 268.22371pt x 131.80643pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [11
 
  <./img/NDVI_Briere.png>]
-<img/classif_exemple.pdf, id=331, 845.1575pt x 597.23125pt>
+<img/classif_exemple.pdf, id=363, 845.1575pt x 597.23125pt>
 File: img/classif_exemple.pdf Graphic file (type pdf)
 
 <use img/classif_exemple.pdf>
-Package pdftex.def Info: img/classif_exemple.pdf used on input line 161.
-(pdftex.def)             Requested size: 211.28885pt x 149.30743pt.
-File: img/logos.jpg Graphic file (type jpg)
- <use img/logos.jpg>
-Package pdftex.def Info: img/logos.jpg used on input line 161.
-(pdftex.def)             Requested size: 143.57422pt x 22.76228pt.
+Package pdftex.def Info: img/classif_exemple.pdf used on input line 160.
+(pdftex.def)             Requested size: 245.0894pt x 173.19263pt.
 
-Overfull \vbox (32.57013pt too high) has occurred while \output is active []
-
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
 
 [12
 
  <./img/classif_exemple.pdf>]
+<img/metrique_paysage.png, id=413, 1203.49625pt x 723.70375pt>
+File: img/metrique_paysage.png Graphic file (type png)
+
+<use img/metrique_paysage.png>
+Package pdftex.def Info: img/metrique_paysage.png used on input line 170.
+(pdftex.def)             Requested size: 264.76999pt x 159.21532pt.
+
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
+
+[13
+
+ <./img/metrique_paysage.png>]
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 181.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
+
+[14
+
+]
+File: img/logos.jpg Graphic file (type jpg)
+ <use img/logos.jpg>
+Package pdftex.def Info: img/logos.jpg used on input line 186.
+(pdftex.def)             Requested size: 301.3284pt x 47.77156pt.
+
+Overfull \hbox (4.52866pt too wide) has occurred while \output is active
+  [] [][][][] [][][][][] [][][][][] []  
+ []
+
+[15
+
+]
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
 
@@ -1436,13 +1444,13 @@ Overfull \vbox (32.57013pt too high) has occurred while \output is active []
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 162.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 162.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 188.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 188.
  (./presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 162.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 162.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 188.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 188.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
-(rerunfilecheck)             Checksum: 65AFFA14A8933A838DC73927AA3AB1B4;854.
+(rerunfilecheck)             Checksum: D9EEA0280C6388F18F987F0DD575343E;895.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -1454,27 +1462,28 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 162.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 188.
  ) 
 Here is how much of TeX's memory you used:
- 17262 strings out of 494910
- 326438 string characters out of 6179837
- 395913 words of memory out of 5000000
- 20090 multiletter control sequences out of 15000+600000
- 17444 words of font info for 47 fonts, out of 8000000 for 9000
+ 17310 strings out of 494910
+ 327545 string characters out of 6179837
+ 395405 words of memory out of 5000000
+ 20126 multiletter control sequences out of 15000+600000
+ 17758 words of font info for 48 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  48i,19n,56p,410b,756s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </hom
-e/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk> </home/donati
-en/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1440.600pk> </home/donatien/.texm
-f-var/fonts/pk/ljfour/jknappen/ec/ecss0600.600pk></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/symbols/msam7.pfb>
-Output written on presentation.pdf (12 pages, 3184512 bytes).
+ </home/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ectt1095.600pk> </hom
+e/donatien/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1000.600pk> </home/donati
+en/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecss1095.600pk> </home/donatien/.texm
+f-var/fonts/pk/ljfour/jknappen/ec/ecss1440.600pk> </home/donatien/.texmf-var/fo
+nts/pk/ljfour/jknappen/ec/ecss0600.600pk></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/symbols/msam7.pfb>
+Output written on presentation.pdf (15 pages, 3818971 bytes).
 PDF statistics:
- 593 PDF objects out of 1000 (max. 8388607)
- 352 compressed objects within 4 object streams
- 39 named destinations out of 1000 (max. 500000)
- 189 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 735 PDF objects out of 1000 (max. 8388607)
+ 450 compressed objects within 5 object streams
+ 46 named destinations out of 1000 (max. 500000)
+ 202 words of extra memory for PDF output out of 10000 (max. 10000000)
 
