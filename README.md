@@ -79,7 +79,7 @@ Les paramètres de cet outil sont :
 - -b : si présent, génère une courbe représentant la moyenne mobile des valeurs selon T-1, T, T+1 (-b)
 
 __TODO :__
-- Calculer les données manquantes entre les dates (pas de temps de 8 jours). A vérifier la pertinence vis à vis des températures pauvant être très différentes en 16 jours.
+- Calculer les données manquantes entre les dates (pas de temps de 8 jours). A vérifier la pertinence vis à vis des températures pouvant être très différentes en 16 jours.
 ***
 ##### Powered by [![AGROCAMPUS-OUEST](http://geoinfo.agrocampus-ouest.fr/illustrations/logo_agrocampusouest.jpg)](http://www.agrocampus-ouest.fr)
 ***
