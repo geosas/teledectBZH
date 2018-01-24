@@ -72,16 +72,22 @@ def Download(ListUrls, Path, netrc):
         
         # pour chaque image
         for dl in ListFiles:
-            # si elle n'existe pas deja, telecharge avec curl
-            if not os.path.exists(Path+"/usgs/"+os.path.basename(dl)):
-                print "Telechargement de l'image %s" % (dl)
-                # les cookies sont necessaires car l'identification se passe
-                # sur un autre site
-                command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
-                            % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
-                os.system(command)
-	    else :
-	        print "L'image %s existe deja" % (dl)
+            # ouvre le fichier listant toutes les images deja telechargees
+            fichier = open(Path+"/usgs/log_images.txt", "r+") 
+            for ligne in fichier:
+                if os.path.basename(dl) in ligne :
+                    break
+            else :
+                # si elle n'existe pas deja, telecharge avec curl
+                if not os.path.exists(Path+"/usgs/"+os.path.basename(dl)):
+                    print "Telechargement de l'image %s" % (dl)
+                    # les cookies sont necessaires car l'identification se passe
+                    # sur un autre site
+                    command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
+                                % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
+                    os.system(command)
+                fichier.write(os.path.basename(dl)+"\n") 
+            fichier.close()
 
 
 def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):

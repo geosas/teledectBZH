@@ -657,8 +657,12 @@ def Main(datas, out, clipShp, maskShp):
         if not os.path.exists(out+"/EF"):
             os.mkdir(out+"/EF")
 
-        if not os.path.exists(out+"/EF/EF_%s.tif" % (Date)):
-            
+        #if not os.path.exists(out+"/EF/EF_%s.tif" % (Date)):
+        fichier = open(out+"/log_produits.txt", "r+")
+        for ligne in fichier :
+            if "EF_%s.tif" % (Date) in ligne :
+                break
+        else :
             # Extract au format tif et clip les bandes et temperatures
             ListFilesBands, filenameBand = ExtractClip(FilesBands, out, "Bands", clipShp, maskShp, Date)
             ListFilesTemp, filenameTemp = ExtractClip(FilesTemp, out, "Temp", clipShp, maskShp, Date)
@@ -689,27 +693,27 @@ def Main(datas, out, clipShp, maskShp):
             TjTn, Xsize_Tj, Ysize_Tj, Projection_Tj, Transform_Tj, Tj, Tn \
                 = CalcTjTn(ListFilesTemp, out, Date)
             
-	    # si une date ne contient aucune donnee de temperature, ne calcule pas EF
-	    try:
-	        if TjTn == False:
-		    print "Aucune temperature disponible a la date du %s" %(Date)
-	            continue
-	    except:ValueError
-            # Supprime les valeurs de FVC ou la temperature n'est pas disponible
-            fvc[np.where(TjTn==0)]=np.nan
-    
-            # Calcule les donnees necessaires pour calculer les droites de regression)
-            # Initialise le pourcentage de points à prendre a 1 et l'incremente au besoin
-            pourcentPoints = 1
-            nbPoints = False
-            
-            #gere les erreurs si aucun point ne se situe dans l'intervalle choisi
-            while nbPoints == False:
-                try :
-                    (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(fvc, TjTn, 25, pourcentPoints)
-                    nbPoints = True
-                except UnboundLocalError :
-                    pourcentPoints += 1       
+    	    # si une date ne contient aucune donnee de temperature, ne calcule pas EF
+    	    try:
+    	        if TjTn == False:
+    		    print "Aucune temperature disponible a la date du %s" %(Date)
+    	            continue
+    	    except ValueError :
+                # Supprime les valeurs de FVC ou la temperature n'est pas disponible
+                fvc[np.where(TjTn==0)]=np.nan
+        
+                # Calcule les donnees necessaires pour calculer les droites de regression)
+                # Initialise le pourcentage de points à prendre a 1 et l'incremente au besoin
+                pourcentPoints = 1
+                nbPoints = False
+                
+                #gere les erreurs si aucun point ne se situe dans l'intervalle choisi
+                while nbPoints == False:
+                    try :
+                        (PtsInf, PtsSup), (PtsInfMean, PtsSupMean) = courbes_phi(fvc, TjTn, 25, pourcentPoints)
+                        nbPoints = True
+                    except UnboundLocalError :
+                        pourcentPoints += 1       
             
             # Calcule les droites de regression et les donnees necessaire pour calculer EF
             if not os.path.exists(out+"/graphiques"):
@@ -720,8 +724,11 @@ def Main(datas, out, clipShp, maskShp):
             # Calcul d'EF
             CalcEF(fvc, SlopeSec, InterceptSec, TjTn, Tj, Tn, TminHumide, out+"/EF", \
                 Date, Xsize_Tj, Ysize_Tj, Transform_Tj, Projection_Tj)
-	else :
-	    print "La date %s a deja ete traitee" % (Date)
+
+            fichier.write("EF_%s.tif\n" % (Date))
+        fichier.close()
+	#else :
+	    #print "La date %s a deja ete traitee" % (Date)
 
         
 if __name__ == "__main__":

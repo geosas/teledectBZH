@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
+
+#cree fichier log
+exec &> "/home/dallery/teledectBZH/out.log"
 
 ###########################################
 #################Variables#################

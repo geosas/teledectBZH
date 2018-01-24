@@ -24,25 +24,27 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
         for raster in rasters :
             #s'il fait parti des fichiers a exporter
             for indice in indices.keys() :
-		if indice == raster[:-13] :	
-		    # existe t'il dans le dossier de destination ?
-		    resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
-		    '%s@%s' % (login, outUrl), 'test', '-e',\
-		    '%s/%s/%s' %(outServer, indices[indice], raster)])
-		    #si non, exporte le fichier
-		    if resp == 1:
-			print ("Export")
-			command = 'sshpass -p "%s" scp %s/%s/%s %s@%s:%s/%s/%s'\
-			% (password, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
-			os.system(command)
-		    #si oui, ne fait rien
-		    elif resp == 0 :
-			print "Fichier %s deja exporte" % (raster)
-		    #sinon, code erreur et arret
-		    else :
-			print "Code erreur ssh, arret"
-			print resp
-			sys.exit()
+        		if indice == raster[:-13] :	
+        		    # existe t'il dans le dossier de destination ?
+        		    resp = subprocess.call(['sshpass', '-p', "%s" % (password), 'ssh',\
+        		    '%s@%s' % (login, outUrl), 'test', '-e',\
+        		    '%s/%s/%s' %(outServer, indices[indice], raster)])
+        		    #si non, exporte le fichier
+        		    if resp == 1:
+            			print ("Export")
+            			command = 'sshpass -p "%s" scp %s/%s/%s %s@%s:%s/%s/%s'\
+            			% (password, inServer, indice, raster, login, outUrl, outServer, indices[indice], raster)
+            			os.system(command)
+        		    #si oui, ne fait rien
+        		    elif resp == 0 :
+            			print "Fichier %s deja exporte" % (raster)
+            		    #sinon, code erreur et arret
+        		    else :
+            			print "Code erreur ssh, arret"
+            			print resp
+            			sys.exit()
+        #if not raster == "log_produits.txt" :
+           # os.remove("%s/%s/%s" % (inServer, indice, raster))
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
