@@ -9,6 +9,8 @@ import sys
 import subprocess
 import argparse
 import csv
+import glob
+import shutil
 
 def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
     """
@@ -43,8 +45,12 @@ def exportRasters(inUrl, inServer, outUrl, outServer, login, password):
             			print "Code erreur ssh, arret"
             			print resp
             			sys.exit()
-        #if not raster == "log_produits.txt" :
-           # os.remove("%s/%s/%s" % (inServer, indice, raster))
+
+    # nettoyage des repertoires
+    dossiers = glob.glob(inServer+"/*")
+    for dossier in dossiers :
+        if os.path.basename(dossier) != "log_produits.txt":
+            shutil.rmtree(dossier)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

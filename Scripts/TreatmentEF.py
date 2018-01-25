@@ -729,7 +729,10 @@ def Main(datas, out, clipShp, maskShp):
         fichier.close()
 	#else :
 	    #print "La date %s a deja ete traitee" % (Date)
-
+    fichiers = glob.glob(datas+"/*")
+    for fichier in fichiers :
+        if os.path.basename(fichier) != "log_images.txt":
+            os.remove(fichier)
         
 if __name__ == "__main__":
     if len(sys.argv) == 1:
