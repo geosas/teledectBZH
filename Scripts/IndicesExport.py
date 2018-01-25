@@ -82,6 +82,12 @@ if __name__ == "__main__":
                             
         args = parser.parse_args()
         
+        print("\nEtape 3 : Export des produits de psncalc vers geowww")
+
+        if len(glob.glob(args.inServer+"/*")) == 1 :
+            print("Aucune image a exporter, arret")
+            sys.exit()
+            
         # Recupere le login et password dans un fichier    
         with open(args.loginCop, "r") as coFile:
             reader = csv.reader(coFile)
@@ -91,5 +97,3 @@ if __name__ == "__main__":
                 break
             
         exportRasters(args.inUrl, args.inServer, args.outUrl, args.outServer, login, password)
-        
-        print "\nExport Terminee"

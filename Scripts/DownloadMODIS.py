@@ -60,6 +60,7 @@ def Download(ListUrls, Path, netrc):
     Rq : obligation d'utiliser un fichier .netrc car la methode visant
     a rentrer directement le login:mdp ne fonctionne pas.
     """
+    dwnld = False
     # enrgistre les images dans un dossier nomme usgs
     if not os.path.exists(Path+"/usgs/"):
         os.mkdir(Path+"/usgs/")
@@ -86,8 +87,11 @@ def Download(ListUrls, Path, netrc):
                     command = "curl --netrc-file %s -L -c %s.cookies -b %s.cookies %s --output %s"\
                                 % (netrc, Path+"/usgs/", Path+"/usgs/", url+dl, Path+"/usgs/"+os.path.basename(dl))
                     os.system(command)
+                    dwnld = True
                 fichier.write(os.path.basename(dl)+"\n") 
             fichier.close()
+
+    return dwnld
 
 
 def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
@@ -106,13 +110,13 @@ def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
     baseUrlMOD11A2 = 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11A2.006/'
 
     # liste toutes les dates disponibles pour les donnees MODIS
-    print "Liste les dates disponibles"
+    #print "Liste les dates disponibles"
     listDatesMOD09Q1 = ListUrlDates(baseUrlMOD09Q1)
     listDatesMOD11A2 = ListUrlDates(baseUrlMOD11A2)
     
     # genere une liste contenant les dates que l'on souhaite et qui sont
     # disponibles
-    print "Listage des dates voulus"
+    #print "Listage des dates voulus"
     listDatesDl1 = [date1 for date1 in listDatesMOD09Q1 \
                             for date2 in listDates if date2 in date1]
     listDatesDl2 = [date1 for date1 in listDatesMOD11A2 \
@@ -124,14 +128,16 @@ def Main(Path, netrc, dateStart, dateEnd=datetime.date.today()):
         sys.exit()
         
     # genere une liste des urls des images a telecharger
-    print "Generation des urls des images"
+    #print "Generation des urls des images"
     listUrlsDl1 = [baseUrlMOD09Q1+date for date in listDatesDl1]
     listUrlsDl2 = [baseUrlMOD11A2+date for date in listDatesDl2]
     
     # telechargement des images   
     Download(listUrlsDl1, Path, netrc)
-    Download(listUrlsDl2, Path, netrc)
+    dwnld = Download(listUrlsDl2, Path, netrc)
 
+    if dwnld == False:
+        print("Aucune nouvelle image de disponible")
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
@@ -175,5 +181,7 @@ if __name__ == "__main__":
                 fdate = i
             else :
                 ldate = i
-    
+                
+    print("Etape 1 : Recherche et telechargement d'images MODIS")
+
     Main(args.path, args.netrc, fdate, ldate)

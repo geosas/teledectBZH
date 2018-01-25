@@ -762,7 +762,11 @@ if __name__ == "__main__":
     np.seterr(divide='ignore', invalid='ignore')
     if not os.path.exists(args.out):
         os.mkdir(args.out)
-        
-    Main(args.datas, args.out, args.clipShp, args.maskShp)
     
-    print "\nToutes les dates (rasters) telechargees ont ete traitees. Fin"
+    print("\nEtape 2 : traitement des images")
+    
+    if glob.glob(args.datas+"/*.hdf") == [] :
+        print("Aucune image a traiter, arret")
+        sys.exit()
+
+    Main(args.datas, args.out, args.clipShp, args.maskShp)

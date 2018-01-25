@@ -72,3 +72,8 @@ sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} 
 
 sshpass -p "${mdp}" ssh ${login}@${urlGeoserver} nohup  python ${scriptPublish} -url ${urlWorkspaces} -wspace ${workspace} -store ${storeTn} -datadir ${dirWorkspace}${storeTn} -co ${logpassPublie}
 
+echo "Fin d'execution des scripts"
+
+#echo "publication effectuee"   |  mail -s "geouest log" -a /home/dallery/teledectBZH/out.log donatien.dallery@agrocampus-ouest.fr
+mail -s "geouest log" donatien.dallery@agrocampus-ouest.fr < /home/dallery/teledectBZH/out.log
+
